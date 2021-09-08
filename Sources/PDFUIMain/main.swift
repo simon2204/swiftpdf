@@ -1,5 +1,10 @@
 import SwiftPDFUI
+import Foundation
 
-let test = 90
+let number = 90
 
-print(String(test.formatted(.number.precision(.integerLength(10)))))
+let formattedNumber = number
+
+print(formattedNumber)
+
+
