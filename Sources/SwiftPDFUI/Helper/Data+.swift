@@ -12,9 +12,19 @@ extension Data: ExpressibleByIntegerLiteral {
     }
 }
 
+extension Data: ExpressibleByStringInterpolation { }
+
 extension Data {
     static func += (lhs: inout Data, rhs: String) {
         lhs += rhs.data
+    }
+    
+    static func + (lhs: Data, rhs: String) -> Data {
+        lhs + rhs.data
+    }
+    
+    static func + (lhs: String, rhs: Data) -> Data {
+        lhs.data + rhs
     }
 }
 

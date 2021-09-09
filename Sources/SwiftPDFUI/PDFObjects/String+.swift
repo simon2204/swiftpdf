@@ -5,3 +5,9 @@ extension String {
         self.data(using: .utf8)!
     }
 }
+
+extension String: PDFObject {
+    var pdfData: Data {
+        "(" + data + ")"
+    }
+}

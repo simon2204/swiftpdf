@@ -1,5 +1,7 @@
 import Foundation
 
+/// 7.5.4 Cross-referencetable
+/// Page 55
 struct CrossReferenceTable {
     private var entries = [Entry(offset: 0, generation: 65535, isInUse: false)]
     

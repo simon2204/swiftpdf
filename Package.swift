@@ -13,8 +13,8 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "SwiftPDFUI",
-            dependencies: []),
+            name: "SwiftPDFUI"
+        ),
         .executableTarget(
             name: "PDFUIMain",
             dependencies: ["SwiftPDFUI"]),
