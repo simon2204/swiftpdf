@@ -1,17 +1,22 @@
 import Foundation
 
-/// 7.5.4 Cross-referencetable
-/// Page 55
+/// Contains information that permits random access to indirect objects.
+///
+/// The cross-reference table contains information that permits random access to indirect objects
+/// within the PDF file so that the entire PDF file need not be read to locate any particular object.
 struct CrossReferenceTable {
     private var entries = [Entry(offset: 0, generation: 65535, isInUse: false)]
     
+    private var entryData: Data {
+        entries.lazy.map { $0.data }.joined()
+    }
+    
     var data: Data {
-        var tableData: Data = "xref"
-        tableData += Whitespace.crlf
-        tableData += "0 \(entries.count)"
-        tableData += Whitespace.crlf
-        tableData += entries.joined()
-        return tableData
+        "xref"
+        + Whitespace.crlf
+        + "0 \(entries.count)"
+        + Whitespace.crlf
+        + entryData
     }
     
     mutating func append(entry: Entry) {
@@ -46,13 +51,5 @@ extension CrossReferenceTable.Entry {
         entryData += Whitespace.crlf
         
         return entryData
-    }
-}
-
-extension Array where Element == CrossReferenceTable.Entry {
-    func joined() -> Data {
-        reduce(into: Data(capacity: count * 20)) { partialJoinedData, entry in
-            partialJoinedData += entry.data
-        }
     }
 }

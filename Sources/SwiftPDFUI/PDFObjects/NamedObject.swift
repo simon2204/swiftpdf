@@ -6,14 +6,12 @@ struct NamedObject: PDFObject {
     var pdfData: Data {
         "/\(name)".data
     }
-    
-//    var pdfData: Data {
-//        if let object = value as? NamedObject {
-//            return "\(name) \(object.name)"
-//        } else {
-//            return "\(name) " + value.pdfData
-//        }
-//    }
+}
+
+extension NamedObject: ExpressibleByStringLiteral {
+    init(stringLiteral value: String) {
+        self.name = value
+    }
 }
 
 extension NamedObject: Hashable { }
