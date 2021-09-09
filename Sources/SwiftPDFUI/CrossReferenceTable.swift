@@ -1,7 +1,7 @@
 import Foundation
 
 struct CrossReferenceTable {
-    private var entries = [Entry(offset: 0, generation: 65535, inUse: false)]
+    private var entries = [Entry(offset: 0, generation: 65535, isInUse: false)]
     
     var data: Data {
         var tableData: Data = "xref"
@@ -24,7 +24,7 @@ extension CrossReferenceTable {
         /// 5-digit generation number.
         var generation: Int
         /// Identifying this as an in-use entry.
-        var inUse: Bool = true
+        var isInUse: Bool = true
     }
 }
 
@@ -34,13 +34,13 @@ extension CrossReferenceTable.Entry {
         
         let offset = offset.formatted(integerLength: 10)
         let generation = generation.formatted(integerLength: 5)
-        let inUse = inUse ? "n" : "f"
+        let isInUse = isInUse ? "n" : "f"
         
         entryData += offset
         entryData += Whitespace.space
         entryData += generation
         entryData += Whitespace.space
-        entryData += inUse
+        entryData += isInUse
         entryData += Whitespace.crlf
         
         return entryData

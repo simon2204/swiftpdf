@@ -1,10 +1,3 @@
-//
-//  File.swift
-//  File
-//
-//  Created by Simon Schöpke on 02.09.21.
-//
-
 import Foundation
 
 enum Whitespace {
