@@ -7,12 +7,12 @@ struct FileTrailer {
     let size: Int
     
     /// The catalog dictionary for the PDF file (see 7.7.2, "Document catalog dictionary").
-    let root: IndirectObject.Reference
+    let root: Reference<Catalog>
     
     /// An array of two byte-strings constituting a PDF file identifier (See 14.4, "File identifiers") for the PDF file.
     /// Each PDF file identifier byte-string shall have a minimum length of 16 bytes.
     /// If there is an Encrypt entry, this array and the two byte-strings shall be direct objects and shall be unencrypted.
-    let id: [PDFObject]
+    let id: [Hexadecimal]
     
     let count: Int
     
@@ -23,14 +23,8 @@ struct FileTrailer {
     }
     
     var data: Data {
-        "trailer"
-        + Whitespace.crlf
-        + dictionary.pdfData
-        + Whitespace.crlf
-        + "startxref"
-        + Whitespace.crlf
-        + String(count)
-        + Whitespace.crlf
-        + "%%EOF"
+        ["trailer", dictionary.pdfData,
+         "startxref", String(count).data,
+         "%%EOF"].joined(separator: Whitespace.crlf)
     }
 }

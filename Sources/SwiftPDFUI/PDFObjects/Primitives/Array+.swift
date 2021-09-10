@@ -29,7 +29,7 @@ extension Array where Element == Data {
     }
 }
 
-extension Array: PDFObject where Element == PDFObject {
+extension Array: PDFObject where Element: PDFObject {
     var pdfData: Data {
         "["
         + Whitespace.crlf
