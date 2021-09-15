@@ -1,5 +1,5 @@
 import Foundation
 
 protocol PDFObject {
-    var pdfData: Data { get }
+    var pdfValue: Data { get }
 }

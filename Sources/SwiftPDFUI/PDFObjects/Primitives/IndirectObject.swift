@@ -17,10 +17,10 @@ struct IndirectObject<Object>: PDFObject where Object: PDFObject {
         self.object = object
     }
     
-    var pdfData: Data {
+    var pdfValue: Data {
         "\(objectNumber) 0 obj"
         + Whitespace.crlf
-        + object.pdfData
+        + object.pdfValue
         + Whitespace.crlf
         + "endobj"
     }
@@ -29,7 +29,7 @@ struct IndirectObject<Object>: PDFObject where Object: PDFObject {
 struct Reference<Object>: PDFObject where Object: PDFObject {
     fileprivate let id: Int
     
-    var pdfData: Data {
+    var pdfValue: Data {
         "\(id) 0 R"
     }
 }

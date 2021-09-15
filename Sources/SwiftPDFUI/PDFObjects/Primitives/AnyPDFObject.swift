@@ -7,7 +7,7 @@ struct AnyPDFObject: PDFObject {
         self.wrappedValue = object
     }
     
-    var pdfData: Data {
-        wrappedValue.pdfData
+    var pdfValue: Data {
+        wrappedValue.pdfValue
     }
 }

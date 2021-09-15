@@ -5,7 +5,7 @@ protocol PDFDictionary: PDFObject {
 }
 
 extension PDFDictionary {
-    var pdfData: Data {
-        dictionary.pdfData
+    var pdfValue: Data {
+        dictionary.pdfValue
     }
 }

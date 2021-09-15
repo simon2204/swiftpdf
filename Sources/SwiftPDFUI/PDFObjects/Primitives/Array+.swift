@@ -30,14 +30,14 @@ extension Array where Element == Data {
 }
 
 extension Array: PDFObject where Element: PDFObject {
-    var pdfData: Data {
-        "[" + lazy.map(\.pdfData).joined(separator: Whitespace.space) + "]"
+    var pdfValue: Data {
+        "[" + lazy.map(\.pdfValue).joined(separator: Whitespace.space) + "]"
     }
 }
 
 extension String.StringInterpolation {
     mutating func appendInterpolation<Element: PDFObject>(_ value: Array<Element>) {
-        let array = String(data: value.pdfData, encoding: .utf8)!
+        let array = String(data: value.pdfValue, encoding: .utf8)!
         appendInterpolation(array)
     }
 }

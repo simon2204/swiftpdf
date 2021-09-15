@@ -7,7 +7,7 @@ extension String {
 }
 
 extension String: PDFObject {
-    var pdfData: Data {
+    var pdfValue: Data {
         data
     }
 }

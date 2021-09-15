@@ -3,7 +3,7 @@ import Foundation
 struct Stream: PDFObject {
     
     
-    var pdfData: Data {
+    var pdfValue: Data {
         Data()
     }
 }

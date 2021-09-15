@@ -6,7 +6,7 @@ protocol PDFArray: PDFObject {
 }
 
 extension PDFArray {
-    var pdfData: Data {
-        array.pdfData
+    var pdfValue: Data {
+        array.pdfValue
     }
 }

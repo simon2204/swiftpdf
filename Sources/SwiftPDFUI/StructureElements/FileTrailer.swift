@@ -23,7 +23,7 @@ struct FileTrailer {
     }
     
     var data: Data {
-        ["trailer", dictionary.pdfData,
+        ["trailer", dictionary.pdfValue,
          "startxref", String(count).data,
          "%%EOF"].joined(separator: Whitespace.crlf)
     }

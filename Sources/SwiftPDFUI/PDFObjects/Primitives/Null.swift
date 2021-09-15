@@ -1,7 +1,7 @@
 import Foundation
 
 struct Null: PDFObject {
-    var pdfData: Data {
+    var pdfValue: Data {
         "null"
     }
 }

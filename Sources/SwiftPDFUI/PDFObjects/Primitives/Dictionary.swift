@@ -1,10 +1,10 @@
 import Foundation
 
 extension Dictionary: PDFObject where Key == NamedObject, Value == PDFObject {
-    var pdfData: Data {
+    var pdfValue: Data {
         "<<"
         + Whitespace.crlf
-        + lazy.map { $0.key.name + " " + $0.value.pdfData }.joined(separator: Whitespace.crlf)
+        + lazy.map { $0.key.name + " " + $0.value.pdfValue }.joined(separator: Whitespace.crlf)
         + Whitespace.crlf
         + ">>"
     }
