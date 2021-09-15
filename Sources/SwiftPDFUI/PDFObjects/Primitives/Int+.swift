@@ -2,7 +2,7 @@ import Foundation
 
 extension Int: PDFObject {
     var pdfData: Data {
-        String(self).pdfData
+        "\(self)"
     }
 }
 

@@ -7,6 +7,7 @@ import Foundation
 struct CrossReferenceTable {
     private var entries = [Entry(offset: 0, generation: 65535, isInUse: false)]
     
+    /// Concatenates all entrie's data property and returns a single `Data` object.
     private var entryData: Data {
         entries.lazy.map { $0.data }.joined()
     }

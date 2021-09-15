@@ -8,6 +8,6 @@ extension String {
 
 extension String: PDFObject {
     var pdfData: Data {
-        "(" + data + ")"
+        data
     }
 }

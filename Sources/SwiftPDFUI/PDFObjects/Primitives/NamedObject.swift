@@ -4,7 +4,7 @@ struct NamedObject: PDFObject {
     let name: String
 
     var pdfData: Data {
-        "/\(name)".data
+        "/\(name.capitalized)".data
     }
 }
 
@@ -15,3 +15,10 @@ extension NamedObject: ExpressibleByStringLiteral {
 }
 
 extension NamedObject: Hashable { }
+
+extension String.StringInterpolation {
+    mutating func appendInterpolation(_ value: NamedObject) {
+        let namedObject = String(data: value.pdfData, encoding: .utf8)!
+        appendInterpolation(namedObject)
+    }
+}

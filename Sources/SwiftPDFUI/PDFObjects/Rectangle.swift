@@ -4,11 +4,16 @@ import Foundation
 ///
 /// Rectangles are used to describe locations on a page and bounding boxes for a variety of objects.
 /// A rectangle shall be written as an array of four numbers giving the coordinates of a pair of diagonally opposite corners.
-struct Rectangle: PDFObject {
+struct Rectangle: PDFArray {
+    
+    /// Origin's x coordinate.
     var x: Double = 0
+    
+    /// Origin's y coordinate.
     var y: Double = 0
     
     let width: Double
+    
     let height: Double
     
     private var lowerLeftX: Double {
@@ -26,9 +31,9 @@ struct Rectangle: PDFObject {
     private var upperRightY: Double {
         return y + height
     }
-
-    var pdfData: Data {
+    
+    var array: [Double] {
         [lowerLeftX, lowerLeftY,
-         upperRightX, upperRightY].pdfData
+         upperRightX, upperRightY]
     }
 }

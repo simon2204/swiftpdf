@@ -1,12 +1,11 @@
 import Foundation
 
-struct Catalog: PDFObject {
-    private static let type = NamedObject(name: "Catalog")
+struct Catalog: PDFDictionary {
+    private let type: NamedObject = "catalog"
     
-    let pages: Reference<Pages>
+    var pages: Reference<Pages>
     
-    var pdfData: Data {
-        ["Type": Self.type,
-         "Pages": pages].pdfData
+    var dictionary: [NamedObject : PDFObject] {
+        ["type" : type, "pages" : pages]
     }
 }

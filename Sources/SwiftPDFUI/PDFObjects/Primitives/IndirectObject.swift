@@ -12,7 +12,7 @@ struct IndirectObject<Object>: PDFObject where Object: PDFObject {
         Reference(id: objectNumber)
     }
     
-    init(referencing object: PDFObject, number: Int) {
+    init(referencing object: Object, number: Int) {
         self.objectNumber = number
         self.object = object
     }

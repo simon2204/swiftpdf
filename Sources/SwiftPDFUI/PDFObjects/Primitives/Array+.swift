@@ -31,11 +31,13 @@ extension Array where Element == Data {
 
 extension Array: PDFObject where Element: PDFObject {
     var pdfData: Data {
-        "["
-        + Whitespace.crlf
-        + lazy.map(\.pdfData).joined(separator: Whitespace.crlf)
-        + Whitespace.crlf
-        + "]"
+        "[" + lazy.map(\.pdfData).joined(separator: Whitespace.space) + "]"
     }
 }
 
+extension String.StringInterpolation {
+    mutating func appendInterpolation<Element: PDFObject>(_ value: Array<Element>) {
+        let array = String(data: value.pdfData, encoding: .utf8)!
+        appendInterpolation(array)
+    }
+}
