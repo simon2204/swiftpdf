@@ -65,3 +65,9 @@ extension Operator {
         case endPath = "n"
     }
 }
+
+extension Operator.PathPainting: PDFObject {
+    var pdfValue: String {
+        self.rawValue
+    }
+}

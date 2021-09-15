@@ -5,7 +5,8 @@ extension Operator {
     ///
     /// A path description is built up through the invocation of one or more path construction operators that add segments to it.
     /// The path construction operators may be invoked in any sequence,
-    /// but the first one invoked shall be `move(x:y:)` or `rectangle(x:y:width:height:)` to begin a new subpath.
+    /// but the first one invoked shall be `Operator.PathConstruction.move(x:y:)` or
+    /// `Operator.PathConstruction.rectangle(x:y:width:height:)` to begin a new subpath.
     /// The path definition may conclude with the application of a path-painting operator such as
     /// `Operator.PathPainting.stroke`, `Operator.PathPainting.fill`, or `Operator.PathPainting.closeFillAndStroke`;
     /// this operator may optionally be preceded by one of the clipping path operators

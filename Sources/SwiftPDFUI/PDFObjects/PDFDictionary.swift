@@ -1,5 +1,5 @@
 protocol PDFDictionary: PDFObject {
-    var dictionary: [NamedObject : PDFObject] { get }
+    var dictionary: [Name : PDFObject] { get }
 }
 
 extension PDFDictionary {

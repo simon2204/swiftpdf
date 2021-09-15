@@ -14,7 +14,7 @@ struct FileTrailer: PDFObject {
     
     let count: Int
     
-    var dictionary: Dictionary<NamedObject, PDFObject> {
+    var dictionary: Dictionary<Name, PDFObject> {
         ["Size": size,
          "Root": root,
          "ID" : id]

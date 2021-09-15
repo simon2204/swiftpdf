@@ -10,8 +10,10 @@ struct Rectangle: PDFArray {
     /// Origin's y coordinate.
     var y: Double = 0
     
+    /// Width value
     let width: Double
     
+    /// Height value
     let height: Double
     
     private var lowerLeftX: Double {

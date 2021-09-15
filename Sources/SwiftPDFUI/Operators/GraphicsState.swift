@@ -1,5 +1,3 @@
-import Foundation
-
 extension Operator {
     enum GraphicsState {
         /// Save the current graphics state on the graphics state stack.
@@ -55,7 +53,7 @@ extension Operator {
         ///
         /// `dictName` shall be the name of a graphics state parameter dictionary
         /// in the ExtGState subdictionary of the current resource dictionary.
-        case dictName(NamedObject)
+        case dictName(Name)
     }
 }
 
@@ -111,7 +109,7 @@ extension Operator.GraphicsState {
 
 extension Operator.GraphicsState {
     /// Lists the standard rendering intents that shall be recognised.
-    enum RenderingIntent: NamedObject {
+    enum RenderingIntent: Name {
         /// AbsoluteColorimetric
         ///
         /// Colours shall be represented solely with respect to the light source;

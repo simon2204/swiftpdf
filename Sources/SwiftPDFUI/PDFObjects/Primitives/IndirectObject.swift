@@ -17,9 +17,9 @@ struct IndirectObject<Object>: PDFObject where Object: PDFObject {
     
     var pdfValue: String {
         "\(objectNumber) 0 obj"
-        + Whitespace.crlf.rawValue
+        + Whitespace.crlf
         + object.pdfValue
-        + Whitespace.crlf.rawValue
+        + Whitespace.crlf
         + "endobj"
     }
 }

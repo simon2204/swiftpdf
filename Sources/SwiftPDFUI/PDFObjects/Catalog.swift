@@ -1,9 +1,9 @@
 struct Catalog: PDFDictionary {
-    private let type: NamedObject = "catalog"
+    private let type: Name = "catalog"
     
     var pages: Reference<Pages>
     
-    var dictionary: [NamedObject : PDFObject] {
+    var dictionary: [Name : PDFObject] {
         ["type" : type, "pages" : pages]
     }
 }

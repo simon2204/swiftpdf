@@ -1,4 +1,4 @@
-extension Dictionary: PDFObject where Key == NamedObject, Value == PDFObject {
+extension Dictionary: PDFObject where Key == Name, Value == PDFObject {
     var pdfValue: String {
         "<<"
         + Whitespace.crlf
@@ -9,7 +9,7 @@ extension Dictionary: PDFObject where Key == NamedObject, Value == PDFObject {
 }
 
 extension String.StringInterpolation {
-    mutating func appendInterpolation(_ value: [NamedObject : PDFObject]) {
+    mutating func appendInterpolation(_ value: [Name : PDFObject]) {
         appendInterpolation(value.pdfValue)
     }
 }
