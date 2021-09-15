@@ -1,6 +1,4 @@
-import Foundation
-
-struct FileTrailer {
+struct FileTrailer: PDFObject {
     /// The total number of entries in the PDF file’s cross-reference table,
     /// as defined by the combination of the original section and all update sections.
     /// Equivalently, this value shall be 1 greater than the highest object number defined in the PDF file.
@@ -22,9 +20,13 @@ struct FileTrailer {
          "ID" : id]
     }
     
-    var data: Data {
-        ["trailer", dictionary.pdfValue,
-         "startxref", String(count).data,
-         "%%EOF"].joined(separator: Whitespace.crlf)
+    var pdfValue: String {
+        """
+        trailer
+        \(dictionary)
+        startxref
+        \(count)
+        %%EOF
+        """
     }
 }

@@ -1,8 +1,5 @@
-import Foundation
-
-struct FileHeader {
-    var data: Data {
-        "%PDF–2.0"
-        + Whitespace.crlf
+struct FileHeader: PDFObject {
+    var pdfValue: String {
+        "%PDF–2.0" + Whitespace.crlf
     }
 }

@@ -1,5 +1,3 @@
-import Foundation
-
 struct Catalog: PDFDictionary {
     private let type: NamedObject = "catalog"
     

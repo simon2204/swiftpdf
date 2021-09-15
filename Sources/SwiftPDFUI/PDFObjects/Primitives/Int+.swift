@@ -1,7 +1,5 @@
-import Foundation
-
 extension Int: PDFObject {
-    var pdfValue: Data {
+    var pdfValue: String {
         "\(self)"
     }
 }

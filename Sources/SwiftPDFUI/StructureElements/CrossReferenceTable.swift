@@ -1,23 +1,22 @@
-import Foundation
-
 /// Contains information that permits random access to indirect objects.
 ///
 /// The cross-reference table contains information that permits random access to indirect objects
 /// within the PDF file so that the entire PDF file need not be read to locate any particular object.
-struct CrossReferenceTable {
+struct CrossReferenceTable: PDFObject {
     private var entries = [Entry(offset: 0, generation: 65535, isInUse: false)]
     
-    /// Concatenates all entrie's data property and returns a single `Data` object.
-    private var entryData: Data {
-        entries.lazy.map { $0.data }.joined()
+    /// Concatenates all entrie's data property and returns a single `String` object.
+    private var entryValues: String {
+        entries.lazy.map { $0.pdfValue }.joined(separator: Whitespace.crlf.rawValue)
     }
     
-    var data: Data {
+    var pdfValue: String {
         "xref"
         + Whitespace.crlf
         + "0 \(entries.count)"
         + Whitespace.crlf
-        + entryData
+        + entryValues
+        + Whitespace.crlf
     }
     
     mutating func append(entry: Entry) {
@@ -32,25 +31,15 @@ extension CrossReferenceTable {
         /// 5-digit generation number.
         var generation: Int
         /// Identifying this as an in-use entry.
-        var isInUse: Bool = true
+        var isInUse = true
     }
 }
 
-extension CrossReferenceTable.Entry {
-    var data: Data {
-        var entryData = Data(capacity: 20)
-        
+extension CrossReferenceTable.Entry: PDFObject {
+    var pdfValue: String {
         let offset = offset.formatted(integerLength: 10)
         let generation = generation.formatted(integerLength: 5)
         let isInUse = isInUse ? "n" : "f"
-        
-        entryData += offset
-        entryData += Whitespace.space
-        entryData += generation
-        entryData += Whitespace.space
-        entryData += isInUse
-        entryData += Whitespace.crlf
-        
-        return entryData
+        return "\(offset) \(generation) \(isInUse)"
     }
 }

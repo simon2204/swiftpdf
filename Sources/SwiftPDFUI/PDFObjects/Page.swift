@@ -1,5 +1,3 @@
-import Foundation
-
 /// The leaves of the page tree are page objects,
 /// each of which is a dictionary specifying the attributes of a single page of the document.
 struct Page {

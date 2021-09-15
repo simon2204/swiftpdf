@@ -1,5 +1,3 @@
-import Foundation
-
 /// The pages of a document are accessed through a structure known as the page tree,
 /// which defines the ordering of pages in the document.
 /// Using the tree structure, PDF readers using only limited memory,

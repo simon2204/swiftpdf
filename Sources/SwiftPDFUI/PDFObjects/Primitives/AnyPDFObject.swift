@@ -1,5 +1,3 @@
-import Foundation
-
 struct AnyPDFObject: PDFObject {
     private let wrappedValue: PDFObject
     
@@ -7,7 +5,7 @@ struct AnyPDFObject: PDFObject {
         self.wrappedValue = object
     }
     
-    var pdfValue: Data {
+    var pdfValue: String {
         wrappedValue.pdfValue
     }
 }

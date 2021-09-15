@@ -1,5 +1,3 @@
-import Foundation
-
 struct Resources {
     /// A dictionary that maps resource names to graphics state parameter dictionaries.
     var extGState: [NamedObject : PDFObject]?
@@ -59,5 +57,4 @@ extension Resources: PDFDictionary {
         
         return dict
     }
-
 }

@@ -159,8 +159,8 @@ extension Operator.GraphicsState {
     }
 }
 
-extension Operator.GraphicsState {
-    var data: Data {
+extension Operator.GraphicsState: PDFObject {
+    var pdfValue: String {
         switch self {
         case .save:
             return "q"

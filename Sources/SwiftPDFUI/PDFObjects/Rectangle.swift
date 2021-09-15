@@ -1,5 +1,3 @@
-import Foundation
-
 /// Rectangles are used to describe locations on a page and bounding boxes
 ///
 /// Rectangles are used to describe locations on a page and bounding boxes for a variety of objects.

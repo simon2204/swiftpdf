@@ -1,7 +1,5 @@
-import Foundation
-
 extension Bool: PDFObject {
-    var pdfValue: Data {
+    var pdfValue: String {
         self ? "true" : "false"
     }
 }

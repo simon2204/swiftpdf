@@ -1,10 +1,8 @@
-import Foundation
-
 struct NamedObject: PDFObject {
     let name: String
 
-    var pdfValue: Data {
-        "/\(name.capitalized)".data
+    var pdfValue: String {
+        "/\(name.capitalized)"
     }
 }
 
@@ -18,7 +16,6 @@ extension NamedObject: Hashable { }
 
 extension String.StringInterpolation {
     mutating func appendInterpolation(_ value: NamedObject) {
-        let namedObject = String(data: value.pdfValue, encoding: .utf8)!
-        appendInterpolation(namedObject)
+        appendInterpolation(value.pdfValue)
     }
 }

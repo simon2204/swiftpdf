@@ -1,5 +1,3 @@
-import Foundation
-
 struct IndirectObject<Object>: PDFObject where Object: PDFObject {
     /// Unique object identifier by which other objects can refer to.
     private let objectNumber: Int
@@ -17,11 +15,11 @@ struct IndirectObject<Object>: PDFObject where Object: PDFObject {
         self.object = object
     }
     
-    var pdfValue: Data {
+    var pdfValue: String {
         "\(objectNumber) 0 obj"
-        + Whitespace.crlf
+        + Whitespace.crlf.rawValue
         + object.pdfValue
-        + Whitespace.crlf
+        + Whitespace.crlf.rawValue
         + "endobj"
     }
 }
@@ -29,7 +27,7 @@ struct IndirectObject<Object>: PDFObject where Object: PDFObject {
 struct Reference<Object>: PDFObject where Object: PDFObject {
     fileprivate let id: Int
     
-    var pdfValue: Data {
+    var pdfValue: String {
         "\(id) 0 R"
     }
 }

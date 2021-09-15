@@ -1,43 +1,11 @@
-import Foundation
-
-extension Array where Element == Data {
-    func joined(separator: Data = .init()) -> Data {
-        let dataCount = self.reduce(0) { $0 + $1.count }
-        let separatorDataCount = count * separator.count
-        let capacity = dataCount + separatorDataCount
-        
-        var result = Data(capacity: capacity)
-        
-        if separator.isEmpty {
-            for data in self {
-                result.append(data)
-            }
-            return result
-        }
-
-        var iterator = makeIterator()
-
-        if let first = iterator.next() {
-            result.append(first)
-            while let next = iterator.next() {
-                result.append(separator)
-                result.append(next)
-            }
-        }
-        
-        return result
-    }
-}
-
 extension Array: PDFObject where Element: PDFObject {
-    var pdfValue: Data {
-        "[" + lazy.map(\.pdfValue).joined(separator: Whitespace.space) + "]"
+    var pdfValue: String {
+        "[" + lazy.map(\.pdfValue).joined(separator: Whitespace.space.rawValue) + "]"
     }
 }
 
 extension String.StringInterpolation {
     mutating func appendInterpolation<Element: PDFObject>(_ value: Array<Element>) {
-        let array = String(data: value.pdfValue, encoding: .utf8)!
-        appendInterpolation(array)
+        appendInterpolation(value.pdfValue)
     }
 }

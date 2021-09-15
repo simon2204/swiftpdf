@@ -1,5 +1,3 @@
-import Foundation
-
 extension Operator {
     /// Path construction operators.
     ///
@@ -9,8 +7,10 @@ extension Operator {
     /// The path construction operators may be invoked in any sequence,
     /// but the first one invoked shall be `move(x:y:)` or `rectangle(x:y:width:height:)` to begin a new subpath.
     /// The path definition may conclude with the application of a path-painting operator such as
-    /// `Operator.PathPainting.stroke`, `Operator.PathPainting.fill`, or `Operator.PathPainting.closeFillAndStroke` (see 8.5.3, "Path-painting operators");
-    /// this operator may optionally be preceded by one of the clipping path operators W or W* (8.5.4, "Clipping path operators").
+    /// `Operator.PathPainting.stroke`, `Operator.PathPainting.fill`, or `Operator.PathPainting.closeFillAndStroke`;
+    /// this operator may optionally be preceded by one of the clipping path operators
+    /// `Operator.PathClipping.nonZeroWindingNumber` or
+    /// `Operator.PathClipping.evenOdd`.
     enum PathConstruction {
         /// Begin a new subpath by moving the current point to coordinates (x, y).
         ///
@@ -100,8 +100,8 @@ extension Operator {
     }
 }
 
-extension Operator.PathConstruction {
-    var data: Data {
+extension Operator.PathConstruction: PDFObject {
+    var pdfValue: String {
         switch self {
         case let .move(x: x, y: y):
             return "\(x) \(y) m"

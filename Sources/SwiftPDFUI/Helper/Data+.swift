@@ -16,15 +16,15 @@ extension Data: ExpressibleByStringInterpolation { }
 
 extension Data {
     static func += (lhs: inout Data, rhs: String) {
-        lhs += rhs.data
+        lhs += rhs.data(using: .utf8)!
     }
     
     static func + (lhs: Data, rhs: String) -> Data {
-        lhs + rhs.data
+        lhs + rhs.data(using: .utf8)!
     }
     
     static func + (lhs: String, rhs: Data) -> Data {
-        lhs.data + rhs
+        lhs.data(using: .utf8)! + rhs
     }
 }
 

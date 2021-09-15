@@ -1,5 +1,3 @@
-import Foundation
-
 extension Operator {
     /// Path-painting operators.
     ///

@@ -1,5 +1,3 @@
-import Foundation
-
 protocol PDFObject {
-    var pdfValue: Data { get }
+    var pdfValue: String { get }
 }
