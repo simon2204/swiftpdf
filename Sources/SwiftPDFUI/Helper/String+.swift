@@ -1,9 +1,3 @@
-extension String: ExpressibleAsPDFString {
-    var pdfString: String {
-        self
-    }
-}
-
 extension String {
     static func += (lhs: inout String, rhs: Whitespace) {
         lhs += rhs.rawValue

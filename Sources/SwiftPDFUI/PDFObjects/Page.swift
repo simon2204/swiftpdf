@@ -1,8 +1,8 @@
 /// The leaves of the page tree are page objects,
 /// each of which is a dictionary specifying the attributes of a single page of the document.
 struct Page {
-    /// The type of PDF object that this dictionary describes.
-    private let type: Name = "page"
+    /// The type of PDF-object that this dictionary describes.
+    private static let type: Name = "page"
     
     /// The page tree node that is the immediate parent of this page object.
     var parent: Reference<Catalog>
@@ -33,7 +33,7 @@ extension Page: PDFDictionary {
         
         var dict: [Name : ExpressibleAsPDFString]
         
-        dict = ["type" : type,
+        dict = ["type" : Self.type,
                 "parent" : parent,
                 "resources" : resources,
                 "mediaBox" : mediaBox]

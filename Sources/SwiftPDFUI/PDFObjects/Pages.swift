@@ -5,8 +5,8 @@
 /// The tree contains nodes of two types — intermediate nodes, called page tree nodes,
 /// and leaf nodes, called page objects
 struct Pages {
-    /// The type of PDF object that this dictionary describes.
-    private let type: Name = "pages"
+    /// The type of PDF-object that this dictionary describes.
+    private static let type: Name = "pages"
     
     /// An array of indirect references to the immediate children of this node.
     /// The children shall only be page objects or other page tree nodes.
@@ -20,7 +20,7 @@ struct Pages {
 
 extension Pages: PDFDictionary {
     var dictionary: [Name : ExpressibleAsPDFString] {
-        ["type" : type,
+        ["type" : Self.type,
          "kids" : kids,
          "count" : count]
     }
