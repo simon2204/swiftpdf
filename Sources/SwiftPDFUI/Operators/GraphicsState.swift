@@ -1,5 +1,5 @@
 extension Operator {
-    enum GraphicsState {
+    enum GraphicsState<N: Number> {
         /// Save the current graphics state on the graphics state stack.
         case save
         
@@ -8,12 +8,12 @@ extension Operator {
         case restore
         
         /// Modify the current transformation matrix (CTM) by concatenating the specified matrix.
-        case transform(a: Double, b: Double, c: Double, d: Double, e: Double, f: Double)
+        case transform(a: N, b: N, c: N, d: N, e: N, f: N)
         
         /// Set the line width in the graphics state.
         ///
         /// The line width parameter specifies the thickness of the line used to stroke a path.
-        case lineWidth(Double)
+        case lineWidth(N)
         
         /// Set the line cap style in the graphics state.
         case lineCap(LineCapStyle)
@@ -28,7 +28,7 @@ extension Operator {
         /// it is possible for the miter to extend far beyond the thickness of the line stroking the path.
         /// The miter limit shall impose a maximum on the ratio of the miter length to the line width.
         /// When the limit is exceeded, the join is converted from a miter to a bevel.
-        case miterLimit(Double)
+        case miterLimit(N)
        
         /// Set the line dash pattern in the graphics state.
         ///
@@ -38,7 +38,7 @@ extension Operator {
         /// - Parameters:
         ///   - dash: Numbers that specify the lengths of alternating dashes and gaps.
         ///   - phase: A number that specifies the distance into the dash pattern at which to start the dash.
-        case lineDashPattern(dash: [Double], phase: Double)
+        case lineDashPattern(dash: [N], phase: N)
         
         /// Set the colour rendering intent in the graphics state.
         case intent(RenderingIntent)
@@ -47,7 +47,7 @@ extension Operator {
         ///
         /// `flatness` is a number in the range 0 to 100;
         /// a value of 0 shall specify the output device’s default flatness tolerance.
-        case flatness(Double)
+        case flatness(N)
         
         /// Set the specified parameters in the graphics state.
         ///
@@ -166,7 +166,7 @@ extension Operator.GraphicsState: PDFObject {
         case .restore:
             return "Q"
             
-        case let .transform(a: a, b: b, c: c, d: d, e: e, f: f):
+        case let .transform(a, b, c, d, e, f):
             return "\(a) \(b) \(c) \(d) \(e) \(f) cm"
             
         case let .lineWidth(lineWidth):
@@ -181,7 +181,7 @@ extension Operator.GraphicsState: PDFObject {
         case let .miterLimit(miterLimit):
             return "\(miterLimit) M"
             
-        case let .lineDashPattern(dash: dash , phase: phase):
+        case let .lineDashPattern(dash, phase):
             return "\(dash) \(phase) d"
             
         case let .intent(intent):

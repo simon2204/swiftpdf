@@ -1,8 +1,9 @@
-extension Int: PDFObject {
+extension Int: PDFObject, Number {
     var pdfValue: String {
         "\(self)"
     }
 }
+
 
 extension Int {
     func formatted(integerLength: Int) -> String {

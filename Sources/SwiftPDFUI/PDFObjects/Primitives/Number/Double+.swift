@@ -1,4 +1,4 @@
-extension Double: PDFObject {
+extension Double: PDFObject, Number {
     var pdfValue: String {
         "\(self)"
     }
