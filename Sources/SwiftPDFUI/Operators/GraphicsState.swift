@@ -1,5 +1,5 @@
 extension Operator {
-    enum GraphicsState<N: Number> {
+    enum GraphicsState {
         /// Save the current graphics state on the graphics state stack.
         case save
         
@@ -8,12 +8,12 @@ extension Operator {
         case restore
         
         /// Modify the current transformation matrix (CTM) by concatenating the specified matrix.
-        case transform(a: N, b: N, c: N, d: N, e: N, f: N)
+        case transform(a: Double, b: Double, c: Double, d: Double, e: Double, f: Double)
         
         /// Set the line width in the graphics state.
         ///
         /// The line width parameter specifies the thickness of the line used to stroke a path.
-        case lineWidth(N)
+        case lineWidth(Double)
         
         /// Set the line cap style in the graphics state.
         case lineCap(LineCapStyle)
@@ -28,7 +28,7 @@ extension Operator {
         /// it is possible for the miter to extend far beyond the thickness of the line stroking the path.
         /// The miter limit shall impose a maximum on the ratio of the miter length to the line width.
         /// When the limit is exceeded, the join is converted from a miter to a bevel.
-        case miterLimit(N)
+        case miterLimit(Double)
        
         /// Set the line dash pattern in the graphics state.
         ///
@@ -38,7 +38,7 @@ extension Operator {
         /// - Parameters:
         ///   - dash: Numbers that specify the lengths of alternating dashes and gaps.
         ///   - phase: A number that specifies the distance into the dash pattern at which to start the dash.
-        case lineDashPattern(dash: [N], phase: N)
+        case lineDashPattern(dash: [Double], phase: Double)
         
         /// Set the colour rendering intent in the graphics state.
         case intent(RenderingIntent)
@@ -47,7 +47,7 @@ extension Operator {
         ///
         /// `flatness` is a number in the range 0 to 100;
         /// a value of 0 shall specify the output device’s default flatness tolerance.
-        case flatness(N)
+        case flatness(Double)
         
         /// Set the specified parameters in the graphics state.
         ///

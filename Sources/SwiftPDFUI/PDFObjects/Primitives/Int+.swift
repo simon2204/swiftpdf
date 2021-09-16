@@ -1,4 +1,4 @@
-extension Int: ExpressibleAsPDFString, Number {
+extension Int: ExpressibleAsPDFString {
     var pdfString: String {
         "\(self)"
     }

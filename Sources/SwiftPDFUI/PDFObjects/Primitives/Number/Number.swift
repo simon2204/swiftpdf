@@ -1,1 +1,0 @@
-protocol Number: SignedNumeric {}

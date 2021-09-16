@@ -13,6 +13,7 @@ extension Array: ExpressibleAsPDFString where Element: ExpressibleAsPDFString {
 }
 
 extension String.StringInterpolation {
+    /// Interpolates the given value’s textual representation into the string literal being created.
     mutating func appendInterpolation<Element: ExpressibleAsPDFString>(_ value: Array<Element>) {
         appendInterpolation(value.pdfString)
     }

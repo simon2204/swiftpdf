@@ -12,7 +12,7 @@ extension Operator {
     /// this operator may optionally be preceded by one of the clipping path operators
     /// `Operator.PathClipping.nonZeroWindingNumber` or
     /// `Operator.PathClipping.evenOdd`.
-    enum PathConstruction<N: Number> {
+    enum PathConstruction {
         /// Begin a new subpath by moving the current point to coordinates (x, y).
         ///
         /// Omitting any connecting line segment.
@@ -22,7 +22,7 @@ extension Operator {
         ///  - Parameters:
         ///    - x: X-coordinate to move the current point to.
         ///    - y: Y-coordinate to move the current point to.
-        case move(x: N, y: N)
+        case move(x: Double, y: Double)
         
         /// Append a straight line segment from the current point to the point (x, y).
         ///
@@ -31,7 +31,7 @@ extension Operator {
         /// - Parameters:
         ///   - x: X-coordinate of the line's end and new current point.
         ///   - y: Y-coordinate of the line's end and new current point.
-        case line(x: N, y: N)
+        case line(x: Double, y: Double)
         
         /// Append a cubic Bézier curve to the current path.
         ///
@@ -47,7 +47,7 @@ extension Operator {
         ///   - y2: Y-coordinate of the second control point.
         ///   - x3: X-coordinate of the curves's end and new current point.
         ///   - y3: Y-coordinate of the curves's end and new current point.
-        case cubic1(x1: N, y1: N, x2: N, y2: N, x3: N, y3: N)
+        case cubic1(x1: Double, y1: Double, x2: Double, y2: Double, x3: Double, y3: Double)
         
         /// Append a cubic Bézier curve to the current path.
         ///
@@ -61,7 +61,7 @@ extension Operator {
         ///   - y2: Y-coordinate of the second control point.
         ///   - x3: X-coordinate of the curves's end and new current point.
         ///   - y3: Y-coordinate of the curves's end and new current point.
-        case cubic2(x2: N, y2: N, x3: N, y3: N)
+        case cubic2(x2: Double, y2: Double, x3: Double, y3: Double)
         
         /// Append a cubic Bézier curve to the current path.
         ///
@@ -75,7 +75,7 @@ extension Operator {
         ///   - y1: Y-coordinate of the first control point.
         ///   - x3: X-coordinate of the curves's end and new current point.
         ///   - y3: Y-coordinate of the curves's end and new current point.
-        case cubic3(x1: N, y1: N, x3: N, y3: N)
+        case cubic3(x1: Double, y1: Double, x3: Double, y3: Double)
         
         /// Close the current subpath.
         ///
@@ -97,7 +97,7 @@ extension Operator {
         ///   - y: Y-coordinate to move the lower-left corner point to.
         ///   - width: The rectangle's width dimension.
         ///   - height: The rectangle's height dimension.
-        case rectangle(x: N, y: N, width: N, height: N)
+        case rectangle(x: Double, y: Double, width: Double, height: Double)
     }
 }
 
