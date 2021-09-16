@@ -10,6 +10,10 @@ struct CrossReferenceTable: ExpressibleAsPDFString {
         entries.lazy.map { $0.pdfString }.joined(separator: Whitespace.crlf.rawValue)
     }
     
+    mutating func append(entry: Entry) {
+        entries.append(entry)
+    }
+    
     var pdfString: String {
         "xref"
         + Whitespace.crlf
@@ -17,10 +21,6 @@ struct CrossReferenceTable: ExpressibleAsPDFString {
         + Whitespace.crlf
         + entryValues
         + Whitespace.crlf
-    }
-    
-    mutating func append(entry: Entry) {
-        entries.append(entry)
     }
 }
 

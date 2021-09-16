@@ -12,7 +12,8 @@ struct FileTrailer: ExpressibleAsPDFString {
     /// If there is an Encrypt entry, this array and the two byte-strings shall be direct objects and shall be unencrypted.
     let id: [Hexadecimal]
     
-    let count: Int
+    /// Byte offset of last cross-reference section.
+    let crossReferenceOffset: Int
     
     var dictionary: Dictionary<Name, ExpressibleAsPDFString> {
         ["Size": size,
@@ -25,7 +26,7 @@ struct FileTrailer: ExpressibleAsPDFString {
         trailer
         \(dictionary)
         startxref
-        \(count)
+        \(crossReferenceOffset)
         %%EOF
         """
     }

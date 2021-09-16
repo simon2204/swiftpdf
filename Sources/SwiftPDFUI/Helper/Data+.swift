@@ -6,12 +6,6 @@ extension Data: ExpressibleByStringLiteral {
     }
 }
 
-extension Data: ExpressibleByIntegerLiteral {
-    public init(integerLiteral value: Int) {
-        self = Swift.withUnsafeBytes(of: value) { Data($0) }
-    }
-}
-
 extension Data: ExpressibleByStringInterpolation { }
 
 extension Data {
@@ -27,5 +21,3 @@ extension Data {
         lhs.data(using: .utf8)! + rhs
     }
 }
-
-

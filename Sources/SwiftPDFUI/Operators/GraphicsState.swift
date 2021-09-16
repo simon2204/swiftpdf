@@ -1,63 +1,61 @@
-extension Operator {
-    enum GraphicsState {
-        /// Save the current graphics state on the graphics state stack.
-        case save
-        
-        /// Restore the graphics state by removing the most recently saved state from
-        /// the stack and making it the current state.
-        case restore
-        
-        /// Modify the current transformation matrix (CTM) by concatenating the specified matrix.
-        case transform(a: Double, b: Double, c: Double, d: Double, e: Double, f: Double)
-        
-        /// Set the line width in the graphics state.
-        ///
-        /// The line width parameter specifies the thickness of the line used to stroke a path.
-        case lineWidth(Double)
-        
-        /// Set the line cap style in the graphics state.
-        case lineCap(LineCapStyle)
-        
-        /// Set the line join style in the graphics state.
-        case lineJoin(LineJoinStyle)
-        
-        /// Set the miter limit in the graphics state.
-        ///
-        /// When two line segments meet at a sharp angle
-        /// and mitered joins have been specified as the line join style,
-        /// it is possible for the miter to extend far beyond the thickness of the line stroking the path.
-        /// The miter limit shall impose a maximum on the ratio of the miter length to the line width.
-        /// When the limit is exceeded, the join is converted from a miter to a bevel.
-        case miterLimit(Double)
-       
-        /// Set the line dash pattern in the graphics state.
-        ///
-        /// The line dash pattern shall control the pattern of dashes and gaps used to stroke paths.
-        /// It shall be specified by a dash array and a dash phase.
-        /// 
-        /// - Parameters:
-        ///   - dash: Numbers that specify the lengths of alternating dashes and gaps.
-        ///   - phase: A number that specifies the distance into the dash pattern at which to start the dash.
-        case lineDashPattern(dash: [Double], phase: Double)
-        
-        /// Set the colour rendering intent in the graphics state.
-        case intent(RenderingIntent)
-        
-        /// Set the flatness tolerance in the graphics state.
-        ///
-        /// `flatness` is a number in the range 0 to 100;
-        /// a value of 0 shall specify the output device’s default flatness tolerance.
-        case flatness(Double)
-        
-        /// Set the specified parameters in the graphics state.
-        ///
-        /// `dictName` shall be the name of a graphics state parameter dictionary
-        /// in the ExtGState subdictionary of the current resource dictionary.
-        case dictName(Name)
-    }
+enum GraphicsState {
+    /// Save the current graphics state on the graphics state stack.
+    case save
+    
+    /// Restore the graphics state by removing the most recently saved state from
+    /// the stack and making it the current state.
+    case restore
+    
+    /// Modify the current transformation matrix (CTM) by concatenating the specified matrix.
+    case transform(a: Double, b: Double, c: Double, d: Double, e: Double, f: Double)
+    
+    /// Set the line width in the graphics state.
+    ///
+    /// The line width parameter specifies the thickness of the line used to stroke a path.
+    case lineWidth(Double)
+    
+    /// Set the line cap style in the graphics state.
+    case lineCap(LineCapStyle)
+    
+    /// Set the line join style in the graphics state.
+    case lineJoin(LineJoinStyle)
+    
+    /// Set the miter limit in the graphics state.
+    ///
+    /// When two line segments meet at a sharp angle
+    /// and mitered joins have been specified as the line join style,
+    /// it is possible for the miter to extend far beyond the thickness of the line stroking the path.
+    /// The miter limit shall impose a maximum on the ratio of the miter length to the line width.
+    /// When the limit is exceeded, the join is converted from a miter to a bevel.
+    case miterLimit(Double)
+    
+    /// Set the line dash pattern in the graphics state.
+    ///
+    /// The line dash pattern shall control the pattern of dashes and gaps used to stroke paths.
+    /// It shall be specified by a dash array and a dash phase.
+    ///
+    /// - Parameters:
+    ///   - dash: Numbers that specify the lengths of alternating dashes and gaps.
+    ///   - phase: A number that specifies the distance into the dash pattern at which to start the dash.
+    case lineDashPattern(dash: [Double], phase: Double)
+    
+    /// Set the colour rendering intent in the graphics state.
+    case intent(RenderingIntent)
+    
+    /// Set the flatness tolerance in the graphics state.
+    ///
+    /// `flatness` is a number in the range 0 to 100;
+    /// a value of 0 shall specify the output device’s default flatness tolerance.
+    case flatness(Double)
+    
+    /// Set the specified parameters in the graphics state.
+    ///
+    /// `dictName` shall be the name of a graphics state parameter dictionary
+    /// in the ExtGState subdictionary of the current resource dictionary.
+    case dictName(Name)
 }
 
-extension Operator.GraphicsState {
+extension GraphicsState {
     /// The line cap style shall specify the shape that shall be used at both ends of open subpaths
     /// (and dashes) when they are stroked.
     enum LineCapStyle: Int {
@@ -81,7 +79,7 @@ extension Operator.GraphicsState {
     }
 }
 
-extension Operator.GraphicsState {
+extension GraphicsState {
     /// The line join style shall specify the shape to be used at the corners of paths that are stroked.
     enum LineJoinStyle: Int {
         /// Miter join.
@@ -107,7 +105,7 @@ extension Operator.GraphicsState {
     }
 }
 
-extension Operator.GraphicsState {
+extension GraphicsState {
     /// Lists the standard rendering intents that shall be recognised.
     enum RenderingIntent: Name {
         /// AbsoluteColorimetric
@@ -157,7 +155,7 @@ extension Operator.GraphicsState {
     }
 }
 
-extension Operator.GraphicsState: ExpressibleAsPDFString {
+extension GraphicsState: ExpressibleAsPDFString {
     var pdfString: String {
         switch self {
         case .save:
