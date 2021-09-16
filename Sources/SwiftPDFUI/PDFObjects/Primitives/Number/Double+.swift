@@ -1,5 +1,5 @@
-extension Double: PDFObject, Number {
-    var pdfValue: String {
+extension Double: ExpressibleAsPDFObject, Number {
+    var pdfRepresentation: String {
         "\(self)"
     }
 }

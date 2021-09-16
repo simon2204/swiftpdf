@@ -1,9 +1,9 @@
-protocol PDFDictionary: PDFObject {
-    var dictionary: [Name : PDFObject] { get }
+protocol PDFDictionary: ExpressibleAsPDFObject {
+    var dictionary: [Name : ExpressibleAsPDFObject] { get }
 }
 
 extension PDFDictionary {
-    var pdfValue: String {
-        dictionary.pdfValue
+    var pdfRepresentation: String {
+        dictionary.pdfRepresentation
     }
 }

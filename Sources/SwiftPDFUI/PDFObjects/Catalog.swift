@@ -3,7 +3,7 @@ struct Catalog: PDFDictionary {
     
     var pages: Reference<Pages>
     
-    var dictionary: [Name : PDFObject] {
+    var dictionary: [Name : ExpressibleAsPDFObject] {
         ["type" : type, "pages" : pages]
     }
 }

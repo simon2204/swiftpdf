@@ -1,5 +1,5 @@
-struct Null: PDFObject {
-    var pdfValue: String {
+struct Null: ExpressibleAsPDFObject {
+    var pdfRepresentation: String {
         "null"
     }
 }

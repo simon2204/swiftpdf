@@ -101,8 +101,8 @@ extension Operator {
     }
 }
 
-extension Operator.PathConstruction: PDFObject {
-    var pdfValue: String {
+extension Operator.PathConstruction: ExpressibleAsPDFObject {
+    var pdfRepresentation: String {
         switch self {
         case let .move(x, y):
             return "\(x) \(y) m"

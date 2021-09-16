@@ -1,7 +1,7 @@
-struct Hexadecimal: PDFObject {
+struct Hexadecimal: ExpressibleAsPDFObject {
     let value: String
     
-    var pdfValue: String {
+    var pdfRepresentation: String {
         "<\(value)>"
     }
 }

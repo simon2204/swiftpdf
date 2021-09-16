@@ -1,9 +1,9 @@
-struct IndirectObject<Object>: PDFObject where Object: PDFObject {
+struct IndirectObject<Object>: ExpressibleAsPDFObject where Object: ExpressibleAsPDFObject {
     /// Unique object identifier by which other objects can refer to.
     private let objectNumber: Int
     
     /// The object which gets to be labelled as an `IndirectObject`.
-    private let object: PDFObject
+    private let object: ExpressibleAsPDFObject
     
     /// The object may be referred to from elsewhere in the file by an indirect reference.
     var reference: Reference<Object> {
@@ -15,19 +15,19 @@ struct IndirectObject<Object>: PDFObject where Object: PDFObject {
         self.object = object
     }
     
-    var pdfValue: String {
+    var pdfRepresentation: String {
         "\(objectNumber) 0 obj"
         + Whitespace.crlf
-        + object.pdfValue
+        + object.pdfRepresentation
         + Whitespace.crlf
         + "endobj"
     }
 }
 
-struct Reference<Object>: PDFObject where Object: PDFObject {
+struct Reference<Object>: ExpressibleAsPDFObject where Object: ExpressibleAsPDFObject {
     fileprivate let id: Int
     
-    var pdfValue: String {
+    var pdfRepresentation: String {
         "\(id) 0 R"
     }
 }

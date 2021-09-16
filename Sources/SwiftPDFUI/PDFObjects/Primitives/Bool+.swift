@@ -1,5 +1,5 @@
-extension Bool: PDFObject {
-    var pdfValue: String {
+extension Bool: ExpressibleAsPDFObject {
+    var pdfRepresentation: String {
         "\(self)"
     }
 }
