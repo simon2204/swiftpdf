@@ -1,31 +1,31 @@
 struct Resources {
     /// A dictionary that maps resource names to graphics state parameter dictionaries.
-    var extGState: [Name : ExpressibleAsPDFObject]?
+    var extGState: [Name : ExpressibleAsPDFString]?
     
     /// A dictionary that maps each resource name to either the name of a device-dependent colour space
     /// or an array describing a colour space.
-    var colorSpace: [Name : ExpressibleAsPDFObject]?
+    var colorSpace: [Name : ExpressibleAsPDFString]?
     
     /// A dictionary that maps resource names to pattern objects.
-    var pattern: [Name : ExpressibleAsPDFObject]?
+    var pattern: [Name : ExpressibleAsPDFString]?
     
     /// A dictionary that maps resource names to shading dictionaries.
-    var shading: [Name : ExpressibleAsPDFObject]?
+    var shading: [Name : ExpressibleAsPDFString]?
     
     /// A dictionary that maps resource names to external objects.
-    var xObject: [Name : ExpressibleAsPDFObject]?
+    var xObject: [Name : ExpressibleAsPDFString]?
     
     /// A dictionary that maps resource names to font dictionaries.
-    var font: [Name : ExpressibleAsPDFObject]?
+    var font: [Name : ExpressibleAsPDFString]?
     
     /// A dictionary that maps resource names to property list dictionaries for marked-content.
-    var properties: [Name : ExpressibleAsPDFObject]?
+    var properties: [Name : ExpressibleAsPDFString]?
 }
 
 extension Resources: PDFDictionary {
-    var dictionary: [Name : ExpressibleAsPDFObject] {
+    var dictionary: [Name : ExpressibleAsPDFString] {
         
-        var dict = [Name : ExpressibleAsPDFObject]()
+        var dict = [Name : ExpressibleAsPDFString]()
         
         if let extGState = extGState {
             dict["extGState"] = extGState

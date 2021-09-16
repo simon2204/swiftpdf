@@ -66,8 +66,8 @@ extension Operator {
     }
 }
 
-extension Operator.PathPainting: ExpressibleAsPDFObject {
-    var pdfRepresentation: String {
+extension Operator.PathPainting: ExpressibleAsPDFString {
+    var pdfString: String {
         self.rawValue
     }
 }

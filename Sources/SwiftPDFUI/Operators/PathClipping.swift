@@ -10,8 +10,8 @@ extension Operator {
     }
 }
 
-extension Operator.PathClipping: ExpressibleAsPDFObject {
-    var pdfRepresentation: String {
+extension Operator.PathClipping: ExpressibleAsPDFString {
+    var pdfString: String {
         self.rawValue
     }
 }

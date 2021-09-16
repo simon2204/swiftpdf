@@ -1,10 +1,10 @@
-protocol PDFArray: ExpressibleAsPDFObject {
-    associatedtype Element: ExpressibleAsPDFObject
+protocol PDFArray: ExpressibleAsPDFString {
+    associatedtype Element: ExpressibleAsPDFString
     var array: [Element] { get }
 }
 
 extension PDFArray {
-    var pdfRepresentation: String {
-        array.pdfRepresentation
+    var pdfString: String {
+        array.pdfString
     }
 }

@@ -1,12 +1,12 @@
 /// Type erasure.
-struct AnyPDFObject: ExpressibleAsPDFObject {
-    private let wrappedValue: ExpressibleAsPDFObject
+struct AnyPDFObject: ExpressibleAsPDFString {
+    private let wrappedValue: ExpressibleAsPDFString
     
-    init<WrappedValue>(_ object: WrappedValue) where WrappedValue: ExpressibleAsPDFObject {
+    init<WrappedValue>(_ object: WrappedValue) where WrappedValue: ExpressibleAsPDFString {
         self.wrappedValue = object
     }
     
-    var pdfRepresentation: String {
-        wrappedValue.pdfRepresentation
+    var pdfString: String {
+        wrappedValue.pdfString
     }
 }

@@ -1,6 +1,6 @@
-struct Stream: ExpressibleAsPDFObject {
+struct Stream: ExpressibleAsPDFString {
     
-    var pdfRepresentation: String {
+    var pdfString: String {
         ""
     }
 }

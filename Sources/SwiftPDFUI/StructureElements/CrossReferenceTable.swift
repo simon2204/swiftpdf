@@ -2,15 +2,15 @@
 ///
 /// The cross-reference table contains information that permits random access to indirect objects
 /// within the PDF file so that the entire PDF file need not be read to locate any particular object.
-struct CrossReferenceTable: ExpressibleAsPDFObject {
+struct CrossReferenceTable: ExpressibleAsPDFString {
     private var entries = [Entry(offset: 0, generation: 65535, isInUse: false)]
     
     /// Concatenates all entrie's data property and returns a single `String` object.
     private var entryValues: String {
-        entries.lazy.map { $0.pdfRepresentation }.joined(separator: Whitespace.crlf.rawValue)
+        entries.lazy.map { $0.pdfString }.joined(separator: Whitespace.crlf.rawValue)
     }
     
-    var pdfRepresentation: String {
+    var pdfString: String {
         "xref"
         + Whitespace.crlf
         + "0 \(entries.count)"
@@ -35,8 +35,8 @@ extension CrossReferenceTable {
     }
 }
 
-extension CrossReferenceTable.Entry: ExpressibleAsPDFObject {
-    var pdfRepresentation: String {
+extension CrossReferenceTable.Entry: ExpressibleAsPDFString {
+    var pdfString: String {
         let offset = offset.formatted(integerLength: 10)
         let generation = generation.formatted(integerLength: 5)
         let isInUse = isInUse ? "n" : "f"

@@ -19,7 +19,7 @@ struct Pages {
 }
 
 extension Pages: PDFDictionary {
-    var dictionary: [Name : ExpressibleAsPDFObject] {
+    var dictionary: [Name : ExpressibleAsPDFString] {
         ["type" : type,
          "kids" : kids,
          "count" : count]

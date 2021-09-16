@@ -1,4 +1,4 @@
-struct FileTrailer: ExpressibleAsPDFObject {
+struct FileTrailer: ExpressibleAsPDFString {
     /// The total number of entries in the PDF file’s cross-reference table,
     /// as defined by the combination of the original section and all update sections.
     /// Equivalently, this value shall be 1 greater than the highest object number defined in the PDF file.
@@ -14,13 +14,13 @@ struct FileTrailer: ExpressibleAsPDFObject {
     
     let count: Int
     
-    var dictionary: Dictionary<Name, ExpressibleAsPDFObject> {
+    var dictionary: Dictionary<Name, ExpressibleAsPDFString> {
         ["Size": size,
          "Root": root,
          "ID" : id]
     }
     
-    var pdfRepresentation: String {
+    var pdfString: String {
         """
         trailer
         \(dictionary)

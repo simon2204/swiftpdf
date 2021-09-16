@@ -1,5 +1,5 @@
-extension String: ExpressibleAsPDFObject {
-    var pdfRepresentation: String {
+extension String: ExpressibleAsPDFString {
+    var pdfString: String {
         self
     }
 }

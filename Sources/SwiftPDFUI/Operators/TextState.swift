@@ -46,8 +46,8 @@ extension Operator {
     }
 }
 
-extension Operator.TextState: ExpressibleAsPDFObject {
-    var pdfRepresentation: String {
+extension Operator.TextState: ExpressibleAsPDFString {
+    var pdfString: String {
         switch self {
         case let .charSpace(value):
             return "\(value) Tc"
