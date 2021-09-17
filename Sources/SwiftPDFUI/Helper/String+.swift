@@ -17,3 +17,10 @@ extension Sequence where Element == String {
         joined(separator: seperator.rawValue)
     }
 }
+
+//extension String.StringInterpolation {
+//	/// Interpolates the given value’s textual representation into the string literal being created.
+//	mutating func appendInterpolation<Value: ExpressibleAsPDFString>(_ value: Value) {
+//		appendInterpolation(value.pdfString)
+//	}
+//}

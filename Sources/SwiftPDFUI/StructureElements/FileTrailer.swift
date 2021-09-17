@@ -5,7 +5,7 @@ struct FileTrailer: ExpressibleAsPDFString {
     let size: Int
     
     /// The catalog dictionary for the PDF file (see 7.7.2, "Document catalog dictionary").
-    let root: Reference<Catalog>
+    let root: IndirectReference<Catalog>
     
     /// An array of two byte-strings constituting a PDF file identifier (See 14.4, "File identifiers") for the PDF file.
     /// Each PDF file identifier byte-string shall have a minimum length of 16 bytes.

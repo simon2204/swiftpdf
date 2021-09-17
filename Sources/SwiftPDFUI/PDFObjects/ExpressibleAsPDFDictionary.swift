@@ -1,8 +1,8 @@
-protocol PDFDictionary: ExpressibleAsPDFString {
+protocol ExpressibleAsPDFDictionary: ExpressibleAsPDFString {
     var dictionary: [Name : ExpressibleAsPDFString] { get }
 }
 
-extension PDFDictionary {
+extension ExpressibleAsPDFDictionary {
     var pdfString: String {
         dictionary.pdfString
     }

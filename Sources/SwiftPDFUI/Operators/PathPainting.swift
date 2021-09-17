@@ -46,16 +46,19 @@ enum PathPainting: String {
     /// instead of `Operator.PathPainting.fill`.
     case fillAndStrokeEvenOdd = "B*"
     
-    /// Close, fill, and then stroke the path, using the non-zero winding number rule to determine the region to fill.
+    /// Close, fill, and then stroke the path,
+	/// using the non-zero winding number rule to determine the region to fill.
     ///
     /// This operator will have the same effect as the sequence
-    /// `Operator.PathConstruction.close`, `Operator.PathPainting.fillAndStroke`.
+    /// `Operator.PathConstruction.close`,
+	/// `Operator.PathPainting.fillAndStroke`.
     case closeFillAndStroke = "b"
     
     /// Close, fill, and then stroke the path, using the even-odd rule to determine the region to fill.
     ///
     /// This operator will have the same effect as the sequence
-    /// `Operator.PathConstruction.close`, `Operator.PathPainting.fillAndStrokeEvenOdd`.
+    /// `Operator.PathConstruction.close`,
+	/// `Operator.PathPainting.fillAndStrokeEvenOdd`.
     case closeFillAndStrokeEvenOdd = "b*"
     
     /// End the path object without filling or stroking it.

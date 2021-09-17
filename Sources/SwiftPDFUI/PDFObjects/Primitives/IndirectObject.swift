@@ -6,8 +6,8 @@ struct IndirectObject<Object>: ExpressibleAsPDFString where Object: ExpressibleA
     private let object: ExpressibleAsPDFString
     
     /// The object may be referred to from elsewhere in the file by an indirect reference.
-    var reference: Reference<Object> {
-        Reference(id: objectNumber)
+    var reference: IndirectReference<Object> {
+        IndirectReference(id: objectNumber)
     }
     
     init(referencing object: Object, number: Int) {
@@ -21,13 +21,5 @@ struct IndirectObject<Object>: ExpressibleAsPDFString where Object: ExpressibleA
         + object.pdfString
         + Whitespace.crlf
         + "endobj"
-    }
-}
-
-struct Reference<Object>: ExpressibleAsPDFString where Object: ExpressibleAsPDFString {
-    fileprivate let id: Int
-    
-    var pdfString: String {
-        "\(id) 0 R"
     }
 }

@@ -29,7 +29,7 @@ extension CrossReferenceTable {
         /// 10-digit byte offset in the decoded stream.
         var offset: Int
         /// 5-digit generation number.
-        var generation: Int
+        var generation = 0
         /// Identifying this as an in-use entry.
         var isInUse = true
     }

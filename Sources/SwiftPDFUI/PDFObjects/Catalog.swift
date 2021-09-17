@@ -1,7 +1,7 @@
-struct Catalog: PDFDictionary {
+struct Catalog: ExpressibleAsPDFDictionary {
     private let type: Name = "catalog"
     
-    var pages: Reference<Pages>
+    var pages: IndirectReference<Pages>
     
     var dictionary: [Name : ExpressibleAsPDFString] {
         ["type" : type, "pages" : pages]

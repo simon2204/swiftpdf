@@ -5,7 +5,7 @@ struct Page {
     private static let type: Name = "page"
     
     /// The page tree node that is the immediate parent of this page object.
-    var parent: Reference<Catalog>
+    var parent: IndirectReference<Catalog>
     
     /// A dictionary containing any resources required by the page contents.
     var resources: Resources = Resources()
@@ -22,13 +22,13 @@ struct Page {
     
     /// A content stream that shall describe the contents of this page.
     /// If this entry is absent, the page shall be empty.
-    var contents: [Reference<Stream>]?
+    var contents: [IndirectReference<Stream>]?
     
     /// The number of degrees by which the page shall be rotated clockwise when displayed or printed.
     var rotate: Int?
 }
 
-extension Page: PDFDictionary {
+extension Page: ExpressibleAsPDFDictionary {
     var dictionary: [Name : ExpressibleAsPDFString] {
         
         var dict: [Name : ExpressibleAsPDFString]

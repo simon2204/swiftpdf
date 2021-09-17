@@ -29,7 +29,8 @@ enum TextState {
     /// before any text is shown.
     ///
     /// - Parameters:
-    ///   - fontResource: The name of a font resource in the Font subdictionary of the current resource dictionary.
+    ///   - fontResource: The name of a font resource in the Font subdictionary
+	///   of the current resource dictionary.
     ///   - scaleFactor: A number representing a scale factor.
     case font(fontResource: Name, scaleFactor: Double)
     

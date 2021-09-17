@@ -7,7 +7,8 @@ enum GraphicsState {
     case restore
     
     /// Modify the current transformation matrix (CTM) by concatenating the specified matrix.
-    case transform(a: Double, b: Double, c: Double, d: Double, e: Double, f: Double)
+    case transform(a: Double, b: Double, c: Double,
+                   d: Double, e: Double, f: Double)
     
     /// Set the line width in the graphics state.
     ///
@@ -110,28 +111,30 @@ extension GraphicsState {
     enum RenderingIntent: Name {
         /// AbsoluteColorimetric
         ///
-        /// Colours shall be represented solely with respect to the light source;
-        /// no correction shall be made for the output medium’s white point (such as the colour of unprinted paper).
-        /// Thus, for example, a monitor’s white point, which is bluish compared to that of a printer’s paper,
-        /// would be reproduced with a blue cast. In-gamut colours shall be reproduced exactly;
+        /// Colours shall be represented solely with respect to the light source; no correction shall be
+        /// made for the output medium’s white point (such as the colour of unprinted paper).
+        /// Thus, for example, a monitor’s white point, which is bluish compared to that of a printer’s
+        /// paper, would be reproduced with a blue cast. In-gamut colours shall be reproduced exactly;
         /// out-of-gamut colours shall be mapped to the nearest value within the reproducible gamut
         ///
         /// - Note: This style of reproduction has the advantage of providing exact colour matches
         /// from one output medium to another.
-        /// It has the disadvantage of causing colours with Y values between the medium’s white point and 1.0
-        /// to be out of gamut.
-        ///  Logos and solid colours are typical cases requiring exact reproduction across different media.
+        /// It has the disadvantage of causing colours with Y values between the medium’s white point
+        /// and 1.0 to be out of gamut.
+        /// Logos and solid colours are typical cases requiring exact reproduction across different media.
         case absoluteColorimetric
         
         /// RelativeColorimetric
         ///
         /// Colours shall be represented with respect to the combination of the light source
         /// and the output medium’s white point (such as the colour of unprinted paper).
-        /// Thus, a monitor’s white point can be reproduced on a printer by simply leaving the paper unmarked,
-        /// ignoring colour differences between the two media. In-gamut colours shall be reproduced exactly;
-        /// out-of-gamut colours shall be mapped to the nearest value within the reproducible gamut.
+        /// Thus, a monitor’s white point can be reproduced on a printer by simply leaving the paper
+        /// unmarked, ignoring colour differences between the two media. In-gamut colours shall be
+        /// reproduced exactly; out-of-gamut colours shall be mapped to the nearest value within the
+        /// reproducible gamut.
         ///
-        /// - Note: This style of reproduction has the advantage of adapting for the varying white points of different output media.
+        /// - Note: This style of reproduction has the advantage of adapting for the varying white
+		/// points of different output media.
         /// It has the disadvantage of not providing exact colour matches from one medium to another.
         /// Vector graphics are a typical use case.
         case relativeColorimetric
@@ -141,14 +144,16 @@ extension GraphicsState {
         /// Colours shall be represented in a manner that preserves or emphasizes saturation.
         /// Reproduction of in-gamut colours may or may not be colorimetrically accurate.
         ///
-        /// - Note: Business graphics are a typical use case where saturation is the most important attribute of the colour.
+        /// - Note: Business graphics are a typical use case where saturation is the most important
+        /// attribute of the colour.
         case saturation
         
         /// Perceptual
         ///
         /// Colours shall be represented in a manner that provides a pleasing perceptual appearance.
         /// To preserve colour relationships,
-        /// both in-gamut and out-of-gamut colours shall be generally modified from their precise colorimetric values.
+        /// both in-gamut and out-of-gamut colours shall be generally modified from their precise
+        /// colorimetric values.
         ///
         /// - Note: Scanned images are a typical use case.
         case perceptual

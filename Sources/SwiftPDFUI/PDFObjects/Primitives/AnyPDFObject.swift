@@ -2,7 +2,9 @@
 struct AnyPDFObject: ExpressibleAsPDFString {
     private let wrappedValue: ExpressibleAsPDFString
     
-    init<WrappedValue>(_ object: WrappedValue) where WrappedValue: ExpressibleAsPDFString {
+    init<WrappedValue>(_ object: WrappedValue)
+	where WrappedValue: ExpressibleAsPDFString
+	{
         self.wrappedValue = object
     }
     

@@ -2,7 +2,8 @@
 ///
 /// Path construction operators define the geometry of a path.
 ///
-/// A path description is built up through the invocation of one or more path construction operators that add segments to it.
+/// A path description is built up through the invocation of one or more path construction operators
+/// that add segments to it.
 /// The path construction operators may be invoked in any sequence,
 /// but the first one invoked shall be `Operator.PathConstruction.move(x:y:)` or
 /// `Operator.PathConstruction.rectangle(x:y:width:height:)` to begin a new subpath.
@@ -46,7 +47,8 @@ enum PathConstruction {
     ///   - y2: Y-coordinate of the second control point.
     ///   - x3: X-coordinate of the curves's end and new current point.
     ///   - y3: Y-coordinate of the curves's end and new current point.
-    case cubic1(x1: Double, y1: Double, x2: Double, y2: Double, x3: Double, y3: Double)
+    case cubic1(x1: Double, y1: Double, x2: Double,
+				y2: Double, x3: Double, y3: Double)
     
     /// Append a cubic Bézier curve to the current path.
     ///
