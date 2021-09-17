@@ -1,36 +1,57 @@
-struct Font: ExpressibleAsPDFDictionary {
-	private static let type: Name = "Font"
+struct Font {
+	private static let type: Name = "font"
 	
-	var subtype: Name
+	private static let subtype: Name = "type1"
 	
-	var baseFont: Name
+	var baseFont: BaseFont
 	
-	var firstChar: Int
-	
-	var lastChar: Int
-	
-	var widths: IndirectReference<[Double]>
-	
-	var fontDescriptor: Null
-	
-	var encoding: Encoding
-	
-	var toUnicode: IndirectReference<Stream>?
-	
-	var dictionary: [Name : ExpressibleAsPDFString] {
-		["type" : Self.type,
-		 "subtype" : subtype,
-		 "firstChar" : firstChar,
-		 "lastChar" : lastChar,
-		 "widths" : widths,
-		 "fontDescriptor" : fontDescriptor,
-		 "encoding" : encoding.rawValue,
-		 "toUnicode" : toUnicode]
+	var encoding: Encoding?
+}
+
+extension Font {
+	enum BaseFont: Name {
+		case timesRoman = "Times-Roman"
+		case helvetica = "Helvetica"
+		case Courier = "Courier"
+		case symbol = "Symbol"
+		case timesBold = "Times-Bold"
+		case helveticaBold = "Helvetica-Bold"
+		case courierBold = "Courier-Bold"
+		case zapfDingbats = "ZapfDingbats"
+		case timesItalic = "Times-Italic"
+		case helveticaOblique = "Helvetica-Oblique"
+		case courierOblique = "Courier-Oblique"
+		case timesBoldItalic = "Times-BoldItalic"
+		case helveticaBoldOblique = "Helvetica-BoldOblique"
+		case courierBoldOblique = "Courier-BoldOblique"
 	}
 }
 
-enum Encoding: Name {
-	case macRomanEncoding
-	case macExpertEncoding
-	case winAnsiEncoding
+extension Font {
+	enum Encoding: Name {
+		case macRomanEncoding
+		case macExpertEncoding
+		case winAnsiEncoding
+	}
+}
+
+extension Font: ExpressibleAsPDFDictionary {
+	var pdfDictionary: [Name : ExpressibleAsPDFString] {
+		["type" : Self.type,
+		 "subtype" : Self.subtype,
+		 "baseFont" : baseFont,
+		 "encoding" : encoding]
+	}
+}
+
+extension Font.BaseFont: ExpressibleAsPDFString {
+	var pdfString: String {
+		self.rawValue.pdfString
+	}
+}
+
+extension Font.Encoding: ExpressibleAsPDFString {
+	var pdfString: String {
+		self.rawValue.pdfString
+	}
 }

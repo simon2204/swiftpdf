@@ -1,14 +1,14 @@
 import Foundation
 
-extension Array: ExpressibleAsPDFData where Element: ExpressibleAsPDFString {
+extension Array: ExpressibleAsPDFData where Element: ExpressibleAsPDFData {
     var pdfData: Data {
-        Data(pdfString.utf8)
+		"[" + lazy.map(\.pdfData).joined(seperator: .space) + "]"
     }
 }
 
 extension Array: ExpressibleAsPDFString where Element: ExpressibleAsPDFString {
     var pdfString: String {
-        "[" + lazy.map(\.pdfString).joined(separator: Whitespace.space.rawValue) + "]"
+		"[" + lazy.map(\.pdfString).joined(seperator: .space) + "]"
     }
 }
 
@@ -36,7 +36,9 @@ extension Array where Element == Data {
 		
 		return result
 	}
-	
+}
+
+extension Array where Element == Data {
 	func joined() -> Data {
 		let dataCount = self.reduce(0) { $0 + $1.count }
 		
@@ -47,5 +49,17 @@ extension Array where Element == Data {
 		}
 		
 		return result
+	}
+}
+
+extension Array where Element == Data {
+	func joined(seperator: Whitespace) -> Data {
+		joined(separator: Data(seperator.rawValue.utf8))
+	}
+}
+
+extension Array where Element == String {
+	func joined(seperator: Whitespace) -> String {
+		joined(separator: seperator.rawValue)
 	}
 }

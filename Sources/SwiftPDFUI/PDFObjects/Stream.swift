@@ -1,6 +1,8 @@
-struct Stream: ExpressibleAsPDFString {
+import Foundation
+
+struct Stream: ExpressibleAsPDFData {
     
-    var pdfString: String {
-        ""
-    }
+	var pdfData: Data {
+		Data()
+	}
 }

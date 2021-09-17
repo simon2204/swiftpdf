@@ -23,7 +23,7 @@ struct Resources {
 }
 
 extension Resources: ExpressibleAsPDFDictionary {
-    var dictionary: [Name : ExpressibleAsPDFString] {
+    var pdfDictionary: [Name : ExpressibleAsPDFString] {
         
         var dict = [Name : ExpressibleAsPDFString]()
         

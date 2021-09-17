@@ -1,4 +1,4 @@
-struct IndirectReference<Object>: ExpressibleAsPDFString where Object: ExpressibleAsPDFString {
+struct IndirectReference<Object>: ExpressibleAsPDFString {
 	let id: Int
 	
 	var pdfString: String {

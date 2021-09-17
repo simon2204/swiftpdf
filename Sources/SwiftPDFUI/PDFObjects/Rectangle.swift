@@ -3,7 +3,7 @@
 /// Rectangles are used to describe locations on a page and bounding boxes for a variety of objects.
 /// A rectangle shall be written as an array of four numbers giving the
 /// coordinates of a pair of diagonally opposite corners.
-struct Rectangle: PDFArray {
+struct Rectangle {
     
     /// Origin's x coordinate.
     var x: Double = 0
@@ -32,9 +32,11 @@ struct Rectangle: PDFArray {
     private var upperRightY: Double {
         return y + height
     }
-    
-    var array: [Double] {
-        [lowerLeftX, lowerLeftY,
-         upperRightX, upperRightY]
-    }
+}
+
+extension Rectangle: ExpressibleAsPDFArray {
+	var pdfArray: [Double] {
+		[lowerLeftX, lowerLeftY,
+		 upperRightX, upperRightY]
+	}
 }
