@@ -36,13 +36,41 @@ enum TextState {
     
     /// Set the text rendering mode.
     ///
-    /// Initial value: 0.
-    case render(Int)
+    /// Initial value: fill.
+    case render(RenderingMode)
     
     /// Set the text rise.
     ///
-    /// Initial value: 0.
+    /// Specifies the distance, in unscaled text space units,
+	/// to move the baseline up or down from its default location.
+	/// Positive values of text rise shall move the baseline up.
+	///
+	/// Initial value: 0.
     case rise(Double)
+}
+
+/// The text rendering mode.
+///
+/// The text rendering mode determines whether showing text shall cause glyph outlines
+/// to be stroked, filled, used as a clipping boundary, or some combination of the three.
+/// Stroking, filling, and clipping have the same effects for a text object as they do for a path object.
+enum RenderingMode: Int {
+	/// Fill text.
+	case fill
+	/// Stroke text.
+	case stroke
+	/// Fill, then stroke text.
+	case fillAndStroke
+	/// Neither fill nor stroke text (invisible).
+	case invisible
+	/// Fill text and add to path for clipping.
+	case fillAndClip
+	/// Stroke text and add to path for clipping.
+	case strokeAndClip
+	/// Fill, then stroke text and add to path for clipping.
+	case fillStrokeAndClip
+	/// Add text to path for clipping.
+	case clip
 }
 
 extension TextState: ExpressibleAsPDFString {
@@ -64,7 +92,7 @@ extension TextState: ExpressibleAsPDFString {
             return "\(fontResource) \(scaleFactor) Tf"
             
         case let .render(value):
-            return "\(value) Tr"
+			return "\(value.rawValue) Tr"
             
         case let .rise(value):
             return "\(value) Ts"

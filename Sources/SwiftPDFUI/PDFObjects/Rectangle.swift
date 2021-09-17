@@ -4,34 +4,13 @@
 /// A rectangle shall be written as an array of four numbers giving the
 /// coordinates of a pair of diagonally opposite corners.
 struct Rectangle {
+    var lowerLeftX: Double
     
-    /// Origin's x coordinate.
-    var x: Double = 0
+	var lowerLeftY: Double
     
-    /// Origin's y coordinate.
-    var y: Double = 0
+    var upperRightX: Double
     
-    /// Width value
-    let width: Double
-    
-    /// Height value
-    let height: Double
-    
-    private var lowerLeftX: Double {
-        return x
-    }
-    
-    private var lowerLeftY: Double {
-        return y
-    }
-    
-    private var upperRightX: Double {
-        return x + width
-    }
-    
-    private var upperRightY: Double {
-        return y + height
-    }
+    var upperRightY: Double
 }
 
 extension Rectangle: ExpressibleAsPDFArray {

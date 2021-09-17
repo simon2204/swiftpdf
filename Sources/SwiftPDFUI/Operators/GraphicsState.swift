@@ -185,13 +185,13 @@ extension GraphicsState: ExpressibleAsPDFString {
             return "\(miterLimit) M"
             
         case let .lineDashPattern(dash, phase):
-            return "\(dash) \(phase) d"
+			return "\(dash) \(phase) d"
             
         case let .intent(intent):
-            return "\(intent) ri"
+			return "\(intent.rawValue) ri"
             
         case let .flatness(flatness):
-            return "\(flatness) i"
+			return "\(flatness) i"
             
         case let .dictName(dictName):
             return "\(dictName) gs"
