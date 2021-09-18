@@ -1,6 +1,7 @@
 enum TextObject {
 	/// Begin a text object.
 	case begin
+    
 	/// End a text object.
 	case end
 }

@@ -2,6 +2,8 @@ enum GraphicsState {
     /// Save the current graphics state on the graphics state stack.
     case save
     
+    /// Restore the graphics state.
+    ///
     /// Restore the graphics state by removing the most recently saved state from
     /// the stack and making it the current state.
     case restore

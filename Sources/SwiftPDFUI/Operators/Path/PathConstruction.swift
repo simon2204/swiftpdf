@@ -8,7 +8,8 @@
 /// but the first one invoked shall be `Operator.PathConstruction.move(x:y:)` or
 /// `Operator.PathConstruction.rectangle(x:y:width:height:)` to begin a new subpath.
 /// The path definition may conclude with the application of a path-painting operator such as
-/// `Operator.PathPainting.stroke`, `Operator.PathPainting.fill`, or `Operator.PathPainting.closeFillAndStroke`;
+/// `Operator.PathPainting.stroke`, `Operator.PathPainting.fill`, or
+/// `Operator.PathPainting.closeFillAndStroke`;
 /// this operator may optionally be preceded by one of the clipping path operators
 /// `Operator.PathClipping.nonZeroWindingNumber` or
 /// `Operator.PathClipping.evenOdd`.
