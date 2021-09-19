@@ -1,6 +1,6 @@
 /// The leaves of the page tree are page objects,
 /// each of which is a dictionary specifying the attributes of a single page of the document.
-struct Page {
+final class Page {
     /// The type of PDF-object that this dictionary describes.
     private static let type: Name = "page"
     
@@ -26,6 +26,11 @@ struct Page {
     
     /// The number of degrees by which the page shall be rotated clockwise when displayed or printed.
     var rotate: Int?
+    
+    init(parent: IndirectReference<Catalog>, mediaBox: Rectangle) {
+        self.parent = parent
+        self.mediaBox = mediaBox
+    }
 }
 
 extension Page: ExpressibleAsPDFDictionary {

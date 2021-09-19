@@ -17,10 +17,6 @@ struct CrossReferenceTable {
     mutating func append(entry: Entry) {
         entries.append(entry)
     }
-	
-	mutating func appendEntry(withOffset offset: Int) {
-		entries.append(Entry(offset: offset))
-	}
 }
 
 extension CrossReferenceTable {

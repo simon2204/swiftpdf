@@ -1,4 +1,6 @@
-struct Null: ExpressibleAsPDFString {
+struct Null {}
+
+extension Null: ExpressibleAsPDFString {
     var pdfString: String {
         "null"
     }

@@ -3,28 +3,11 @@ import Foundation
 
 let desktop = URL(fileURLWithPath: "/Users/simon/Desktop/SwiftPDF.pdf")
 
-let rectangle = Rectangle(lowerLeftX: 0, lowerLeftY: 0, upperRightX: 700, upperRightY: 800)
+let document = Document()
 
-let catalog = Catalog()
+let page = document.makePage(mediaBox: Rectangle(lowerLeftX: 0, lowerLeftY: 0, upperRightX: 200, upperRightY: 600))
+let page2 = document.makePage(mediaBox: Rectangle(lowerLeftX: 0, lowerLeftY: 0, upperRightX: 400, upperRightY: 600))
 
-let indirectCatalog = IndirectObject(referencing: catalog)
+let documentData = document.create()
 
-let pages = Pages()
-
-let indirectPages = IndirectObject(referencing: pages)
-
-let page = Page(parent: indirectCatalog.reference, mediaBox: rectangle)
-
-let indirectPage = IndirectObject(referencing: page)
-
-indirectPages.object.kids = [indirectPage.reference]
-
-indirectCatalog.object.pages = indirectPages.reference
-
-var body = FileBody(catalog: indirectCatalog)
-
-body.appendObject(indirectPage)
-
-let document = PDFDocument(body: body)
-
-try document.create().write(to: desktop)
+try documentData.write(to: desktop)

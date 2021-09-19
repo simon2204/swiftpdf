@@ -16,7 +16,7 @@ extension String {
 
 extension String {
 	func hexEncodedString() -> String {
-		Data(utf8).map { String(format: "%02hhx", $0) }.joined()
+		Data(utf8).map { String(format: "%02hhX", $0) }.joined()
 	}
 }
 
