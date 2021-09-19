@@ -6,7 +6,7 @@ struct Name: ExpressibleAsPDFString {
     }
     
     var pdfString: String {
-        "/\(name.capitalized)"
+        "/\(name.capitalizingFirstLetter())"
     }
 }
 
@@ -17,10 +17,3 @@ extension Name: ExpressibleByStringLiteral {
 }
 
 extension Name: Hashable { }
-
-extension String.StringInterpolation {
-	/// Interpolates the given value’s textual representation into the string literal being created.
-    mutating func appendInterpolation(_ value: Name) {
-        appendInterpolation(value.pdfString)
-    }
-}

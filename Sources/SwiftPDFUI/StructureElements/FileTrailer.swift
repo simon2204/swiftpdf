@@ -15,7 +15,7 @@ struct FileTrailer: ExpressibleAsPDFString {
     /// Byte offset of last cross-reference section.
     let crossReferenceOffset: Int
     
-    var dictionary: Dictionary<Name, ExpressibleAsPDFString> {
+    private var dictionary: Dictionary<Name, ExpressibleAsPDFString> {
         ["Size": size,
          "Root": root,
          "ID" : id]

@@ -9,7 +9,7 @@ struct Stream: ExpressibleAsPDFData {
     
 	var pdfData: Data {
         "\(dict)"
-        + Whitespace.lineFeed.rawValue
+		+ Whitespace.lineFeed.rawValue
         + "stream"
         + Whitespace.lineFeed.rawValue
 		+ data
@@ -18,7 +18,7 @@ struct Stream: ExpressibleAsPDFData {
 	}
 }
 
-extension Stream {
+fileprivate extension Stream {
     struct StreamDictionary: ExpressibleAsPDFDictionary {
         var length: Int
         

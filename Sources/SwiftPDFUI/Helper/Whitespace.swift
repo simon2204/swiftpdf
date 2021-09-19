@@ -5,3 +5,9 @@ enum Whitespace: String {
     case crlf = "\r\n"
     case space = " "
 }
+
+extension Whitespace: ExpressibleAsPDFString {
+	var pdfString: String {
+		self.rawValue
+	}
+}

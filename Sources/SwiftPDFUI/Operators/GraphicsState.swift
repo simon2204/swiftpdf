@@ -178,10 +178,10 @@ extension GraphicsState: ExpressibleAsPDFString {
             return "\(lineWidth) w"
             
         case let .lineCap(lineCapStyle):
-            return "\(lineCapStyle.rawValue) J"
+            return "\(lineCapStyle) J"
             
         case let .lineJoin(lineJoinStyle):
-            return "\(lineJoinStyle.rawValue) j"
+            return "\(lineJoinStyle) j"
             
         case let .miterLimit(miterLimit):
             return "\(miterLimit) M"
@@ -190,7 +190,7 @@ extension GraphicsState: ExpressibleAsPDFString {
 			return "\(dash) \(phase) d"
             
         case let .intent(intent):
-			return "\(intent.rawValue) ri"
+			return "\(intent) ri"
             
         case let .flatness(flatness):
 			return "\(flatness) i"

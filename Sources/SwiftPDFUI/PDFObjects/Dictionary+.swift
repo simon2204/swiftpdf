@@ -10,14 +10,8 @@ extension Dictionary: ExpressibleAsPDFString where Key == Name, Value == Express
     var pdfString: String {
         "<<"
         + Whitespace.crlf
-        + lazy.map { $0.key.name + " " + $0.value.pdfString }.joined(separator: Whitespace.crlf.rawValue)
+        + lazy.map { "\($0.key) \($0.value)" }.joined(separator: Whitespace.crlf.rawValue)
         + Whitespace.crlf
         + ">>"
-    }
-}
-
-extension String.StringInterpolation {
-    mutating func appendInterpolation(_ value: [Name : ExpressibleAsPDFString]) {
-        appendInterpolation(value.pdfString)
     }
 }

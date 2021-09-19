@@ -1,3 +1,5 @@
+import Foundation
+
 extension String {
     static func += (lhs: inout String, rhs: Whitespace) {
         lhs += rhs.rawValue
@@ -12,15 +14,21 @@ extension String {
     }
 }
 
-extension Sequence where Element == String {
-    func joined(seperator: Whitespace) -> String {
-        joined(separator: seperator.rawValue)
+extension String {
+	func hexEncodedString() -> String {
+		Data(utf8).map { String(format: "%02hhx", $0) }.joined()
+	}
+}
+
+extension String.StringInterpolation {
+    mutating func appendInterpolation(_ value: ExpressibleAsPDFString) {
+        appendInterpolation(value.pdfString)
     }
 }
 
-//extension String.StringInterpolation {
-//	/// Interpolates the given value’s textual representation into the string literal being created.
-//	mutating func appendInterpolation<Value: ExpressibleAsPDFString>(_ value: Value) {
-//		appendInterpolation(value.pdfString)
-//	}
-//}
+extension String {
+    func capitalizingFirstLetter() -> String {
+        prefix(1).capitalized + dropFirst()
+    }
+}
+

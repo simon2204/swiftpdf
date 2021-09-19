@@ -1,6 +1,6 @@
 struct Color {
     var colorSpace: ColorSpace
-    var operation: Operation
+    var operation: InkOperation
 }
 
 extension Color {
@@ -33,7 +33,7 @@ extension Color {
 }
 
 extension Color {
-    enum Operation {
+    enum InkOperation {
         case stroke
         case fill
     }

@@ -1,19 +1,18 @@
 import Foundation
 
-struct IndirectObject<Object> {
+final class IndirectObject<Object> {
     /// Unique object identifier by which other objects can refer to.
-    private let objectNumber: Int
+    var objectNumber = 0
     
     /// The object which gets to be labeled as an `IndirectObject`.
-    private let object: Object
+    var object: Object
     
     /// The object may be referred to from elsewhere in the file by an indirect reference.
     var reference: IndirectReference<Object> {
-        IndirectReference(id: objectNumber)
+        IndirectReference(self)
     }
     
-    init(referencing object: Object, number: Int) {
-        self.objectNumber = number
+    init(referencing object: Object) {
         self.object = object
     }
 }
@@ -25,6 +24,7 @@ extension IndirectObject: ExpressibleAsPDFData where Object: ExpressibleAsPDFDat
 		+ object.pdfData
 		+ Whitespace.crlf.rawValue
 		+ "endobj"
+		+ Whitespace.lineFeed.rawValue
 	}
 }
 
@@ -35,5 +35,6 @@ extension IndirectObject: ExpressibleAsPDFString where Object: ExpressibleAsPDFS
 		+ object.pdfString
 		+ Whitespace.crlf
 		+ "endobj"
+		+ Whitespace.lineFeed
 	}
 }

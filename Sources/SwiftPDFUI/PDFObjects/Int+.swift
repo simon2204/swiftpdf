@@ -1,6 +1,6 @@
 extension Int: ExpressibleAsPDFString {
     var pdfString: String {
-        "\(self)"
+        String(self)
     }
 }
 
@@ -14,6 +14,6 @@ extension Int {
     /// - Parameter integerLength: Length of the `Int`-value after formatting.
     /// - Returns: `String`-value of the formatted value.
     func formatted(integerLength: Int) -> String {
-        self.formatted(.number.precision(.integerLength(integerLength)).grouping(.never))
+        String(format: "%0\(integerLength)d", self)
     }
 }

@@ -10,7 +10,7 @@ struct Pages {
     
     /// An array of indirect references to the immediate children of this node.
     /// The children shall only be page objects or other page tree nodes.
-    let kids: [IndirectReference<Page>]
+    var kids: [IndirectReference<Page>]!
     
     /// The number of leaf nodes (page objects) that are descendants of this node within the page tree.
     private var count: Int {

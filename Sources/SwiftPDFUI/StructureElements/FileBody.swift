@@ -1,12 +1,17 @@
 import Foundation
 
-struct FileBody: ExpressibleAsPDFString {
+struct FileBody {
+	var objects: [ExpressibleAsPDFData]
 	
-	mutating func appendObject<Object: ExpressibleAsPDFString>(_ indirectObject: IndirectObject<Object>) {
-		
+	var catalogReference: IndirectReference<Catalog>
+	
+	init(catalog: IndirectObject<Catalog>) {
+		self.objects = [catalog]
+		self.catalogReference = catalog.reference
 	}
 	
-	var pdfString: String {
-		""
+	mutating func appendObject<Object: ExpressibleAsPDFData>(_ indirectObject: IndirectObject<Object>) {
+		indirectObject.objectNumber = objects.count
+		self.objects.append(indirectObject)
 	}
 }

@@ -1,5 +1,5 @@
 extension Double: ExpressibleAsPDFString {
     var pdfString: String {
-        "\(self)"
+        String(self)
     }
 }
