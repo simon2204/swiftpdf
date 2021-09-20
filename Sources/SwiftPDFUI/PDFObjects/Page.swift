@@ -22,7 +22,7 @@ final class Page {
     
     /// A content stream that shall describe the contents of this page.
     /// If this entry is absent, the page shall be empty.
-    var contents: [IndirectReference<Stream>]?
+	var contents: [IndirectReference<AnyStream>] = []
     
     /// The number of degrees by which the page shall be rotated clockwise when displayed or printed.
     var rotate: Int?
@@ -47,7 +47,7 @@ extension Page: ExpressibleAsPDFDictionary {
             dict["cropBox"] = cropBox
         }
         
-        if let contents = contents {
+		if !contents.isEmpty {
             dict["contents"] = contents
         }
         

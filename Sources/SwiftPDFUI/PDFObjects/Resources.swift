@@ -1,25 +1,25 @@
 struct Resources {
     /// A dictionary that maps resource names to graphics state parameter dictionaries.
-    var extGState: [Name : ExpressibleAsPDFString]?
+	var extGState: [Name : ExpressibleAsPDFString] = [:]
     
     /// A dictionary that maps each resource name to either the name of a device-dependent colour space
     /// or an array describing a colour space.
-    var colorSpace: [Name : ExpressibleAsPDFString]?
+    var colorSpace: [Name : ExpressibleAsPDFString] = [:]
     
     /// A dictionary that maps resource names to pattern objects.
-    var pattern: [Name : ExpressibleAsPDFString]?
+    var pattern: [Name : ExpressibleAsPDFString] = [:]
     
     /// A dictionary that maps resource names to shading dictionaries.
-    var shading: [Name : ExpressibleAsPDFString]?
+    var shading: [Name : ExpressibleAsPDFString] = [:]
     
     /// A dictionary that maps resource names to external objects.
-    var xObject: [Name : ExpressibleAsPDFString]?
+    var xObject: [Name : ExpressibleAsPDFString] = [:]
     
     /// A dictionary that maps resource names to font dictionaries.
-    var font: [Name : ExpressibleAsPDFString]?
+    var font: [Name : ExpressibleAsPDFString] = [:]
     
     /// A dictionary that maps resource names to property list dictionaries for marked-content.
-    var properties: [Name : ExpressibleAsPDFString]?
+    var properties: [Name : ExpressibleAsPDFString] = [:]
 }
 
 extension Resources: ExpressibleAsPDFDictionary {
@@ -27,31 +27,31 @@ extension Resources: ExpressibleAsPDFDictionary {
         
         var dict = [Name : ExpressibleAsPDFString]()
         
-        if let extGState = extGState {
+		if !extGState.isEmpty {
             dict["extGState"] = extGState
         }
         
-        if let colorSpace = colorSpace {
+		if !colorSpace.isEmpty {
             dict["colorSpace"] = colorSpace
         }
         
-        if let pattern = pattern {
+		if !pattern.isEmpty {
             dict["pattern"] = pattern
         }
         
-        if let shading = shading {
+		if !shading.isEmpty {
             dict["shading"] = shading
         }
         
-        if let xObject = xObject {
+		if !xObject.isEmpty {
             dict["xObject"] = xObject
         }
         
-        if let font = font {
-            dict["font"] = font
+		if !font.isEmpty {
+			dict["font"] = font
         }
         
-        if let properties = properties {
+		if !properties.isEmpty {
             dict["properties"] = properties
         }
         

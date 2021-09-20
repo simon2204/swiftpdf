@@ -63,3 +63,9 @@ extension Array where Element == String {
 		joined(separator: seperator.rawValue)
 	}
 }
+
+extension Array where Element == ExpressibleAsPDFData {
+	func joined(seperator: Whitespace) -> Data {
+		self.lazy.map(\.pdfData).joined(separator: seperator.pdfData)
+	}
+}

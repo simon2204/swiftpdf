@@ -31,4 +31,3 @@ extension String {
         prefix(1).capitalized + dropFirst()
     }
 }
-

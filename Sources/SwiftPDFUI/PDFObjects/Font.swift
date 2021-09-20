@@ -12,7 +12,7 @@ extension Font {
 	enum BaseFont: Name {
 		case timesRoman = "Times-Roman"
 		case helvetica = "Helvetica"
-		case Courier = "Courier"
+		case courier = "Courier"
 		case symbol = "Symbol"
 		case timesBold = "Times-Bold"
 		case helveticaBold = "Helvetica-Bold"
@@ -34,6 +34,8 @@ extension Font {
 		case winAnsiEncoding
 	}
 }
+
+extension Font: Hashable {}
 
 extension Font: ExpressibleAsPDFDictionary {
 	var pdfDictionary: [Name : ExpressibleAsPDFString] {

@@ -3,8 +3,9 @@ import Foundation
 struct HexadecimalString {
     var value: String
 	
-	init(_ value: String) {
-		self.value = value.hexEncodedString()
+	init<S: StringProtocol>(_ value: S) {
+		let data = value.data(using: .macOSRoman, allowLossyConversion: true)
+		self.value = data?.hexEncodedString() ?? ""
 	}
     
     init(_ value: UUID) {

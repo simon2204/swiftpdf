@@ -1,29 +1,30 @@
 import Foundation
 
-struct Stream: ExpressibleAsPDFData {
-    var data: Data
+struct Stream {
+	private var contents: [ExpressibleAsPDFData] = []
+	
+	private var contentData: Data {
+		contents.lazy.map(\.pdfData).joined(separator: Whitespace.space.pdfData)
+	}
     
-    private var dict: StreamDictionary {
-        StreamDictionary(length: data.count)
-    }
-    
-	var pdfData: Data {
-        "\(dict)"
-		+ Whitespace.lineFeed.rawValue
-        + "stream"
-        + Whitespace.lineFeed.rawValue
-		+ data
-        + Whitespace.lineFeed.rawValue
-        + "endstream"
+	init() {}
+	
+	mutating func append(_ content: ExpressibleAsPDFData) {
+		self.contents.append(content)
 	}
 }
 
-fileprivate extension Stream {
-    struct StreamDictionary: ExpressibleAsPDFDictionary {
-        var length: Int
-        
-        var pdfDictionary: [Name : ExpressibleAsPDFString] {
-            ["length" : length]
-        }
-    }
+extension Stream: ExpressibleAsPDFData {
+	var pdfData: Data {
+		let data = contentData
+		let streamDict = StreamDictionary(length: data.count)
+		
+		return "\(streamDict)"
+		+ Whitespace.lineFeed.rawValue
+		+ "stream"
+		+ Whitespace.lineFeed.rawValue
+		+ data
+		+ Whitespace.lineFeed.rawValue
+		+ "endstream"
+	}
 }

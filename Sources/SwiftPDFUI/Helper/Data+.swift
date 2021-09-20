@@ -21,3 +21,12 @@ extension Data {
 		Data(lhs.utf8) + rhs
     }
 }
+
+
+extension Data {
+	func hexEncodedString() -> String {
+		self.map { String(format: "%02hhX", $0) }.joined()
+	}
+}
+
+

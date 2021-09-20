@@ -1,13 +1,13 @@
 import Foundation
 
-final class Document {
+public final class PDFDocument {
     private var bodyObjects: [ExpressibleAsPDFData] = []
     
     private let catalogReference: IndirectReference<Catalog>
     
     private let pages: Pages
     
-    init() {
+    public init() {
         let pages = Pages()
         let indirectPages = IndirectObject(referencing: pages)
         bodyObjects.append(indirectPages)
@@ -20,14 +20,7 @@ final class Document {
         self.pages = pages
     }
     
-    func makePage(mediaBox: Rectangle) -> Page {
-        let page = Page(parent: catalogReference, mediaBox: mediaBox)
-        let pageReference = createReference(for: page)
-        pages.kids.append(pageReference)
-        return page
-    }
-	
-	func create() -> Data {
+	public var dataRepresentation: Data {
 		var pdfData = FileHeader().pdfData
 		
 		var table = CrossReferenceTable()
@@ -55,8 +48,26 @@ final class Document {
 		
 		return pdfData
 	}
+	
+	public func appendPage(dimentions: PDFSize) -> PDFPage {
+		let rect = PDFRect(origin: .zero, size: dimentions)
+		let mediaBox = Rectangle(
+			lowerLeftX: rect.minX,
+			lowerLeftY: rect.minY,
+			upperRightX: rect.maxX,
+			upperRightY: rect.maxY)
+		let page = makePage(mediaBox: mediaBox)
+		return PDFPage(document: self, page: page)
+	}
+	
+	func makePage(mediaBox: Rectangle) -> Page {
+		let page = Page(parent: catalogReference, mediaBox: mediaBox)
+		let pageReference = createReference(for: page)
+		pages.kids.append(pageReference)
+		return page
+	}
     
-    private func createReference<Object: ExpressibleAsPDFData>(for object: Object) -> IndirectReference<Object> {
+    func createReference<Object: ExpressibleAsPDFData>(for object: Object) -> IndirectReference<Object> {
         let indirectObject = IndirectObject(referencing: object)
         bodyObjects.append(indirectObject)
         return indirectObject.reference

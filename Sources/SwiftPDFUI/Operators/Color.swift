@@ -1,10 +1,10 @@
-struct Color {
+struct Color: Equatable {
     var colorSpace: ColorSpace
     var operation: InkOperation
 }
 
 extension Color {
-    enum ColorSpace {
+	enum ColorSpace: Equatable {
         /// Controls the intensity of achromatic light,
         /// on a scale from black to white.
         ///

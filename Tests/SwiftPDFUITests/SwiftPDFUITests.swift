@@ -1,5 +1,5 @@
 import XCTest
-@testable import SwiftPDFUI
+import SwiftPDFUI
 
 final class SwiftPDFUITests: XCTestCase {
     func testExample() throws {
