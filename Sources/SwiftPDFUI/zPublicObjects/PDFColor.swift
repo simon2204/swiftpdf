@@ -1,17 +1,9 @@
 /// Darstellung einer Farbe.
 ///
-/// Farben können, zum Beispiel, auf ``PDFText`` und ``PDFPath`` angewendet werden.
-///
-/// ```swift
-/// let gefieder = Color(red: 25, green: 22, blue: 17) // Braun- bis grauschwarzes Gefieder.
-/// var text = Text("Der Mauersegler (Apus apus) ist eine Vogelart aus der Familie der Segler.")
-/// text.color = gefieder
-/// ```
-///
 /// Alle Farben, wie ``aliceBlue``, ``deepSkyBlue`` usw., wurden aus
 /// [RapidTables](https://www.rapidtables.com/web/color/RGB_Color.html) entnommen.
 public struct PDFColor {
-	var value: Color
+	let colorSpace: ColorSpace
     
     /// Erstellt eine neue Farbe, zusammengesetzt aus Rot, Grün, Blau.
     ///
@@ -30,7 +22,7 @@ public struct PDFColor {
 		)
     }
     
-    /// Erstellt eine neue Farbe, zusammengesetzt aus Rot, Grün, Blau und einer Deckkraft.
+    /// Erstellt eine neue Farbe, zusammengesetzt aus Rot, Grün und Blau.
     ///
     /// Ein standardmäßiger sRGB-Farbraum.
     /// Jede Farbkomponente - Rot, Grün und Blau - ist auf einen Bereich von 0 bis 1 festgelegt.
@@ -40,13 +32,21 @@ public struct PDFColor {
     ///   - green: Grüner Farbanteil.
     ///   - blue: Blauer Farbanteil.
 	public init(red: Double, green: Double, blue: Double) {
-		self.value = Color(
-			colorSpace: .deviceRGB(red, green, blue),
-			operation: Color.InkOperation.fill)
+		colorSpace = .deviceRGB(red, green, blue)
     }
 	
 	init(_ red: Int, _ green: Int, _ blue: Int) {
 		self.init(red: red, green: green, blue: blue)
+	}
+}
+
+extension PDFColor {
+	func fill() -> ExpressibleAsPDFString {
+		Color(colorSpace: colorSpace, operation: .fill)
+	}
+	
+	func stroke() -> ExpressibleAsPDFString {
+		Color(colorSpace: colorSpace, operation: .stroke)
 	}
 }
 

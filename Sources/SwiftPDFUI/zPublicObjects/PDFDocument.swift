@@ -6,7 +6,10 @@ public final class PDFDocument {
     private let catalogReference: IndirectReference<Catalog>
     
     private let pages: Pages
+	
+	private var pdfPages: [PDFPage] = []
     
+	/// Inilializes a new `PDFDocument`.
     public init() {
         let pages = Pages()
         let indirectPages = IndirectObject(referencing: pages)

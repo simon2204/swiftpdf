@@ -1,5 +1,3 @@
-/// Path construction operators.
-///
 /// Path construction operators define the geometry of a path.
 ///
 /// A path description is built up through the invocation of one or more path construction operators
@@ -11,7 +9,7 @@
 /// `Operator.PathPainting.stroke`, `Operator.PathPainting.fill`, or
 /// `Operator.PathPainting.closeFillAndStroke`;
 /// this operator may optionally be preceded by one of the clipping path operators
-/// `Operator.PathClipping.nonZeroWindingNumber` or
+/// `Operator.PathClipping.winding` or
 /// `Operator.PathClipping.evenOdd`.
 enum PathConstruction {
     /// Begin a new subpath by moving the current point to coordinates (x, y).
