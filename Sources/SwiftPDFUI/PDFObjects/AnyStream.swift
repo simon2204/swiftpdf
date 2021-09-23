@@ -1,7 +1,7 @@
 struct AnyStream: ExpressibleAsPDFStream {
 	private let wrapped: [ExpressibleAsPDFData]
 	
-	init<S: ExpressibleAsPDFStream>(_ stream: S) {
+	init(_ stream: ExpressibleAsPDFStream) {
 		self.wrapped = stream.pdfStream
 	}
 	

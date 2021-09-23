@@ -1,9 +1,9 @@
-struct Color: Equatable {
+struct ColorOperator: Equatable {
     var colorSpace: ColorSpace
     var operation: InkOperation
 }
 
-extension Color: ExpressibleAsPDFString {
+extension ColorOperator: ExpressibleAsPDFString {
     var pdfString: String {
         switch operation {
         case .stroke:

@@ -16,7 +16,8 @@ let package = Package(
         ),
         .executableTarget(
             name: "PDFUIMain",
-            dependencies: ["SwiftPDFUI"]),
+            dependencies: ["SwiftPDFUI"]
+		),
         .testTarget(
             name: "SwiftPDFUITests",
             dependencies: ["SwiftPDFUI"]),

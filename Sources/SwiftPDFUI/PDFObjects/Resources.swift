@@ -16,6 +16,8 @@ struct Resources {
     var xObject: [Name : ExpressibleAsPDFString] = [:]
     
     /// A dictionary that maps resource names to font dictionaries.
+	///
+	/// The value should be preferably of type `IndirectReference<Font>`.
     var font: [Name : ExpressibleAsPDFString] = [:]
     
     /// A dictionary that maps resource names to property list dictionaries for marked-content.

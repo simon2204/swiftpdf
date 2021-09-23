@@ -10,37 +10,17 @@ public struct PDFRect {
     /// A size that specifies the height and width of the rectangle.
     public var size: PDFSize
     
-    /// A point that specifies the coordinates of the rectangle’s center.
-    public var center: PDFPoint {
-        get {
-            PDFPoint(x: midX, y: midY)
-        }
-        set {
-            origin.x = newValue.x - width / 2
-            origin.y = newValue.y - height / 2
-        }
-    }
-    
     /// Creates a rectangle with the specified origin and size.
     public init(origin: PDFPoint, size: PDFSize) {
         self.origin = origin
         self.size = size
     }
-    
-    /// Creates a rectangle with the specified center and size.
-    public init(center: PDFPoint, size: PDFSize) {
-        self.origin = .zero
-        self.size = size
-        self.center = center
-    }
-}
-
-public extension PDFRect {
-    /// Creates a rectangle with coordinates and dimensions specified as `Double` values.
-    init(x: Double, y: Double, width: Double, height: Double) {
-        self.origin = PDFPoint(x: x, y: y)
-        self.size = PDFSize(width: width, height: height)
-    }
+	
+	/// Creates a rectangle with coordinates and dimensions specified as `Double` values.
+	public init(x: Double, y: Double, width: Double, height: Double) {
+		self.origin = PDFPoint(x: x, y: y)
+		self.size = PDFSize(width: width, height: height)
+	}
 }
 
 public extension PDFRect {

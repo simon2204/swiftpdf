@@ -6,6 +6,8 @@ public struct PDFSize {
         self.width = width
         self.height = height
     }
+	
+	public static let zero = PDFSize(width: 0, height: 0)
 }
 
 extension PDFSize: Equatable {}

@@ -1,3 +1,4 @@
+import Darwin
 public class PDFGraphicsContext {
 	private var operations: [ExpressibleAsPDFString] = []
 	
@@ -134,9 +135,11 @@ public class PDFGraphicsContext {
 	/// - Parameter rect: A rectangle that defines the area for the ellipse to fit in.
 	///
 	public func addEllipse(in rect: PDFRect) {
-		let kappa = 0.5522848
+		let kappa = 4 * (sqrt(2) - 1) / 3
+		
 		let horizontalControlPointOffset = rect.width / 2 * kappa
 		let verticalControlPointOffset = rect.height / 2 * kappa
+		
 		let maxX = rect.maxX
 		let maxY = rect.maxY
 		let midX = rect.midX
@@ -147,27 +150,26 @@ public class PDFGraphicsContext {
 		move(to: PDFPoint(x: minX, y: midY))
 		
 		addCurve(
-			to: PDFPoint(x: minX, y: midY - verticalControlPointOffset),
-			control1: PDFPoint(x: midX - horizontalControlPointOffset, y: minY),
-			control2: PDFPoint(x: midX, y: minY)
+			to: PDFPoint(x: midX, y: minY),
+			control1: PDFPoint(x: minX, y: midY - verticalControlPointOffset),
+			control2: PDFPoint(x: midX - horizontalControlPointOffset, y: minY)
+		)
+		addCurve(
+			to: PDFPoint(x: maxX, y: midY),
+			control1: PDFPoint(x: midX + horizontalControlPointOffset, y: minY),
+			control2: PDFPoint(x: maxX, y: midY - verticalControlPointOffset)
 		)
 		
 		addCurve(
-			to: PDFPoint(x: midX + horizontalControlPointOffset, y: minY),
-			control1: PDFPoint(x: maxX, y: midY - verticalControlPointOffset),
-			control2: PDFPoint(x: maxX, y: midY)
+			to: PDFPoint(x: midX, y: maxY),
+			control1: PDFPoint(x: maxX, y: midY + verticalControlPointOffset),
+			control2: PDFPoint(x: midX + horizontalControlPointOffset, y: maxY)
 		)
 		
 		addCurve(
-			to: PDFPoint(x: maxX, y: midY + verticalControlPointOffset),
-			control1: PDFPoint(x: midX + horizontalControlPointOffset, y: maxY),
-			control2: PDFPoint(x: midX, y: maxY)
-		)
-		
-		addCurve(
-			to: PDFPoint(x: midX - horizontalControlPointOffset, y: maxY),
-			control1: PDFPoint(x: minX, y: midY + verticalControlPointOffset),
-			control2: PDFPoint(x: minX, y: midY)
+			to: PDFPoint(x: minX, y: midY),
+			control1: PDFPoint(x: midX - horizontalControlPointOffset, y: maxY),
+			control2: PDFPoint(x: minX, y: midY + verticalControlPointOffset)
 		)
 	}
 	
@@ -261,7 +263,7 @@ public class PDFGraphicsContext {
 	private var currentFont: PDFFont = .helvetica
 	
 	/// Currently used font size in text space units.
-	private var currentFontSize: Double = 11
+	private var currentFontSize: Double = 0
 	
 	/// Sets the font in a graphics context.
 	///
@@ -296,6 +298,8 @@ public class PDFGraphicsContext {
 			fontResource: currentFont.resourceName,
 			scaleFactor: currentFontSize)
 		)
+		
+		//operations.append(PDFColor.black.fill())
 		
 		// Append text
 		operations.append(TextShowing.show(HexadecimalString(text)))

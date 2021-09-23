@@ -1,6 +1,5 @@
 import Foundation
 
-fileprivate var indirectObjectCount = 0
 
 struct IndirectObject<Object> where Object: ExpressibleAsPDFData {
     /// Unique object identifier by which other objects can refer to.
@@ -12,15 +11,11 @@ struct IndirectObject<Object> where Object: ExpressibleAsPDFData {
     /// The object may be referred to from elsewhere in the file by an indirect reference.
     private(set) var reference: IndirectReference<Object>
     
-    private init(referencing object: Object, objectNumber: Int) {
+    init(referencing object: Object, objectNumber: inout Int) {
         self.object = object
         self.objectNumber = objectNumber
         self.reference = IndirectReference(id: objectNumber)
-    }
-    
-    init(referencing object: Object) {
-        indirectObjectCount += 1
-        self.init(referencing: object, objectNumber: indirectObjectCount)
+		objectNumber += 1
     }
 }
 

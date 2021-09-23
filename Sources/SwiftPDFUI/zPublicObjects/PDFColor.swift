@@ -42,11 +42,11 @@ public struct PDFColor {
 
 extension PDFColor {
 	func fill() -> ExpressibleAsPDFString {
-		Color(colorSpace: colorSpace, operation: .fill)
+		ColorOperator(colorSpace: colorSpace, operation: .fill)
 	}
 	
 	func stroke() -> ExpressibleAsPDFString {
-		Color(colorSpace: colorSpace, operation: .stroke)
+		ColorOperator(colorSpace: colorSpace, operation: .stroke)
 	}
 }
 

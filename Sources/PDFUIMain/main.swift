@@ -1,22 +1,62 @@
 import SwiftPDFUI
 import Foundation
 
-let desktop = URL(fileURLWithPath: "/Users/simon/Desktop/SwiftPDF.pdf")
+let desktop = URL(fileURLWithPath: "/Users/simon/Desktop/SwiftPDFUI.pdf")
 
 let document = PDFDocument()
 
-let page = document.appendPage(dimentions: PDFSize(width: 200, height: 400))
-var text = PDFText("Hallo", font: PDFFont.helvetica)
-text.fontSize = 10
-text.color = .blue
-text.position = .init(x: 20, y: 20)
+class DinA4PDFPage: PDFPage {
+	override init() {
+		let width = 210 * 72 * 0.0393701
+		let height = 297 * 72 * 0.0393701
+		super.init(width: width, height: height)
+	}
+}
 
-page.addText(text)
+class BezierCurve: DinA4PDFPage {
+	override func draw(in context: PDFGraphicsContext) {
+		let topLeft = PDFPoint(x: 0, y: size.height)
+		let topRight = PDFPoint(x: size.width, y: size.height)
+		let bottomRight = PDFPoint(x: size.width, y: 0)
+		
+		context.saveGState()
+		
+		context.setStrokeColor(.green)
+		
+		context.move(to: .zero)
+		
+		context.addCurve(to: topRight, control1: topLeft, control2: bottomRight)
+		
+		context.strokePath()
+		
+		context.restoreGState()
+	}
+}
 
-let page2 = document.appendPage(dimentions: PDFSize(width: 400, height: 600))
-page2.rotateClockwise()
-page2.rotateClockwise()
+class Ellipse: DinA4PDFPage {
+	override func draw(in context: PDFGraphicsContext) {
+		context.saveGState()
+		
+		context.setFillColor(.aquaMarine)
+		
+		let rect = PDFRect(x: 0, y: 0, width: 200, height: 200)
+		
+		context.addEllipse(in: rect)
+		
+		context.fillPath()
+		
+		context.restoreGState()
+	}
+}
 
-let documentData = document.dataRepresentation
+let page = BezierCurve()
+let page2 = Ellipse()
+
+document.appendPage(page2)
+document.appendPage(page)
+
+let documentData = document.dataRepresentation()
+
+let endTime = DispatchTime.now()
 
 try documentData.write(to: desktop)

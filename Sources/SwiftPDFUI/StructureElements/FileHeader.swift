@@ -2,10 +2,17 @@ import Foundation
 
 /// A one-line header identifying the version of the PDF specification to which the PDF file conforms.
 struct FileHeader: ExpressibleAsPDFData {
+	
+	/// Major PDF-version number.
+	let major = 2
+	
+	/// Minor PDF-version number.
+	let minor = 0
+	
     var pdfData: Data {
         // The file header consist of “%PDF–1.n” or “%PDF–2.n” followed by a single EOL marker,
         // where ‘n’ is a single digit number between 0 (30h) and 9 (39h)
-        "%PDF-2.0"
+        "%PDF-\(major).\(minor)"
         + Whitespace.lineFeed.rawValue
         // If the PDF file contains binary data,
         // the header line is immediately followed by a comment line

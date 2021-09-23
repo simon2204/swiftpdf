@@ -7,7 +7,7 @@ public struct PDFPoint {
         self.y = y
     }
 	
-	static let zero = PDFPoint(x: 0, y: 0)
+	public static let zero = PDFPoint(x: 0, y: 0)
 }
 
 extension PDFPoint: Equatable {}

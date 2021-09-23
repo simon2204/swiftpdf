@@ -3,7 +3,7 @@ import Foundation
 struct TextStream {
 	let text: HexadecimalString
 	
-	let color: Color
+	let color: ColorOperator
 	
 	let position: PDFPoint
 	
