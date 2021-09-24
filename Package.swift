@@ -11,12 +11,20 @@ let package = Package(
             targets: ["SwiftPDFUI"]),
     ],
     targets: [
+		.target(
+			name: "SwiftPDF"
+		),
         .target(
-            name: "SwiftPDFUI"
+            name: "SwiftPDFUI",
+			dependencies: ["SwiftPDF"]
         ),
         .executableTarget(
-            name: "PDFUIMain",
-            dependencies: ["SwiftPDFUI"]
+            name: "SwiftPDFMain",
+            dependencies: ["SwiftPDF"]
+		),
+		.executableTarget(
+			name: "SwiftPDFUIMain",
+			dependencies: ["SwiftPDFUI"]
 		),
         .testTarget(
             name: "SwiftPDFUITests",

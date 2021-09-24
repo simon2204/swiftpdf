@@ -9,7 +9,7 @@ open class PDFPage {
 	open var layout = Layout.vertical
 	
 	/// Specifies whether the page should rotate by 180 degrees.
-	open var invertLayout = false
+	open var flippedLayout = false
 	
 	/// Initializes a ``PDFPage`` with a specific size.
 	///
@@ -60,5 +60,17 @@ open class PDFPage {
 	struct PageContent {
 		let stream: AnyStream
 		let fonts: Set<PDFFont>
+	}
+}
+
+extension PDFPage {
+	var rotation: Int {
+		switch layout {
+		case .vertical:
+			return flippedLayout ? 180 : 0
+			
+		case .horizontal:
+			return flippedLayout ? 90 : 270
+		}
 	}
 }

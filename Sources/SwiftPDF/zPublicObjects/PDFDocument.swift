@@ -61,6 +61,8 @@ public final class PDFDocument {
 		
 		page.contents.append(makeReference(for: pdfPageContent.stream))
 		
+		page.rotate = pdfPage.rotation
+		
 		for pdfFont in pdfPageContent.fonts {
 			addFont(pdfFont, to: page)
 		}

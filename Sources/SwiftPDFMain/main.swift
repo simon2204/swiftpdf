@@ -1,4 +1,4 @@
-import SwiftPDFUI
+import SwiftPDF
 import Foundation
 
 let desktop = URL(fileURLWithPath: "/Users/simon/Desktop/SwiftPDFUI.pdf")
@@ -39,24 +39,26 @@ class Ellipse: DinA4PDFPage {
 		
 		context.setFillColor(.aquaMarine)
 		
-		let rect = PDFRect(x: 0, y: 0, width: 200, height: 200)
+		let rect = PDFRect(x: 50, y: 50, width: 200, height: 700)
 		
 		context.addEllipse(in: rect)
 		
 		context.fillPath()
 		
 		context.restoreGState()
+		
+		context.setFontSize(20)
+		
+		context.showText("uhawguhaughg", at: .init(x: 60, y: 60))
 	}
 }
 
-let page = BezierCurve()
-let page2 = Ellipse()
+let page = Ellipse()
+let page2 = BezierCurve()
 
-document.appendPage(page2)
 document.appendPage(page)
+document.appendPage(page2)
 
 let documentData = document.dataRepresentation()
-
-let endTime = DispatchTime.now()
 
 try documentData.write(to: desktop)
