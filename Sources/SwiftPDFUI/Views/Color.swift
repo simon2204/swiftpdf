@@ -1,2 +1,1 @@
-public struct Color: View {
-}
+extension Color: View {}

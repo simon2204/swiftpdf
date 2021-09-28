@@ -1,8 +1,6 @@
 import SwiftPDF
 
-public typealias Font = PDFFont
-
-public struct Text {
+public struct Text: View {
 	var content: String
 	
 	var modifiers: [Modifier] = []

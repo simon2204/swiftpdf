@@ -1,12 +1,20 @@
 public struct ZStack<Content>: View where Content: View {
 	let alignment: Alignment
-	let content: Content
+	let content: () -> Content
 	
 	public init(
 		alignment: Alignment = .center,
-		@ViewBuilder content: () -> Content)
+        @ViewBuilder content: @escaping () -> Content)
 	{
 		self.alignment = alignment
-		self.content = content()
+        self.content = content
 	}
+}
+
+extension ZStack: PrimitiveView {
+    func buildTree(_ parent: Node) {
+        let node = Node(self)
+        parent.children.append(node)
+        self.content().unwrapped().buildTree(node)
+    }
 }

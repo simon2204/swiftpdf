@@ -53,11 +53,44 @@ class Ellipse: DinA4PDFPage {
 	}
 }
 
+class Triangle: DinA4PDFPage {
+	
+	override func draw(in context: PDFGraphicsContext) {
+		
+		
+		context.setFillColor(.gold)
+		context.setStrokeColor(.blue)
+		
+		context.move(to: .init(x: 150, y: 150))
+		
+		context.addLine(to: .init(x: 50, y: 50))
+		
+		context.addLine(to: .init(x: 30, y: 10))
+		
+		context.closePath()
+		
+		context.fillPath()
+		
+		
+		context.move(to: .init(x: 150, y: 150))
+		
+		context.addLine(to: .init(x: 50, y: 50))
+		
+		context.addLine(to: .init(x: 30, y: 10))
+		
+		context.closePath()
+		
+		context.strokePath()
+	}
+	
+}
+
 let page = Ellipse()
 let page2 = BezierCurve()
 
 document.appendPage(page)
 document.appendPage(page2)
+document.appendPage(Triangle())
 
 let documentData = document.dataRepresentation()
 
