@@ -1,7 +1,11 @@
 import SwiftPDF
 import Foundation
 
+#if os(Linux)
+let desktop = URL(fileURLWithPath: "/home/simon/Schreibtisch/SwiftPDFUI.pdf")
+#else
 let desktop = URL(fileURLWithPath: "/Users/simon/Desktop/SwiftPDFUI.pdf")
+#endif
 
 let document = PDFDocument()
 
