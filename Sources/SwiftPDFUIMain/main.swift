@@ -3,7 +3,7 @@ import SwiftPDFUI
 struct SwiftUITest: View {
 	var body: some View {
 		HStack {
-			Spacer()
+			AnyView(Spacer())
 			Spacer()
 		}
 	}

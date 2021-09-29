@@ -1,4 +1,4 @@
-struct OptionalDrawable: Drawable {
+final class OptionalDrawable: Drawable, NodeProtocol {
 	
 	var origin: Point = .zero
 	
@@ -11,6 +11,8 @@ struct OptionalDrawable: Drawable {
 	func getHeightForProposedHeight(_ height: Double) -> Double {
 		height
 	}
+    
+    var children: [NodeProtocol]?
 }
 
 extension OptionalDrawable: CustomStringConvertible {}

@@ -2,17 +2,10 @@ import SwiftPDF
 
 public final class SwiftUIPDFPage: PDFPage {
     
-	private let tree: Tree
-	
-	private var rootView: Node {
-		tree.root
-	}
+	private let rootDrawable = RootDrawable()
     
 	public init<Content>(rootView: Content) where Content: View {
-		let drawable = RootDrawable()
-		let node = Node(drawable)
-		rootView.unwrapped().buildTree(node)
-		self.tree = Tree(root: node)
+		rootView.unwrapped().buildTree(rootDrawable)
         super.init()
     }
     
@@ -23,6 +16,6 @@ public final class SwiftUIPDFPage: PDFPage {
 
 extension SwiftUIPDFPage: CustomStringConvertible {
 	public var description: String {
-		tree.description
+        rootDrawable.description
 	}
 }

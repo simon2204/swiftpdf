@@ -1,14 +1,13 @@
 extension Optional: View {}
 
 extension Optional: PrimitiveView where Wrapped: View {
-	func buildTree(_ parent: Node) {
+	func buildTree(_ parent: NodeProtocol) {
 		let drawable = OptionalDrawable()
-		let node = Node(drawable)
-		parent.children.append(node)
+		parent.append(drawable)
 		
 		if case let .some(view) = self {
 			let primitive = view.unwrapped()
-			primitive.buildTree(node)
+			primitive.buildTree(drawable)
 		}
 	}
 }

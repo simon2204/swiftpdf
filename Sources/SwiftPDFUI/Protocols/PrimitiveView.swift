@@ -1,3 +1,3 @@
 protocol PrimitiveView {
-    func buildTree(_ parent: Node)
+    func buildTree(_ parent: NodeProtocol)
 }

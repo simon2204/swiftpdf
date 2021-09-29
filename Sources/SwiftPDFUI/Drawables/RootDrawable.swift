@@ -1,4 +1,4 @@
-struct RootDrawable: Drawable {
+final class RootDrawable: Drawable, NodeProtocol {
 	
 	var origin: Point = .zero
 	
@@ -11,6 +11,8 @@ struct RootDrawable: Drawable {
 	func getHeightForProposedHeight(_ height: Double) -> Double {
 		height
 	}
+    
+    var children: [NodeProtocol]?
 }
 
 extension RootDrawable: CustomStringConvertible {}
