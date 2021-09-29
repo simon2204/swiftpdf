@@ -13,7 +13,8 @@ public struct ZStack<Content>: View where Content: View {
 
 extension ZStack: PrimitiveView {
     func buildTree(_ parent: Node) {
-        let node = Node(self)
+		let drawable = ZStackDrawable(alignment: alignment)
+        let node = Node(drawable)
         parent.children.append(node)
         self.content().unwrapped().buildTree(node)
     }

@@ -9,15 +9,26 @@ public struct TupleView<T>: View {
 
 extension TupleView: PrimitiveView {
     func buildTree(_ parent: Node) {
-        let children = Mirror(reflecting: value).children
+		let drawable = TupleDrawable()
+		
+		let node = Node(drawable)
+		
+		parent.children.append(node)
+		
+		let reflection = Mirror(reflecting: value)
+		
+        let descendents = reflection.children
         
-        let childNodes = children.lazy.map { child in
-            Node((child.value as! View).unwrapped()) // Impossible cast
+		let childViews = descendents.lazy.compactMap { descendent in
+            descendent.value as? View // Impossible cast, yet it's working.
         }
-        
-        childNodes.forEach {
-            parent.children.append($0)
-            parent.content.buildTree($0)
+		
+		let childPrimitives = childViews.map { childView in
+			childView.unwrapped()
+		}
+		
+		childPrimitives.forEach { childPrimitive in
+			childPrimitive.buildTree(node)
         }
     }
 }

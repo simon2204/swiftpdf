@@ -1,8 +1,14 @@
 import SwiftPDFUI
 
-let test = HStack {
-    Spacer()
-    Spacer()
+struct SwiftUITest: View {
+	var body: some View {
+		HStack {
+			Spacer()
+			Spacer()
+		}
+	}
 }
 
-print(test)
+let page = SwiftUIPDFPage(rootView: SwiftUITest())
+
+print(page)

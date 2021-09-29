@@ -1,15 +1,28 @@
 import SwiftPDF
 
-final class SwiftUIPDFPage<Content: View>: PDFPage {
+public final class SwiftUIPDFPage: PDFPage {
     
-    private var rootView: Content
+	private let tree: Tree
+	
+	private var rootView: Node {
+		tree.root
+	}
     
-    public init(rootView: Content) {
-        self.rootView = rootView
+	public init<Content>(rootView: Content) where Content: View {
+		let drawable = RootDrawable()
+		let node = Node(drawable)
+		rootView.unwrapped().buildTree(node)
+		self.tree = Tree(root: node)
         super.init()
     }
     
-    override func draw(in context: PDFGraphicsContext) {
+	public override func draw(in context: PDFGraphicsContext) {
         
     }
+}
+
+extension SwiftUIPDFPage: CustomStringConvertible {
+	public var description: String {
+		tree.description
+	}
 }

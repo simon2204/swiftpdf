@@ -1,7 +1,7 @@
 public struct HStack<Content>: View where Content: View {
     let alignment: VerticalAlignment
 	let spacing: Double?
-    let content: Content
+    let content: () -> Content
     
     public init(
 		alignment: VerticalAlignment = .center,
@@ -10,14 +10,15 @@ public struct HStack<Content>: View where Content: View {
 	{
 		self.alignment = alignment
 		self.spacing = spacing
-        self.content = content()
+        self.content = content
     }
 }
 
 extension HStack: PrimitiveView {
     func buildTree(_ parent: Node) {
-//        let node = Node(self)
-//        parent.children.append(node)
-//        self.content().unwrapped().buildTree(node)
+		let drawable = HStackDrawable(alignment: alignment, spacing: spacing)
+        let node = Node(drawable)
+        parent.children.append(node)
+        self.content().unwrapped().buildTree(node)
     }
 }
