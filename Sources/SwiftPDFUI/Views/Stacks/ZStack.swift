@@ -11,10 +11,10 @@ public struct ZStack<Content>: View where Content: View {
 	}
 }
 
-extension ZStack: PrimitiveView {
-    func buildTree(_ parent: NodeProtocol) {
-		let drawable = ZStackDrawable(alignment: alignment)
-        parent.append(drawable)
-        self.content().unwrapped().buildTree(drawable)
-    }
-}
+//extension ZStack: PrimitiveView {
+//    func buildTree(_ parent: JustifiyableNode) {
+//		let drawable = ZStackDrawable(alignment: alignment)
+//        parent.append(drawable)
+//        self.content().unwrapped().buildTree(drawable)
+//    }
+//}

@@ -10,8 +10,8 @@ public struct Spacer: View {
 }
 
 extension Spacer: PrimitiveView {
-	func buildTree(_ parent: NodeProtocol) {
+	func buildTree(_ parent: JustifiableNode) {
 		let drawable = SpacerDrawable(minLength: minLength)
-		parent.append(drawable)
+        parent.add(child: drawable)
 	}
 }

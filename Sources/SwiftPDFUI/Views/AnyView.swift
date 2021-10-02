@@ -8,15 +8,13 @@ public struct AnyView: View {
 }
 
 extension AnyView: PrimitiveView {
-    func buildTree(_ parent: NodeProtocol) {
-        let drawable = AnyDrawable()
-        parent.append(drawable)
-        
+    func buildTree(_ parent: JustifiableNode) {
+	
         let view = transform(storage) { storage in
             storage as? View
         }
         
-        view.unwrapped().buildTree(drawable)
+        view.unwrapped().buildTree(parent)
     }
     
     private func transform<T, U>(_ input: T, function: (T) -> U) -> U {

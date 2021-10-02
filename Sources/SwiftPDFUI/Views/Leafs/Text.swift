@@ -48,9 +48,9 @@ public extension Text {
 	}
 }
 
-extension Text: PrimitiveView {
-	func buildTree(_ parent: NodeProtocol) {
-		let drawable = TextDrawable(content: content, modifiers: modifiers)
-		parent.append(drawable)
-	}
-}
+//extension Text: PrimitiveView {
+//	func buildTree(_ parent: JustifiyableNode) {
+//		let drawable = TextDrawable(content: content, modifiers: modifiers)
+//		parent.append(drawable)
+//	}
+//}

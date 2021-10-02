@@ -1,14 +1,15 @@
 import SwiftPDFUI
+import SwiftPDF
+import Foundation
 
-struct SwiftUITest: View {
-	var body: some View {
-		HStack {
-			AnyView(Spacer())
-			Spacer()
-		}
-	}
-}
+let page = Page(rootView: SwiftUITest())
 
-let page = SwiftUIPDFPage(rootView: SwiftUITest())
+let document = PDFDocument()
 
-print(page)
+document.appendPage(page)
+
+let desktopURL = URL(fileURLWithPath: "/Users/Simon/Desktop/SwiftBeta.pdf")
+
+let data = document.dataRepresentation()
+
+try data.write(to: desktopURL)
