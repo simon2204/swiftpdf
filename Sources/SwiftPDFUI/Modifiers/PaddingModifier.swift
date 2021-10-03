@@ -1,5 +1,5 @@
 public struct PaddingModifier: ViewModifier {
-	let length: Double
+	let length: Double?
 	
 	public func body(content: Content) -> some View {
 		content
@@ -15,7 +15,7 @@ extension PaddingModifier: PrimitiveModifier {
 }
 
 public extension View {
-	func padding(_ length: Double) -> ModifiedContent<Self, PaddingModifier> {
+	func padding(_ length: Double? = nil) -> ModifiedContent<Self, PaddingModifier> {
 		modifier(PaddingModifier(length: length))
 	}
 }

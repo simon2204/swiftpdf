@@ -9,23 +9,23 @@ final class FrameNode: JustifiableNode {
 		self.alignment = alignment
 	}
 	
-	override func justifyWidth(proposedWidth: Double, proposedHeight: Double) -> Double {
-		size.width = width ?? proposedWidth
-		
-		children?.forEach { child in
-			child.justifyHeight(proposedWidth: size.width, proposedHeight: proposedHeight)
-		}
-		
-		return size.width
+	override func getBoundary() -> NodeSizeBoundary {
+		NodeSizeBoundary(minWidth: width, minHeight: height, maxWidth: width, maxHeight: height)
 	}
 	
-	override func justifyHeight(proposedWidth: Double, proposedHeight: Double) -> Double {
-		size.height = height ?? proposedHeight
+	override func justifyWidth(proposedWidth: Double, proposedHeight: Double) {
+		size.width = self.width ?? proposedWidth
 		
-		children?.forEach { child in
+		children.forEach { child in
+			child.justifyWidth(proposedWidth: size.width, proposedHeight: proposedHeight)
+		}
+	}
+	
+	override func justifyHeight(proposedWidth: Double, proposedHeight: Double) {
+		size.height = self.height ?? proposedHeight
+		
+		children.forEach { child in
 			child.justifyHeight(proposedWidth: proposedWidth, proposedHeight: size.height)
 		}
-		
-		return size.width
 	}
 }

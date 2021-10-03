@@ -16,7 +16,10 @@ public final class Page: PDFPage {
     }
     
 	public override func draw(in context: PDFGraphicsContext) {
+		_ = rootDrawable.getBoundary()
 		rootDrawable.layoutSubViews()
+		rootDrawable.nodeWillDrawSelf()
         rootDrawable.draw(in: context)
+		rootDrawable.nodeDidDrawSelf()
     }
 }

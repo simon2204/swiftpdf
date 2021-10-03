@@ -11,3 +11,9 @@ public struct PDFSize {
 }
 
 extension PDFSize: Equatable {}
+
+extension PDFSize: Comparable {
+	public static func < (lhs: PDFSize, rhs: PDFSize) -> Bool {
+		(lhs.width * lhs.height).magnitude < (rhs.width * rhs.height).magnitude
+	}
+}

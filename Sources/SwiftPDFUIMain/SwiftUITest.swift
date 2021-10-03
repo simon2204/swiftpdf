@@ -2,27 +2,25 @@ import SwiftPDFUI
 
 struct SwiftUITest: View {
 	
-	let someColors: [Color] = [.greenYellow, .indigo, .tomato]
-	
+	let someColor = [Color.yellow, Color.yellowGreen, Color.crimson]
+
 	var body: some View {
 		HStack {
-			Color.blanchedAlmond
+			
+			Color.yellow.frame(width: 100)
+			Color.yellow.frame(width: 100)
 			
 			HStack {
-				Color.aquaMarine
-				Color.red
+				Color.yellow.frame(width: 100)
+				Color.green.frame(width: 100)
+				Color.green.frame(width: 100)
+				
+				HStack {
+					Color.yellow.frame(width: 100)
+					Color.green.frame(width: 100)
+					Color.green.frame(width: 100)
+				}
 			}
-			
-			ForEach(someColors) { color in
-				color.padding(15)
-			}
-			
-			HStack(spacing: 5) {
-				Color.gold
-				Color.goldenRod
-			}
-			.padding(25)
 		}
-		.padding(20)
 	}
 }
