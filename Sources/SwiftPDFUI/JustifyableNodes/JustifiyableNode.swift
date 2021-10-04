@@ -31,9 +31,7 @@ class JustifiableNode {
     
     private(set) weak var parent: JustifiableNode?
     
-    private(set) var children: [JustifiableNode] = []
-	
-	var boundary = NodeSizeBoundary()
+    var children: [JustifiableNode] = []
 	
 	// MARK: - Alter Subnodes
 	
@@ -73,13 +71,22 @@ class JustifiableNode {
         }
     }
 	
-	// MARK: -
+	// MARK: - Node's Boundary
 	
-	func getBoundary() -> NodeSizeBoundary {
+	var minWidth: Double = .zero
+	var minHeight: Double = .zero
+	var maxWidth: Double = .zero
+	var maxHeight: Double = .zero
+	
+	func getBoundary() -> (minW: Double, minH: Double, maxW: Double, maxH: Double) {
 		for child in children {
-			boundary += child.getBoundary()
+			let boundary = child.getBoundary()
+			self.minWidth += boundary.minW
+			self.minHeight += boundary.minH
+			self.maxWidth += boundary.maxW
+			self.maxHeight += boundary.maxH
 		}
-		return boundary
+		return (minWidth, minHeight, maxWidth, maxHeight)
 	}
 	
 	// MARK: - Justify Node
@@ -148,24 +155,5 @@ class JustifiableNode {
 		children.forEach { child in
 			child.nodeDidDrawSelf()
 		}
-	}
-}
-
-struct NodeSizeBoundary {
-	var minWidth: Double?
-	var minHeight: Double?
-	var maxWidth: Double?
-	var maxHeight: Double?
-	
-	static func + (lhs: NodeSizeBoundary, rhs: NodeSizeBoundary) -> NodeSizeBoundary {
-		NodeSizeBoundary(
-			minWidth: lhs.minWidth + rhs.minWidth,
-			minHeight: lhs.minHeight + rhs.minHeight,
-			maxWidth: lhs.maxWidth + rhs.maxWidth,
-			maxHeight: lhs.maxHeight + rhs.maxHeight)
-	}
-	
-	static func += (lhs: inout NodeSizeBoundary, rhs: NodeSizeBoundary) {
-		lhs = lhs + rhs
 	}
 }

@@ -9,17 +9,16 @@ final class HStackDrawable: JustifiableNode {
         self.spacing = spacing
     }
     
-    var spacingRequirement: Double {
-        spacing ?? Default.spacing
-    }
+    lazy var spacingRequirement = spacing ?? Default.spacing
+	
+	lazy var subDrawableCount = Double(children.count)
+	
+	lazy var totalSpacing: Double = {
+		let spacingCount = subDrawableCount - 1
+		return  spacingCount * spacingRequirement
+	}()
     
     override func justifyWidth(proposedWidth: Double, proposedHeight: Double) {
-		
-		var subDrawableCount = Double(children.count)
-		
-		let spacingCount = subDrawableCount - 1
-		
-		let totalSpacing = spacingCount * spacingRequirement
 		
 		// Remaining width after subtracing the total amount of spacing.
         var remainingWidth = proposedWidth - totalSpacing
@@ -28,19 +27,12 @@ final class HStackDrawable: JustifiableNode {
 			remainingWidth / subDrawableCount
 		}
 		
-		var children = [JustifiableNode]()
-		children.reserveCapacity(self.children.count)
+		var children = self.children
 		
-		children += self.children.lazy.filter { $0.boundary.minWidth != nil && $0.boundary.maxWidth != nil }
-		children += self.children.lazy.filter { $0.boundary.maxWidth ?? .infinity < childWidth && $0.boundary.minWidth == nil }
-		children += self.children.lazy.filter { $0.boundary.maxWidth ?? .infinity > childWidth && $0.boundary.minWidth == nil }
-		
-		assert(
-			children.count == self.children.count,
-			"Filtered children of count \(children.count) does not equal \(self.children.count)"
-		)
-		
-		children.forEach { child in
+		let pivot = children.partition(by: { $0.minWidth > 0 })
+		_ = children[..<pivot].partition(by: { $0.maxWidth < childWidth })
+		 
+		children.reversed().forEach { child in
 			child.justifyWidth(
 				proposedWidth: childWidth,
 				proposedHeight: proposedHeight)
@@ -53,7 +45,6 @@ final class HStackDrawable: JustifiableNode {
     
     override func justifyHeight(proposedWidth: Double, proposedHeight: Double) {
         var maxHeight: Double = 0
-        
 		children.forEach { child in
             child.justifyHeight(
                 proposedWidth: proposedWidth,
@@ -61,17 +52,24 @@ final class HStackDrawable: JustifiableNode {
             )
 			maxHeight = max(maxHeight, child.size.height)
         }
-		
 		size.height = maxHeight
     }
     
     override func justify(x: Double) {
 		self.origin.x = x
 		var xOffSet = x
-		
 		children.forEach { child in
             child.justify(x: xOffSet)
 			xOffSet += child.size.width + spacingRequirement
         }
     }
+	
+	override func getBoundary() -> (minW: Double, minH: Double, maxW: Double, maxH: Double) {
+		var newBoundary = super.getBoundary()
+		newBoundary.minW += totalSpacing
+		newBoundary.maxW += totalSpacing
+		minWidth = newBoundary.minW
+		maxWidth = newBoundary.maxW
+		return newBoundary
+	}
 }

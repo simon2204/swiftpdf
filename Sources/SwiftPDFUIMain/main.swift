@@ -2,7 +2,7 @@ import SwiftPDFUI
 import SwiftPDF
 import Foundation
 
-let page = Page(rootView: SwiftUITest())
+let page = Page(rootView: ContentView())
 
 let document = PDFDocument()
 

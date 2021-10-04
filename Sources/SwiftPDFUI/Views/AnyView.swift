@@ -9,11 +9,9 @@ public struct AnyView: View {
 
 extension AnyView: PrimitiveView {
     func buildTree(_ parent: JustifiableNode) {
-	
         let view = transform(storage) { storage in
-            storage as? View
+            storage as! View
         }
-        
         view.unwrapped().buildTree(parent)
     }
     

@@ -9,13 +9,17 @@ final class FrameNode: JustifiableNode {
 		self.alignment = alignment
 	}
 	
-	override func getBoundary() -> NodeSizeBoundary {
-		NodeSizeBoundary(minWidth: width, minHeight: height, maxWidth: width, maxHeight: height)
+	override func getBoundary() -> (minW: Double, minH: Double, maxW: Double, maxH: Double) {
+		let boundary = super.getBoundary()
+		minWidth = width ?? boundary.minW
+		minHeight = height ?? boundary.minH
+		maxWidth = width ?? boundary.maxW
+		maxHeight = height ?? boundary.maxH
+		return (minWidth, minHeight, maxWidth, maxHeight)
 	}
 	
 	override func justifyWidth(proposedWidth: Double, proposedHeight: Double) {
 		size.width = self.width ?? proposedWidth
-		
 		children.forEach { child in
 			child.justifyWidth(proposedWidth: size.width, proposedHeight: proposedHeight)
 		}
@@ -23,7 +27,6 @@ final class FrameNode: JustifiableNode {
 	
 	override func justifyHeight(proposedWidth: Double, proposedHeight: Double) {
 		size.height = self.height ?? proposedHeight
-		
 		children.forEach { child in
 			child.justifyHeight(proposedWidth: proposedWidth, proposedHeight: size.height)
 		}
