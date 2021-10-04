@@ -8,6 +8,14 @@ final class ColorDrawable: JustifiableNode {
         self.color = color
     }
 	
+	override func justifyWidth(proposedWidth: Double, proposedHeight: Double) {
+		self.size.width = proposedWidth
+	}
+	
+	override func justifyHeight(proposedWidth: Double, proposedHeight: Double) {
+		self.size.height = proposedHeight
+	}
+	
 	override func getBoundary() -> (minW: Double, minH: Double, maxW: Double, maxH: Double) {
 		maxWidth = .infinity
 		maxHeight = .infinity

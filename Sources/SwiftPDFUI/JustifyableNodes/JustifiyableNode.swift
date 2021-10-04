@@ -92,16 +92,16 @@ class JustifiableNode {
 	// MARK: - Justify Node
 	
 	func justifyWidth(proposedWidth: Double, proposedHeight: Double) {
-		size.width = proposedWidth
 		children.forEach { child in
 			child.justifyWidth(proposedWidth: proposedWidth, proposedHeight: proposedHeight)
+			width += child.width
 		}
 	}
 	
 	func justifyHeight(proposedWidth: Double, proposedHeight: Double) {
-		size.height = proposedHeight
 		children.forEach { child in
 			child.justifyHeight(proposedWidth: proposedWidth, proposedHeight: proposedHeight)
+			height += child.height
 		}
 	}
 

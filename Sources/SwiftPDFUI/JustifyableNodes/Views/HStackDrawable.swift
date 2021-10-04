@@ -64,6 +64,41 @@ final class HStackDrawable: JustifiableNode {
         }
     }
 	
+	override func justify(y: Double) {
+		self.origin.y = y
+		
+		switch alignment {
+		case .top:
+			alignChildrenAtTop()
+		case .center:
+			alignChildrenAtCenter()
+		case .bottom:
+			alignChildrenAtBottom()
+		default:
+			alignChildrenAtCenter()
+		}
+	}
+	
+	func alignChildrenAtTop() {
+		children.forEach { child in
+			let y = self.size.height - child.size.height
+			child.justify(y: y)
+		}
+	}
+	
+	func alignChildrenAtCenter() {
+		children.forEach { child in
+			let y = (self.size.height - child.size.height) / 2
+			child.justify(y: y + self.origin.y)
+		}
+	}
+	
+	func alignChildrenAtBottom() {
+		children.forEach { child in
+			child.justify(y: self.origin.y)
+		}
+	}
+	
 	override func getBoundary() -> (minW: Double, minH: Double, maxW: Double, maxH: Double) {
 		var newBoundary = super.getBoundary()
 		newBoundary.minW += totalSpacing
