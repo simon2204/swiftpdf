@@ -40,7 +40,7 @@ class JustifiableNode {
         children.append(child)
     }
 	
-	func replace(node: JustifiableNode, with nodes: [JustifiableNode]) {
+	func replace(_ node: JustifiableNode, with nodes: [JustifiableNode]) {
 		
 		let index = children.firstIndex(where: { child in
 			child === node
@@ -78,9 +78,9 @@ class JustifiableNode {
 	var maxWidth: Double = .zero
 	var maxHeight: Double = .zero
 	
-	func getBoundary() -> (minW: Double, minH: Double, maxW: Double, maxH: Double) {
+	func justifyBounds() -> (minW: Double, minH: Double, maxW: Double, maxH: Double) {
 		for child in children {
-			let boundary = child.getBoundary()
+			let boundary = child.justifyBounds()
 			self.minWidth += boundary.minW
 			self.minHeight += boundary.minH
 			self.maxWidth += boundary.maxW
@@ -120,6 +120,18 @@ class JustifiableNode {
 	}
 	
 	// MARK: - Event Handling
+	
+	func nodeWillJustifyBounds() {
+		children.forEach { child in
+			child.nodeWillJustifyBounds()
+		}
+	}
+	
+	func nodeDidJustifyBounds() {
+		children.forEach { child in
+			child.nodeDidJustifyBounds()
+		}
+	}
 	
 	func nodeWillJustifySize() {
 		children.forEach { child in

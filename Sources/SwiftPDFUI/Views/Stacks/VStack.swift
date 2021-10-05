@@ -14,10 +14,10 @@ public struct VStack<Content>: View where Content: View {
 	}
 }
 
-//extension VStack: PrimitiveView {
-//    func buildTree(_ parent: JustifiyableNode) {
-//		let drawable = VStackDrawable(alignment: alignment, spacing: spacing)
-//        parent.append(drawable)
-//        self.content().unwrapped().buildTree(drawable)
-//    }
-//}
+extension VStack: PrimitiveView {
+    func buildTree(_ parent: JustifiableNode) {
+		let drawable = VStackDrawable(alignment: alignment, spacing: spacing)
+		parent.add(child: drawable)
+        self.content().unwrapped().buildTree(drawable)
+    }
+}

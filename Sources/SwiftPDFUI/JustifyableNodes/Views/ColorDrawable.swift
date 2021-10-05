@@ -6,6 +6,9 @@ final class ColorDrawable: JustifiableNode {
     
     init(color: PDFColor) {
         self.color = color
+		super.init()
+		maxWidth = .infinity
+		maxHeight = .infinity
     }
 	
 	override func justifyWidth(proposedWidth: Double, proposedHeight: Double) {
@@ -16,9 +19,7 @@ final class ColorDrawable: JustifiableNode {
 		self.size.height = proposedHeight
 	}
 	
-	override func getBoundary() -> (minW: Double, minH: Double, maxW: Double, maxH: Double) {
-		maxWidth = .infinity
-		maxHeight = .infinity
+	override func justifyBounds() -> (minW: Double, minH: Double, maxW: Double, maxH: Double) {
 		return (minWidth, minHeight, maxWidth, maxHeight)
 	}
     

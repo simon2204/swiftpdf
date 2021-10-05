@@ -99,8 +99,8 @@ final class HStackDrawable: JustifiableNode {
 		}
 	}
 	
-	override func getBoundary() -> (minW: Double, minH: Double, maxW: Double, maxH: Double) {
-		var newBoundary = super.getBoundary()
+	override func justifyBounds() -> (minW: Double, minH: Double, maxW: Double, maxH: Double) {
+		var newBoundary = super.justifyBounds()
 		newBoundary.minW += totalSpacing
 		newBoundary.maxW += totalSpacing
 		minWidth = newBoundary.minW

@@ -1,10 +1,6 @@
 final class ForEachDrawable: JustifiableNode {
-	override func nodeWillJustifySize() {
-		
-		if let hStack = parent as? HStackDrawable {
-			hStack.replace(node: self, with: children)
-		}
-		
-		super.nodeWillJustifySize()
+	override func nodeWillJustifyBounds() {
+		parent?.replace(self, with: children)
+		super.nodeWillJustifyBounds()
 	}
 }

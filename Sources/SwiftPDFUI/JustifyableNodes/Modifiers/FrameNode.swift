@@ -9,8 +9,8 @@ final class FrameNode: JustifiableNode {
 		self.alignment = alignment
 	}
 	
-	override func getBoundary() -> (minW: Double, minH: Double, maxW: Double, maxH: Double) {
-		let boundary = super.getBoundary()
+	override func justifyBounds() -> (minW: Double, minH: Double, maxW: Double, maxH: Double) {
+		let boundary = super.justifyBounds()
 		minWidth = width ?? boundary.minW
 		minHeight = height ?? boundary.minH
 		maxWidth = width ?? boundary.maxW
