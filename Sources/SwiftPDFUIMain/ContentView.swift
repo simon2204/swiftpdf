@@ -1,45 +1,17 @@
 import SwiftPDFUI
 
 struct ContentView: View {
-	
-	let colors: [Color] = [.green, .blue, .pink]
-	
 	var body: some View {
 		VStack {
-		
-			VerticallyStackedColors(colors: colors)
+			Text("Hey, guck mal, wie toll! :D")
+				.size(20)
 				.padding()
+				.border()
 			
-			HStack {
-				VStack {
-					VStack {
-						Color.purple
-						Color.yellow
-					}
-					Color.mint
-				}
-				Color.orange
-				Color.teal
-			}
-			.padding(45)
-			
-			HStack {
-				Color.red
-				Color.indigo
-				Color.yellow.frame(width: 400)
-			}
+			Text("Mit freundlichen Grüßen, Simon Schöpke")
+				.size(20)
 		}
 		.padding()
-	}
-}
-
-struct VerticallyStackedColors: View {
-	let colors: [Color]
-	var body: some View {
-		VStack(spacing: 20) {
-			ForEach(colors) { color in
-				color
-			}
-		}
+		.border()
 	}
 }

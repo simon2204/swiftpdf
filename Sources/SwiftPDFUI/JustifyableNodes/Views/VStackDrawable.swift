@@ -92,7 +92,7 @@ final class VStackDrawable: JustifiableNode {
 	func alignChildrenTrailing() {
 		children.forEach { child in
 			let x = self.size.width - child.size.width
-			child.justify(x: x)
+			child.justify(x: x + self.origin.x)
 		}
 	}
 	

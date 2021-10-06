@@ -24,3 +24,9 @@ public struct PDFFont {
 }
 
 extension PDFFont: Hashable {}
+
+public extension PDFFont {
+	func width(of text: String, size: Double) -> Double {
+		Double(text.count) * size * 604 / (14.0 * 72)
+	}
+}

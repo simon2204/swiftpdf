@@ -1,19 +1,3 @@
-@propertyWrapper
-struct Clamping<Value: Comparable> {
-	var value: Value
-	let lowerBound: Value
-
-	init(wrappedValue: Value, lowerBound: Value) {
-		self.value = wrappedValue
-		self.lowerBound = lowerBound
-	}
-
-	var wrappedValue: Value {
-		get { value }
-		set { value = max(lowerBound, newValue) }
-	}
-}
-
 class JustifiableNode {
 	
 	var origin: Point = .zero
@@ -167,5 +151,21 @@ class JustifiableNode {
 		children.forEach { child in
 			child.nodeDidDrawSelf()
 		}
+	}
+}
+
+@propertyWrapper
+struct Clamping<Value: Comparable> {
+	var value: Value
+	let lowerBound: Value
+
+	init(wrappedValue: Value, lowerBound: Value) {
+		self.value = wrappedValue
+		self.lowerBound = lowerBound
+	}
+
+	var wrappedValue: Value {
+		get { value }
+		set { value = max(lowerBound, newValue) }
 	}
 }

@@ -15,10 +15,8 @@ public struct ForEach<Data, Content>: View where Data: RandomAccessCollection, C
 
 extension ForEach: PrimitiveView {
     func buildTree(_ parent: JustifiableNode) {
-        let node = ForEachDrawable()
-        parent.add(child: node)
         data.forEach { dataElement in
-            content(dataElement).unwrapped().buildTree(node)
+            content(dataElement).unwrapped().buildTree(parent)
         }
     }
 }

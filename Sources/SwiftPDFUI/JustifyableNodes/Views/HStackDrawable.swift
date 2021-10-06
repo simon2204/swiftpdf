@@ -82,7 +82,7 @@ final class HStackDrawable: JustifiableNode {
 	func alignChildrenAtTop() {
 		children.forEach { child in
 			let y = self.size.height - child.size.height
-			child.justify(y: y)
+			child.justify(y: y + self.origin.y)
 		}
 	}
 	
