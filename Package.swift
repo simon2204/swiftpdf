@@ -13,6 +13,9 @@ let package = Package(
     ],
     targets: [
 		.target(
+			name: "FontKit"
+		),
+		.target(
 			name: "SwiftPDF"
 		),
         .target(

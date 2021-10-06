@@ -287,9 +287,17 @@ public class PDFGraphicsContext {
 	///   - text: A text to draw.
 	///   - position: A point (in user space) at which to display the text.
 	///
-	public func showText(_ text: String, at position: PDFPoint) {
+	public func showText<S: StringProtocol>(_ text: S, at position: PDFPoint) {
+		showTextLines([text], at: position)
+	}
+	
+	public func showTextLines<S: StringProtocol>(_ lines: [S], at position: PDFPoint, leading: Double = 20) {
+		guard !lines.isEmpty else { return }
+		
 		// Begin text
 		operations.append(TextObject.begin)
+		
+		operations.append(TextState.leading(leading))
 		
 		// Positioning text
 		operations.append(TextPositioning.move(dx: position.x, dy: position.y))
@@ -303,7 +311,16 @@ public class PDFGraphicsContext {
 		//operations.append(PDFColor.black.fill())
 		
 		// Append text
-		operations.append(TextShowing.show(HexadecimalString(text)))
+		
+		var iterator = lines.makeIterator()
+		
+		if let first = iterator.next() {
+			operations.append(TextShowing.show(HexadecimalString(first)))
+			
+			while let next = iterator.next() {
+				operations.append(TextShowing.nextLine(HexadecimalString(next)))
+			}
+		}
 		
 		// End text
 		operations.append(TextObject.end)
