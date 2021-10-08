@@ -15,18 +15,4 @@ final class RootDrawable: JustifiableNode {
 		justify(y: (pageSize.height - size.height) / 2)
 		nodeDidJustifyAchsis()
 	}
-	
-//	override func justifyWidth(proposedWidth: Double, proposedHeight: Double) {
-//		children.forEach { child in
-//			child.justifyWidth(proposedWidth: proposedWidth, proposedHeight: proposedHeight)
-//			self.size.width += child.size.width
-//		}
-//	}
-//	
-//	override func justifyHeight(proposedWidth: Double, proposedHeight: Double) {
-//		children.forEach { child in
-//			child.justifyHeight(proposedWidth: proposedWidth, proposedHeight: proposedHeight)
-//			self.size.height += child.size.height
-//		}
-//	}
 }

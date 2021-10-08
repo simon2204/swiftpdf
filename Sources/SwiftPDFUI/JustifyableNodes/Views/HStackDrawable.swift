@@ -1,71 +1,105 @@
 final class HStackDrawable: JustifiableNode {
     
-    var alignment: VerticalAlignment
+	/// Vertical alignment of children.
+    private var alignment: VerticalAlignment
     
-    var spacing: Double?
+	/// Spacing of children.
+    private var spacing: Double?
     
     init(alignment: VerticalAlignment, spacing: Double?) {
         self.alignment = alignment
         self.spacing = spacing
     }
     
-    lazy var spacingRequirement = spacing ?? Default.spacing
+	/// Amout of spacing or default spacing, when no spacing has been specified.
+	private var appliedSpacing: Double {
+		spacing ?? Default.spacing
+	}
 	
-	lazy var subDrawableCount = Double(children.count)
-	
-	lazy var totalSpacing: Double = {
-		let spacingCount = subDrawableCount - 1
-		return  spacingCount * spacingRequirement
-	}()
+	/// Total amout of spacing needed for spacing all children.
+	private var totalSpacing: Double {
+		let spacingCount = Double(children.count) - 1
+		return spacingCount * appliedSpacing
+	}
     
     override func justifyWidth(proposedWidth: Double, proposedHeight: Double) {
+		
+		// Count of children which did not justify their width yet.
+		var justifiedChildrenWidthCount = Double(children.count)
 		
 		// Remaining width after subtracing the total amount of spacing.
         var remainingWidth = proposedWidth - totalSpacing
 		
+		// Compute equal width for all children
+		// which did not get a proposal yet.
 		var childWidth: Double {
-			remainingWidth / subDrawableCount
+			remainingWidth / justifiedChildrenWidthCount
 		}
 		
+		// Copy of `self.children`, because we want to modify
+		// the order of children which get a dimension proposed first.
 		var children = self.children
 		
+		// Least flexible children with a minimum
+		// width will get the width dimension proposed first.
+		// They will be located in the right half of `children`,
+		// starting from the pivot-index.
 		let pivot = children.partition(by: { $0.minWidth > 0 })
+		
+		// Children with a maximum width smaller
+		// than the `childWidth`,
+		// in the left half of the array before the pivot,
+		// will get proposed `childWidth`,
+		// so that remaining children can fully use the remaining width.
 		_ = children[..<pivot].partition(by: { $0.maxWidth < childWidth })
 		 
+		// `children` got divided into three partitions.
+		// ([child..., (child.maxWidth < childWidth)..., (child.minWidth > 0)...]).
+		// Now the order needs to be reversed because we still want
+		// children with a minimum width greater than zero to get a proposal first,
+		// after that children with a maximum width smaller than `childWidth`
+		// and then the remaining children.
 		children.reversed().forEach { child in
 			child.justifyWidth(
 				proposedWidth: childWidth,
 				proposedHeight: proposedHeight)
-			subDrawableCount -= 1
+			justifiedChildrenWidthCount -= 1
 			remainingWidth -= child.size.width
 		}
 		
-		size.width = proposedWidth - remainingWidth
+		// Sum of all children's width.
+		let childrenWidth = proposedWidth - remainingWidth
+		
+		size.width = childrenWidth
     }
     
     override func justifyHeight(proposedWidth: Double, proposedHeight: Double) {
-        var maxHeight: Double = 0
+		
+		// The largest child's height.
+        var maxChildHeight: Double = 0
+		
 		children.forEach { child in
             child.justifyHeight(
                 proposedWidth: proposedWidth,
                 proposedHeight: proposedHeight
             )
-			maxHeight = max(maxHeight, child.size.height)
+			maxChildHeight = max(maxChildHeight, child.size.height)
         }
-		size.height = maxHeight
+		
+		size.height = maxChildHeight
     }
     
     override func justify(x: Double) {
-		self.origin.x = x
 		var xOffSet = x
 		children.forEach { child in
             child.justify(x: xOffSet)
-			xOffSet += child.size.width + spacingRequirement
+			xOffSet += child.size.width + appliedSpacing
         }
+		origin.x = x
     }
 	
 	override func justify(y: Double) {
-		self.origin.y = y
+		origin.y = y
 		
 		switch alignment {
 		case .top:
@@ -79,23 +113,23 @@ final class HStackDrawable: JustifiableNode {
 		}
 	}
 	
-	func alignChildrenAtTop() {
+	private func alignChildrenAtTop() {
 		children.forEach { child in
 			let y = self.size.height - child.size.height
-			child.justify(y: y + self.origin.y)
+			child.justify(y: y + origin.y)
 		}
 	}
 	
-	func alignChildrenAtCenter() {
+	private func alignChildrenAtCenter() {
 		children.forEach { child in
-			let y = (self.size.height - child.size.height) / 2
-			child.justify(y: y + self.origin.y)
+			let y = (size.height - child.size.height) / 2
+			child.justify(y: y + origin.y)
 		}
 	}
 	
-	func alignChildrenAtBottom() {
+	private func alignChildrenAtBottom() {
 		children.forEach { child in
-			child.justify(y: self.origin.y)
+			child.justify(y: origin.y)
 		}
 	}
 	

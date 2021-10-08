@@ -1,5 +1,6 @@
 import SwiftPDF
 
+@frozen
 public struct Text: View {
 	var content: String
 	
@@ -16,6 +17,7 @@ public struct Text: View {
 }
 
 extension Text {
+	@usableFromInline
 	enum Modifier {
 		case color(Color)
 		case font(Font?)

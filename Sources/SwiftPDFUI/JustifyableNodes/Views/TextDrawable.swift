@@ -37,8 +37,17 @@ final class TextDrawable: JustifiableNode {
 	}
 	
 	override func justifyWidth(proposedWidth: Double, proposedHeight: Double) {
-		self.size.width = maxWidth
+		var width: Double = 0
+		
 		subcontent = content.split(separator: "\n", omittingEmptySubsequences: false)
+		
+		for subcontent in subcontent {
+			if let subcontentWidth = PDFFont.courier.width(of: String(subcontent), size: fontSize) {
+				width = max(width, subcontentWidth)
+			}
+		}
+		
+		self.size.width = width
 	}
 	
 	override func justifyHeight(proposedWidth: Double, proposedHeight: Double) {

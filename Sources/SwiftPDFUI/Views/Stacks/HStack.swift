@@ -1,3 +1,5 @@
+
+@frozen
 public struct HStack<Content>: View where Content: View {
     let alignment: VerticalAlignment
 	let spacing: Double?

@@ -291,7 +291,7 @@ public class PDFGraphicsContext {
 		showTextLines([text], at: position)
 	}
 	
-	public func showTextLines<S: StringProtocol>(_ lines: [S], at position: PDFPoint, leading: Double = 20) {
+	public func showTextLines<S: StringProtocol>(_ lines: [S], at position: PDFPoint, leading: Double = 12) {
 		guard !lines.isEmpty else { return }
 		
 		// Begin text
@@ -307,8 +307,6 @@ public class PDFGraphicsContext {
 			fontResource: currentFont.resourceName,
 			scaleFactor: currentFontSize)
 		)
-		
-		//operations.append(PDFColor.black.fill())
 		
 		// Append text
 		
