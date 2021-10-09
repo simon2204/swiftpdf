@@ -20,6 +20,6 @@ extension HStack: PrimitiveView {
     func buildTree(_ parent: JustifiableNode) {
 		let drawable = HStackDrawable(alignment: alignment, spacing: spacing)
         parent.add(child: drawable)
-        self.content().unwrapped().buildTree(drawable)
+        content().unwrapped().buildTree(drawable)
     }
 }

@@ -1,4 +1,4 @@
-final class HStackDrawable: JustifiableNode {
+final class HStackDrawable: StackNode {
     
 	/// Vertical alignment of children.
     private var alignment: VerticalAlignment
@@ -74,19 +74,13 @@ final class HStackDrawable: JustifiableNode {
     }
     
     override func justifyHeight(proposedWidth: Double, proposedHeight: Double) {
-		
-		// The largest child's height.
-        var maxChildHeight: Double = 0
-		
 		children.forEach { child in
             child.justifyHeight(
                 proposedWidth: proposedWidth,
                 proposedHeight: proposedHeight
             )
-			maxChildHeight = max(maxChildHeight, child.size.height)
         }
-		
-		size.height = maxChildHeight
+		size.height = maximumHeightOfChildren
     }
     
     override func justify(x: Double) {
@@ -99,38 +93,17 @@ final class HStackDrawable: JustifiableNode {
     }
 	
 	override func justify(y: Double) {
-		origin.y = y
-		
 		switch alignment {
 		case .top:
-			alignChildrenAtTop()
+			alignChildrenTop()
 		case .center:
-			alignChildrenAtCenter()
+			centerChildrenVertically()
 		case .bottom:
-			alignChildrenAtBottom()
+			alignChildrenBottom()
 		default:
-			alignChildrenAtCenter()
+			centerChildrenVertically()
 		}
-	}
-	
-	private func alignChildrenAtTop() {
-		children.forEach { child in
-			let y = self.size.height - child.size.height
-			child.justify(y: y + origin.y)
-		}
-	}
-	
-	private func alignChildrenAtCenter() {
-		children.forEach { child in
-			let y = (size.height - child.size.height) / 2
-			child.justify(y: y + origin.y)
-		}
-	}
-	
-	private func alignChildrenAtBottom() {
-		children.forEach { child in
-			child.justify(y: origin.y)
-		}
+		origin.y = y
 	}
 	
 	override func justifyBounds() -> (minW: Double, minH: Double, maxW: Double, maxH: Double) {

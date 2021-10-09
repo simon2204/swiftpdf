@@ -1,4 +1,4 @@
-final class VStackDrawable: JustifiableNode {
+final class VStackDrawable: StackNode {
 	
 	var alignment: HorizontalAlignment
 	
@@ -61,7 +61,7 @@ final class VStackDrawable: JustifiableNode {
 		case .leading:
 			alignChildrenLeading()
 		case .center:
-			alignChildrenCenter()
+			centerChildrenHorizontally()
 		case .trailing:
 			alignChildrenTrailing()
 		}
@@ -73,26 +73,6 @@ final class VStackDrawable: JustifiableNode {
 		children.reversed().forEach { child in
 			child.justify(y: yOffSet)
 			yOffSet += child.size.height + spacingRequirement
-		}
-	}
-	
-	func alignChildrenLeading() {
-		children.forEach { child in
-			child.justify(x: self.origin.x)
-		}
-	}
-	
-	func alignChildrenCenter() {
-		children.forEach { child in
-			let x = (self.size.width - child.size.width) / 2
-			child.justify(x: x + self.origin.x)
-		}
-	}
-	
-	func alignChildrenTrailing() {
-		children.forEach { child in
-			let x = self.size.width - child.size.width
-			child.justify(x: x + self.origin.x)
 		}
 	}
 	

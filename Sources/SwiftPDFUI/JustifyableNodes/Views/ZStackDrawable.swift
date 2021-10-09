@@ -1,4 +1,4 @@
-final class ZStackDrawable: JustifiableNode {
+final class ZStackDrawable: StackNode {
 	
 	/// Vertical alignment of children.
 	private var alignment: Alignment
@@ -14,10 +14,6 @@ final class ZStackDrawable: JustifiableNode {
 				proposedHeight: proposedHeight
 			)
 		}
-		
-		// If there is no child and therefore no maximum, zero will be returned.
-		let maximumWidthOfChildren = children.lazy.map(\.size.width).max() ?? 0
-		
 		size.width = maximumWidthOfChildren
 	}
 	
@@ -28,28 +24,47 @@ final class ZStackDrawable: JustifiableNode {
 				proposedHeight: proposedHeight
 			)
 		}
-		
-		// If there is no child and therefore no maximum, zero will be returned.
-		let maximumHeightOfChildren = children.lazy.map(\.size.height).max() ?? 0
-		
 		size.height = maximumHeightOfChildren
 	}
 	
 	override func justify(x: Double) {
-		for child in children {
-			child.justify(x: x)
+		switch alignment.horizontal {
+		case .leading:
+			alignChildrenLeading()
+			
+		case .center:
+			centerChildrenHorizontally()
+			
+		case .trailing:
+			alignChildrenTrailing()
 		}
+		
 		origin.x = x
 	}
 	
 	override func justify(y: Double) {
-		for child in children {
-			child.justify(y: y)
+		switch alignment.vertical {
+		case .top:
+			alignChildrenTop()
+		case .center:
+			centerChildrenVertically()
+		case .bottom:
+			alignChildrenBottom()
+		default:
+			centerChildrenVertically()
 		}
+		
 		origin.y = y
 	}
 	
 	override func justifyBounds() -> (minW: Double, minH: Double, maxW: Double, maxH: Double) {
-		super.justifyBounds()
+		for child in children {
+			let bounds = child.justifyBounds()
+			minWidth = min(minWidth, bounds.minW)
+			minHeight = min(minHeight, bounds.minH)
+			maxWidth = max(maxWidth, bounds.maxW)
+			maxHeight = max(maxHeight, bounds.maxH)
+		}
+		return (minWidth, minHeight, maxWidth, maxHeight)
 	}
 }

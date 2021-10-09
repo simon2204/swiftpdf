@@ -18,6 +18,6 @@ extension VStack: PrimitiveView {
     func buildTree(_ parent: JustifiableNode) {
 		let drawable = VStackDrawable(alignment: alignment, spacing: spacing)
 		parent.add(child: drawable)
-        self.content().unwrapped().buildTree(drawable)
+        content().unwrapped().buildTree(drawable)
     }
 }
