@@ -28,6 +28,8 @@ final class ZStackDrawable: StackNode {
 	}
 	
 	override func justify(x: Double) {
+		origin.x = x
+		
 		switch alignment.horizontal {
 		case .leading:
 			alignChildrenLeading()
@@ -38,23 +40,24 @@ final class ZStackDrawable: StackNode {
 		case .trailing:
 			alignChildrenTrailing()
 		}
-		
-		origin.x = x
 	}
 	
 	override func justify(y: Double) {
+		origin.y = y
+		
 		switch alignment.vertical {
 		case .top:
 			alignChildrenTop()
+			
 		case .center:
 			centerChildrenVertically()
+			
 		case .bottom:
 			alignChildrenBottom()
+			
 		default:
 			centerChildrenVertically()
 		}
-		
-		origin.y = y
 	}
 	
 	override func justifyBounds() -> (minW: Double, minH: Double, maxW: Double, maxH: Double) {

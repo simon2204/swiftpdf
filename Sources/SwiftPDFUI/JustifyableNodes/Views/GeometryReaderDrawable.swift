@@ -20,7 +20,7 @@ final class GeometryReaderDrawable: JustifiableNode {
 	override func nodeDidJustifyAchsis() {
 		didLayout?(Rect(origin: origin, size: size))
 		
-		children.forEach { child in
+		if let child = children.first {
 			child.justifyWidth(proposedWidth: size.width, proposedHeight: size.height)
 			child.justifyHeight(proposedWidth: size.width, proposedHeight: size.height)
 			child.justify(x: origin.x)

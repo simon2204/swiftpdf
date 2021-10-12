@@ -1,4 +1,4 @@
-public struct ForEach<Data, Content>: View where Data: RandomAccessCollection, Content: View {
+public struct ForEach<Data, Content>: View where Data: Sequence, Content: View {
     let data: Data
     let content: (Data.Element) -> Content
     

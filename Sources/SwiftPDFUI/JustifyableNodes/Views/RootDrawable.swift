@@ -1,4 +1,5 @@
 final class RootDrawable: JustifiableNode {
+	
 	let pageSize: Size
 	
 	init(pageSize: Size) {
