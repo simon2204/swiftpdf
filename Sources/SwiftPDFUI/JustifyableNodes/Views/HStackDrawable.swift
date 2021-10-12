@@ -79,12 +79,6 @@ final class HStackDrawable: StackNode {
 			children = children + spacers
 		}
 		
-		// `children` got divided into three partitions.
-		// ([child..., (child.maxWidth < childWidth)..., (child.minWidth > 0)...]).
-		// Now the order needs to be reversed because we still want
-		// children with a minimum width greater than zero to get a proposal first,
-		// after that children with a maximum width smaller than `childWidth`
-		// and then the remaining children.
 		children.forEach { child in
 			child.justifyWidth(
 				proposedWidth: childWidth,

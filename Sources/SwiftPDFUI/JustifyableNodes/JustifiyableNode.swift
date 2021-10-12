@@ -17,35 +17,10 @@ class JustifiableNode {
     
     var children: [JustifiableNode] = []
 	
-	// MARK: - Alter Subnodes
-	
     func add(child: JustifiableNode) {
         child.parent = self
         children.append(child)
     }
-	
-	func replace(_ node: JustifiableNode, with nodes: [JustifiableNode]) {
-		
-		let index = children.firstIndex(where: { child in
-			child === node
-		}) ?? 0
-		
-		children.remove(at: index)
-		
-		children.insert(contentsOf: nodes, at: index)
-	}
-	
-	func move(node: JustifiableNode, to position: Int) {
-		let index = children.firstIndex { child in
-			child === node
-		}
-		children.remove(at: index!)
-		children.insert(node, at: position)
-	}
-	
-	func replaceNodes(with replacement: [JustifiableNode]) {
-		children = replacement
-	}
 	
 	// MARK: - Drawing
         
