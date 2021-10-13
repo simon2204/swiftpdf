@@ -6,51 +6,61 @@ final class TextDrawable: JustifiableNode {
 	
 	let modifiers: [Text.Modifier]
 	
-	var subcontent: [Substring] = []
+	let components: [String]
 	
-	lazy var fontSize: Double = {
-		for modifier in modifiers {
-			if case let .size(size) = modifier {
-				return size
-			}
-		}
-		return 12.0
-	}()
+	var font: Font
 	
-	lazy var fontColor: Color = {
-		for modifier in modifiers {
-			if case let .color(color) = modifier {
-				return color
-			}
-		}
-		return .black
-	}()
+	var fontSize: Double
+	
+	var lineSpacing: Double
+	
+	var fontColor: Color
 	
 	init(content: String, modifiers: [Text.Modifier]) {
 		self.content = content
 		self.modifiers = modifiers
+		self.components = content.components(separatedBy: "\n")
+		
+		self.font = .courier
+		self.fontSize = 12
+		self.lineSpacing = 0
+		self.fontColor = .blue
+		
+		for modifier in modifiers {
+			switch modifier {
+			case let .font(font):
+				self.font = font ?? .courier
+				
+			case let .color(color):
+				self.fontColor = color
+				
+			case let .fontSize(size):
+				self.fontSize = size
+				
+			case let .lineSpacing(spacing):
+				self.lineSpacing = spacing
+			}
+		}
 	}
 	
 	override func justifyBounds() -> (minW: Double, minH: Double, maxW: Double, maxH: Double) {
-		maxWidth = PDFFont.courier.width(of: content, size: fontSize) ?? 0
+		maxWidth = font.width(of: content, size: fontSize) ?? 0
 		return (minWidth, minHeight, maxWidth, maxHeight)
 	}
 	
-	override func justifyWidth(proposedWidth: Double, proposedHeight: Double) {
+	override func justifyWidth(proposedWidth: Double) {
 		var width: Double = 0
 		
-		subcontent = content.split(separator: "\n", omittingEmptySubsequences: false)
-		
-		for subcontent in subcontent {
-			if let subcontentWidth = PDFFont.courier.width(of: String(subcontent), size: fontSize) {
-				width = max(width, subcontentWidth)
+		for component in components {
+			if let componentWidth = font.width(of: component, size: fontSize) {
+				width = max(width, componentWidth)
 			}
 		}
 		
 		self.size.width = width
 	}
 	
-	override func justifyHeight(proposedWidth: Double, proposedHeight: Double) {
+	override func justifyHeight(proposedHeight: Double) {
 		self.size.height = fontSize
 	}
 	
@@ -64,11 +74,14 @@ final class TextDrawable: JustifiableNode {
 			let descender = fontSize * Double(metrics.descender) / Double(metrics.unitsPerEm)
 			let y = origin.y - descender
 			let newOrigin = Point(x: origin.x, y: y)
-			context.showTextLines(subcontent, at: newOrigin)
+			context.showTextLines(components, at: newOrigin)
 		} else {
-			context.showTextLines(subcontent, at: origin)
+			context.showTextLines(components, at: origin)
 		}
 		
 		context.restoreGState()
 	}
+	
+	
+	
 }

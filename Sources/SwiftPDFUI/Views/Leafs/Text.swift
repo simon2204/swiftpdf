@@ -1,7 +1,7 @@
 import SwiftPDF
 
-@frozen
 public struct Text: View {
+	
 	var content: String
 	
 	var modifiers: [Modifier] = []
@@ -17,18 +17,11 @@ public struct Text: View {
 }
 
 extension Text {
-	@usableFromInline
 	enum Modifier {
 		case color(Color)
 		case font(Font?)
-		case size(Double)
-//		case italic
-//		case weight(Font.Weight?)
-		case kerning(Double)
-		case tracking(Double)
-//		case baseline(Double)
-//		case rounded
-		case underline(Bool, Color?)
+		case fontSize(Double)
+		case lineSpacing(Double)
 	}
 }
 
@@ -41,13 +34,13 @@ public extension Text {
 		textWithModifier(.font(font))
 	}
 	
-	func size(_ size: Double) -> Text {
-		textWithModifier(.size(size))
+	func fontSize(_ size: Double) -> Text {
+		textWithModifier(.fontSize(size))
 	}
 	
-//	func underline(_ active: Bool = true, color: Color? = nil) -> Text {
-//		textWithModifier(.underline(active, color))
-//	}
+	func lineSpacing(_ spacing: Double) -> Text {
+		textWithModifier(.lineSpacing(spacing))
+	}
 	
 	private func textWithModifier(_ modifier: Modifier) -> Text {
 		let modifiers = self.modifiers + [modifier]
