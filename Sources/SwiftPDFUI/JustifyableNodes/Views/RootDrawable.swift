@@ -8,12 +8,14 @@ final class RootDrawable: JustifiableNode {
 	
 	func layoutSubViews() {
 		nodeWillJustifySize()
-		justifyWidth(proposedWidth: pageSize.width, proposedHeight: pageSize.height)
-		justifyHeight(proposedWidth: pageSize.width, proposedHeight: pageSize.height)
+		justify(
+			proposedWidth: pageSize.width,
+			proposedHeight: pageSize.height
+		)
 		nodeDidJustifySize()
 		nodeWillJustifyAchsis()
-		justify(x: (pageSize.width - size.width) / 2)
-		justify(y: (pageSize.height - size.height) / 2)
+		justify(x: (pageSize.width - self.width) / 2)
+		justify(y: (pageSize.height - self.height) / 2)
 		nodeDidJustifyAchsis()
 	}
 }

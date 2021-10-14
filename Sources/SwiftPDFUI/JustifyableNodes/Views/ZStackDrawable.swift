@@ -7,28 +7,18 @@ final class ZStackDrawable: StackNode {
 		self.alignment = alignment
 	}
 	
-	override func justifyWidth(proposedWidth: Double, proposedHeight: Double) {
+	override func justify(proposedWidth: Double, proposedHeight: Double) {
+		var maximumWidthOfChildren: Double = 0
+		var maximumHeightOfChildren: Double = 0
 		for child in children {
-			child.justifyWidth(
-				proposedWidth: proposedWidth,
-				proposedHeight: proposedHeight
-			)
+			child.justify(proposedWidth: proposedWidth, proposedHeight: proposedHeight)
+			maximumWidthOfChildren = max(maximumWidthOfChildren, child.width)
+			maximumHeightOfChildren = max(maximumHeightOfChildren, child.height)
 		}
-		size.width = maximumWidthOfChildren
-	}
-	
-	override func justifyHeight(proposedWidth: Double, proposedHeight: Double) {
-		for child in children {
-			child.justifyHeight(
-				proposedWidth: proposedWidth,
-				proposedHeight: proposedHeight
-			)
-		}
-		size.height = maximumHeightOfChildren
 	}
 	
 	override func justify(x: Double) {
-		origin.x = x
+		self.x = x
 		
 		switch alignment.horizontal {
 		case .leading:
@@ -43,7 +33,7 @@ final class ZStackDrawable: StackNode {
 	}
 	
 	override func justify(y: Double) {
-		origin.y = y
+		self.y = y
 		
 		switch alignment.vertical {
 		case .top:

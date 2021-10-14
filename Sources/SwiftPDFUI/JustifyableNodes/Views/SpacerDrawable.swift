@@ -11,21 +11,16 @@ final class SpacerDrawable: JustifiableNode {
 		maxHeight = .infinity
     }
 	
-    override func justifyWidth(proposedWidth: Double, proposedHeight: Double) {
+	override func justify(proposedWidth: Double, proposedHeight: Double) {
 		if let stack = parent as? StackNode, let mainAxis = stack.mainAxis {
-			if case .horizontal = mainAxis {
-				size.width = min(max(minLength, proposedWidth), maxWidth)
+			switch mainAxis {
+			case .vertical:
+				self.height = min(max(minLength, proposedHeight), maxHeight)
+			case .horizontal:
+				self.width = min(max(minLength, proposedWidth), maxWidth)
 			}
 		}
-    }
-    
-    override func justifyHeight(proposedWidth: Double, proposedHeight: Double) {
-		if let stack = parent as? StackNode, let mainAxis = stack.mainAxis {
-			if case .vertical = mainAxis {
-				size.height = min(max(minLength, proposedHeight), maxHeight)
-			}
-		}
-    }
+	}
 	
 	override func justifyBounds() -> (minW: Double, minH: Double, maxW: Double, maxH: Double) {
 		if let stack = parent as? StackNode, let mainAxis = stack.mainAxis {

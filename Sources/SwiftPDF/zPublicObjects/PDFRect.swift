@@ -21,6 +21,8 @@ public struct PDFRect {
 		self.origin = PDFPoint(x: x, y: y)
 		self.size = PDFSize(width: width, height: height)
 	}
+	
+	public static let zero = PDFRect(origin: .zero, size: .zero)
 }
 
 public extension PDFRect {

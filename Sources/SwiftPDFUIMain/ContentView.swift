@@ -27,9 +27,8 @@ import SwiftPDFUI
 struct ContentView: View {
 	var body: some View {
 		ZStack {
-			Color.red.frame(width: 200, height: 200)
-			Spacer(minLength: 300)
+			Color.green.frame(height: 300)
+			Color.red.frame(height: 200)
 		}
-		.border()
 	}
 }

@@ -1,8 +1,8 @@
 final class VStackDrawable: StackNode {
 	
-	let alignment: HorizontalAlignment
+	private let alignment: HorizontalAlignment
 	
-	let spacing: Double
+	private let spacing: Double
 	
 	init(alignment: HorizontalAlignment, spacing: Double?) {
 		self.alignment = alignment
@@ -16,18 +16,7 @@ final class VStackDrawable: StackNode {
 		return spacingCount * spacing
 	}
 	
-	override func justifyWidth(proposedWidth: Double, proposedHeight: Double) {
-		for child in children {
-			child.justifyWidth(
-				proposedWidth: proposedWidth,
-				proposedHeight: proposedHeight
-			)
-		}
-		size.width = maximumWidthOfChildren
-	}
-	
-	override func justifyHeight(proposedWidth: Double, proposedHeight: Double) {
-
+	override func justify(proposedWidth: Double, proposedHeight: Double) {
 		// Count of children which did not justify their height yet.
 		var justifiedChildrenHeightCount = Double(children.count)
 
@@ -89,24 +78,31 @@ final class VStackDrawable: StackNode {
 			children = children + spacers
 		}
 		
+		// Width of the widest child.
+		var maximumWidthOfChildren: Double = 0
+		
 		for child in children {
-			child.justifyHeight(
-				proposedWidth: proposedWidth,
-				proposedHeight: childHeight)
+			
+			child.justify(proposedWidth: proposedWidth, proposedHeight: childHeight)
+			
 			justifiedChildrenHeightCount -= 1
-			remainingHeight -= child.size.height
+			
+			remainingHeight -= child.height
+			
+			// Calculate the height of the tallest child.
+			maximumWidthOfChildren = max(maximumWidthOfChildren, child.width)
 		}
 
+		self.width = maximumWidthOfChildren
+		
 		// Sum of all children's height.
-		let childrenHeight = proposedHeight - remainingHeight
-
-		size.height = childrenHeight
+		self.height = proposedHeight - remainingHeight
 	}
-
+	
+	
 	
 	override func justify(x: Double) {
-		self.origin.x = x
-		
+		self.x = x
 		switch alignment {
 		case .leading:
 			alignChildrenLeading()
@@ -118,11 +114,13 @@ final class VStackDrawable: StackNode {
 	}
 	
 	override func justify(y: Double) {
-		self.origin.y = y
-		var yOffSet = y
-		children.reversed().forEach { child in
-			child.justify(y: yOffSet)
-			yOffSet += child.size.height + spacing
+		self.y = x
+	
+		var offsetY = y
+		
+		for child in children.reversed() {
+			child.justify(y: offsetY)
+			offsetY += child.height + spacing
 		}
 	}
 	

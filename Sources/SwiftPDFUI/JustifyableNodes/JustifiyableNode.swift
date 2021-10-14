@@ -1,29 +1,82 @@
 class JustifiableNode {
 	
-	var origin: Point = .zero
+	/// Node's x-coordinate at which the node is drawn.
+	var x: Double = .zero
 	
-	@Clamping(lowerBound: .zero)
-	private var width: Double = .zero
+	/// Node's y-coordinate at which the node is drawn.
+	var y: Double = .zero
 	
-	@Clamping(lowerBound: .zero)
-	private var height: Double = .zero
+	/// Node's width to be drawn on the canvas.
+	private var _width: Double = .zero
 	
-	var size: Size {
-		get { Size(width: width, height: height) }
-		set { width = newValue.width; height = newValue.height }
+	/// Node's height to be drawn on the canvas.
+	private var _height: Double = .zero
+	
+	/// Node's width to be drawn on the canvas.
+	///
+	/// The width cannot be smaller than zero.
+	var width: Double {
+		
+		get { _width }
+		
+		set {
+			if newValue >= .zero {
+				_width = newValue
+			}
+		}
+	}
+	
+	/// Node's height to be drawn on the canvas.
+	///
+	/// The height cannot be smaller than zero.
+	var height: Double {
+		
+		get { _height }
+		
+		set {
+			if newValue >= .zero {
+				_height = newValue
+			}
+		}
 	}
     
+	/// Parent of the current node.
+	///
+	/// If the current node is the root, it does not have a parent.
     private(set) weak var parent: JustifiableNode?
     
-    var children: [JustifiableNode] = []
+	/// Children of the current node.
+	///
+	/// If the current node is a leaf, it does not have children.
+	private(set) var children: [JustifiableNode] = []
 	
+	
+	final var origin: Point {
+		Point(x: x, y: y)
+	}
+	
+	final var size: Size {
+		Size(width: width, height: height)
+	}
+	
+	final var frame: Rect {
+		Rect(origin: origin, size: size)
+	}
+	
+	/// Adds a new child to the current node.
+	///
+	/// - Parameter child: Child to add to the current node.
     func add(child: JustifiableNode) {
         child.parent = self
         children.append(child)
     }
 	
 	// MARK: - Drawing
-        
+	
+	/// Draws itself into the given context at position `self.x` and `self.y`
+	/// with dimensions of `self.width` and `self.height`.
+	///
+	/// - Parameter context: The context where the node gets drawn to.
     func draw(in context: GraphicsContext) {
 		children.forEach { child in
             child.draw(in: context)
@@ -50,32 +103,35 @@ class JustifiableNode {
 	
 	// MARK: - Justify Node
 	
-	func justifyWidth(proposedWidth: Double, proposedHeight: Double) {
-		children.forEach { child in
-			child.justifyWidth(proposedWidth: proposedWidth, proposedHeight: proposedHeight)
-			width += child.width
+	/// Justifies the size of the node.
+	///
+	/// The parent node proposes a size to its child nodes.
+	/// Each child then chooses its own size based on the proposed size,
+	/// but a child does not have to use the proposed size
+	/// and can choose their own size.
+	///
+	/// - Parameters:
+	///   - proposedWidth: Proposed width as guidance for justifying width.
+	///   - proposedHeight: Proposed height as guidance for justifying height.
+	func justify(proposedWidth: Double, proposedHeight: Double) {
+		if let child = children.first {
+			child.justify(
+				proposedWidth: proposedWidth,
+				proposedHeight: proposedHeight
+			)
+			self.width = child.width
+			self.height = child.height
 		}
 	}
 	
-	func justifyHeight(proposedWidth: Double, proposedHeight: Double) {
-		children.forEach { child in
-			child.justifyHeight(proposedWidth: proposedWidth, proposedHeight: proposedHeight)
-			height += child.height
-		}
-	}
-
 	func justify(x: Double) {
-		self.origin.x = x
-		children.forEach { child in
-			child.justify(x: x)
-		}
+		self.x = x
+		children.first?.justify(x: x)
 	}
 	
 	func justify(y: Double) {
-		self.origin.y = y
-		children.forEach { child in
-			child.justify(y: y)
-		}
+		self.y = y
+		children.first?.justify(y: y)
 	}
 	
 	// MARK: - Event Handling
@@ -126,21 +182,5 @@ class JustifiableNode {
 		children.forEach { child in
 			child.nodeDidDrawSelf()
 		}
-	}
-}
-
-@propertyWrapper
-struct Clamping<Value: Comparable> {
-	var value: Value
-	let lowerBound: Value
-
-	init(wrappedValue: Value, lowerBound: Value) {
-		self.value = wrappedValue
-		self.lowerBound = lowerBound
-	}
-
-	var wrappedValue: Value {
-		get { value }
-		set { value = max(lowerBound, newValue) }
 	}
 }
