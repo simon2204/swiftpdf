@@ -1,19 +1,5 @@
 class AlignmentNode: JustifiableNode {
 	
-	/// Width of the widest child.
-	///
-	/// If there is no child and therefore no maximum, zero will be returned.
-	final var maximumWidthOfChildren: Double {
-		children.lazy.map(\.width).max() ?? 0
-	}
-	
-	/// Height of the tallest child.
-	///
-	/// If there is no child and therefore no maximum, zero will be returned.
-	final var maximumHeightOfChildren: Double {
-		children.lazy.map(\.height).max() ?? 0
-	}
-	
 	// MARK: - Horizontal Alignment
 
 	/// Aligns all children at the leading edge of the stack.

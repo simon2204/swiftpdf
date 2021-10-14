@@ -15,7 +15,7 @@ final class GeometryReaderDrawable: JustifiableNode {
 		self.y = y
 	}
 	
-	override func nodeDidJustifyAchsis() {
+	override func nodeDidJustify() {
 		didLayout?(frame)
 		
 		if let child = children.first {
@@ -24,6 +24,6 @@ final class GeometryReaderDrawable: JustifiableNode {
 			child.justify(y: y)
 		}
 		
-		super.nodeDidJustifyAchsis()
+		super.nodeDidJustify()
 	}
 }

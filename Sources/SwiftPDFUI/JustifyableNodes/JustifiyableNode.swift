@@ -50,16 +50,18 @@ class JustifiableNode {
 	/// If the current node is a leaf, it does not have children.
 	private(set) var children: [JustifiableNode] = []
 	
-	
-	final var origin: Point {
+	/// Origin at which the node will be drawn.
+	var origin: Point {
 		Point(x: x, y: y)
 	}
 	
-	final var size: Size {
+	/// Dimentions for the node on the canvas.
+	var size: Size {
 		Size(width: width, height: height)
 	}
 	
-	final var frame: Rect {
+	/// Frame that describes the origin and size of this node.
+	var frame: Rect {
 		Rect(origin: origin, size: size)
 	}
 	
@@ -85,9 +87,44 @@ class JustifiableNode {
 	
 	// MARK: - Node's Boundary
 	
+	/// Minimum width the node can have.
+	///
+	/// A minimum width of zero means that
+	/// the node is able to give up all its space.
+	///
+	/// `minWidth` will be determined before
+	/// `justify(proposedWidth:proposedHeight:)`
+	/// gets called.
 	var minWidth: Double = .zero
+	
+	/// Minimum height the node can have.
+	///
+	/// A minimum height of zero means that
+	/// the node is able to give up all its space.
+	///
+	/// `minHeight` will be determined before
+	/// `justify(proposedWidth:proposedHeight:)`
+	/// gets called.
 	var minHeight: Double = .zero
+	
+	/// Maximum width the node can have.
+	///
+	/// A maximum width of infinity means
+	/// that the node can fully expand to the width it is given to.
+	///
+	/// `maxWidth` will be determined before
+	/// `justify(proposedWidth:proposedHeight:)`
+	/// gets called.
 	var maxWidth: Double = .zero
+	
+	/// Maximum height the node can have.
+	///
+	/// A maximum height of infinity means
+	/// that the node can fully expand to the height it is given to.
+	///
+	/// `maxHeight` will be determined before
+	/// `justify(proposedWidth:proposedHeight:)`
+	/// gets called.
 	var maxHeight: Double = .zero
 	
 	func justifyBounds() -> (minW: Double, minH: Double, maxW: Double, maxH: Double) {
@@ -124,11 +161,15 @@ class JustifiableNode {
 		}
 	}
 	
+	/// Positions the node and all children at the given x-coordinate.
+	/// - Parameter x: Position to place the node at.
 	func justify(x: Double) {
 		self.x = x
 		children.first?.justify(x: x)
 	}
 	
+	/// Positions the node and all children at the given y-coordinate.
+	/// - Parameter y: Position to place the node at.
 	func justify(y: Double) {
 		self.y = y
 		children.first?.justify(y: y)
@@ -136,51 +177,12 @@ class JustifiableNode {
 	
 	// MARK: - Event Handling
 	
-	func nodeWillJustifyBounds() {
+	/// Gets called when the node has justified its origin and dimentions.
+	///
+	/// Override this method if you want to respond to this event.
+	func nodeDidJustify() {
 		children.forEach { child in
-			child.nodeWillJustifyBounds()
-		}
-	}
-	
-	func nodeDidJustifyBounds() {
-		children.forEach { child in
-			child.nodeDidJustifyBounds()
-		}
-	}
-	
-	func nodeWillJustifySize() {
-		children.forEach { child in
-			child.nodeWillJustifySize()
-		}
-	}
-	
-	func nodeDidJustifySize() {
-		children.forEach { child in
-			child.nodeDidJustifySize()
-		}
-	}
-	
-	func nodeWillJustifyAchsis() {
-		children.forEach { child in
-			child.nodeWillJustifyAchsis()
-		}
-	}
-	
-	func nodeDidJustifyAchsis() {
-		children.forEach { child in
-			child.nodeDidJustifyAchsis()
-		}
-	}
-	
-	func nodeWillDrawSelf() {
-		children.forEach { child in
-			child.nodeWillDrawSelf()
-		}
-	}
-	
-	func nodeDidDrawSelf() {
-		children.forEach { child in
-			child.nodeDidDrawSelf()
+			child.nodeDidJustify()
 		}
 	}
 }

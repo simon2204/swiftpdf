@@ -14,12 +14,8 @@ public final class Page: PDFPage {
     }
     
 	public override func draw(in context: PDFGraphicsContext) {
-		rootDrawable.nodeWillJustifyBounds()
 		_ = rootDrawable.justifyBounds()
-		rootDrawable.nodeDidJustifyBounds()
 		rootDrawable.layoutSubViews()
-		rootDrawable.nodeWillDrawSelf()
         rootDrawable.draw(in: context)
-		rootDrawable.nodeDidDrawSelf()
     }
 }
