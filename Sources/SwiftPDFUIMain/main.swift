@@ -13,6 +13,3 @@ let desktopURL = URL(fileURLWithPath: "/Users/Simon/Desktop/SwiftBeta.pdf")
 let data = document.dataRepresentation()
 
 try data.write(to: desktopURL)
-
-
-

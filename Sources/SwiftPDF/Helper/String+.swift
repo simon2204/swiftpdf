@@ -31,3 +31,23 @@ extension String {
         prefix(1).capitalized + dropFirst()
     }
 }
+
+public extension String {
+	func removeTrailingWhitespaces() -> String {
+		guard !isEmpty else { return self }
+		
+		let reversedString = reversed()
+		
+		var lastIndexWithoutWhitespace = endIndex
+		
+		for char in reversedString {
+			if char == " " {
+				lastIndexWithoutWhitespace = index(before: lastIndexWithoutWhitespace)
+			} else {
+				break
+			}
+		}
+		
+		return String(self[startIndex..<lastIndexWithoutWhitespace])
+	}
+}

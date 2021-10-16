@@ -54,8 +54,8 @@ extension PDFFont {
 }
 
 public extension PDFFont {
-	func width(of text: String, size: Double) -> Double? {
-		guard let metrics = self.metrics else { return nil }
+	func width(of text: String, size: Double) -> Double {
+		guard let metrics = self.metrics else { return Double.infinity }
 		return Double(text.count) * size * Double(metrics.advanceWidthMax) / Double(metrics.unitsPerEm)
 	}
 }

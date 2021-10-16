@@ -50,7 +50,7 @@ public extension Text {
 
 extension Text: PrimitiveView {
 	func buildTree(_ parent: JustifiableNode) {
-//		let drawable = TextDrawable(content: content, modifiers: modifiers)
-//		parent.add(child: drawable)
+		let drawable = TextDrawable(content: content, modifiers: modifiers)
+		parent.add(child: drawable)
 	}
 }
