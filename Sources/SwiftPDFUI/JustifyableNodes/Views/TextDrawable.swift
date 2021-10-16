@@ -76,7 +76,8 @@ final class TextDrawable: JustifiableNode {
 			}
 			
 			var canProcessNextComponent: Bool {
-				currentIndex < lineComponents.endIndex && fittingLines.count <= maxLineCount
+				currentIndex < lineComponents.endIndex
+                && fittingLines.count <= maxLineCount
 			}
 			
 			var currentIndexIsLastIndex: Bool {
@@ -85,29 +86,37 @@ final class TextDrawable: JustifiableNode {
 			
 			repeat {
 				
-				// First append leading whitespaces.
+				// First append leading whitespaces for each empty `currentLineComponent`.
 				while canProcessNextComponent && currentLineComponent.isEmpty {
 					longestFittingLine += " "
 					currentIndex = lineComponents.index(after: currentIndex)
 				}
 				
+                // Extending `longestFittingLine` by the `currentLineComponent`.
 				let extendedLine = longestFittingLine + currentLineComponent
 				
+                // Line width of the extended line.
 				let extendedLineWidth = font.width(of: extendedLine, size: fontSize)
 				
 				if extendedLineWidth <= proposedWidth {
+                    // If `extendedLine` fits in the proposed width the `extendedLine`
+                    // is now the new longestFittingLine.
 					longestFittingLine = extendedLine
-				}
-				
-				if extendedLineWidth > proposedWidth {
-					fittingLines.append(longestFittingLine.removeTrailingWhitespaces())
-					longestFittingLine = currentLineComponent
-				}
-				
+                    
+                } else {
+                    // If `extendedLine` does not fit, therefore `longestFittingLine`
+                    // is now the longest fitting line for the proposed width,
+                    // append it to `fittingLines`.
+                    fittingLines.append(longestFittingLine.removeTrailingWhitespaces())
+                    // `currentLineComponent` will be the start for the next line.
+                    longestFittingLine = currentLineComponent
+                }
+            
 				if currentIndexIsLastIndex {
 					fittingLines.append(longestFittingLine.removeTrailingWhitespaces())
 				}
 				
+                // Append whitespace for seperating each token.
 				longestFittingLine += " "
 				
 				currentIndex = lineComponents.index(after: currentIndex)
