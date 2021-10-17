@@ -19,5 +19,3 @@ extension AnyView: PrimitiveView {
         return function(input)
     }
 }
-
-

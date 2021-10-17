@@ -280,7 +280,7 @@ public class PDFGraphicsContext {
 	public func setFontSize(_ size: Double) {
 		currentFontSize = size
 	}
-	
+    
 	/// Displays a character string at a position you specify.
 	///
 	/// - Parameters:

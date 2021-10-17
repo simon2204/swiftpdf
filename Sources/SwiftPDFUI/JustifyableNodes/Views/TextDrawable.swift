@@ -159,9 +159,9 @@ final class TextDrawable: JustifiableNode {
 			let descender = fontSize * Double(metrics.descender) / Double(metrics.unitsPerEm)
 			let y = origin.y - descender + leading * (lineCount - 1)
 			let newOrigin = Point(x: origin.x, y: y)
-			context.showTextLines(fittingLines, at: newOrigin)
+            context.showTextLines(fittingLines, at: newOrigin, leading: leading)
 		} else {
-			context.showTextLines(fittingLines, at: origin)
+			context.showTextLines(fittingLines, at: origin, leading: leading)
 		}
 		
 		context.restoreGState()

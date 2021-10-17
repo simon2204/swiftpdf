@@ -1,5 +1,6 @@
 public struct BorderModifier: ViewModifier {
 	let color: Color
+    let width: Double
 	
 	public func body(content: Content) -> some View {
 		content
@@ -8,14 +9,14 @@ public struct BorderModifier: ViewModifier {
 
 extension BorderModifier: PrimitiveModifier {
 	func buildTree(_ parent: JustifiableNode, content: PrimitiveView) {
-		let node = BorderNode(color: color)
+        let node = BorderNode(color: color, width: width)
 		parent.add(child: node)
 		content.buildTree(node)
 	}
 }
 
 public extension View {
-	func border(_ color: Color = .black) -> ModifiedContent<Self, BorderModifier> {
-		modifier(BorderModifier(color: color))
+    func border(color: Color, width: Double = 1) -> ModifiedContent<Self, BorderModifier> {
+		modifier(BorderModifier(color: color, width: width))
 	}
 }
