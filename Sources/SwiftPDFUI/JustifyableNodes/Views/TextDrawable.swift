@@ -29,9 +29,9 @@ final class TextDrawable: JustifiableNode {
 		self.modifiers = modifiers
 		self.lines = content.components(separatedBy: "\n")
 		self.font = .courier
-		self.fontSize = 12
-		self.lineSpacing = 0
-		self.fontColor = .black
+		self.fontSize = Default.fontSize
+		self.lineSpacing = Default.lineSpacing
+		self.fontColor = Default.color
 		
 		for modifier in modifiers {
 			switch modifier {
@@ -102,7 +102,6 @@ final class TextDrawable: JustifiableNode {
                     // If `extendedLine` fits in the proposed width the `extendedLine`
                     // is now the new longestFittingLine.
 					longestFittingLine = extendedLine
-                    
                 } else {
                     // If `extendedLine` does not fit, therefore `longestFittingLine`
                     // is now the longest fitting line for the proposed width,
