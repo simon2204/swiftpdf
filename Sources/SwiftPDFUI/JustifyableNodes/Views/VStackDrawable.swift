@@ -11,7 +11,7 @@ final class VStackDrawable: StackNode {
 	}
 	
 	/// Total amout of spacing needed for spacing all children.
-	private var totalSpacing: Double {
+	var totalSpacing: Double {
 		let spacingCount = Double(children.count) - 1
 		return spacingCount * spacing
 	}

@@ -16,96 +16,65 @@ final class HStackDrawable: StackNode {
 	private var totalSpacing: Double {
 		// Count of spacings needed to have one spacing beween each child.
 		let spacingCount = Double(children.count) - 1
-		
 		return spacingCount * spacing
 	}
 	
 	override func justify(proposedWidth: Double, proposedHeight: Double) {
 		
-		// Count of children which did not justify their width yet.
-		var countOfNotJustifiedChildren = Double(children.count)
+		var partitionedChildren = self.children
 		
-		// Remaining width after subtracing the total amount of spacing.
-		var remainingWidth = proposedWidth - totalSpacing
+		let p0 = partitionedChildren.partition(by: { $0.minWidth > 0 })
 		
-		// Compute equal width for all children
-		// which did not get a proposal yet.
+		let minChildrenCount = partitionedChildren[..<p0].count
+		
+		let minSum = partitionedChildren[p0...].map(\.minWidth).reduce(0, +)
+		
+		var remainingWidth = proposedWidth - totalSpacing - minSum
+		
+		let minChildWidth = remainingWidth / Double(minChildrenCount)
+		
+		let _ = partitionedChildren[..<p0].partition(by: { $0.maxWidth <= minChildWidth })
+		
+		remainingWidth = justify(
+			children: partitionedChildren[..<p0],
+			totalWidth: remainingWidth,
+			proposedHeight: proposedHeight
+		)
+		
+		let p3 = partitionedChildren[p0...].partition(by: { $0.maxWidth < .infinity })
+		
+		//partitionedChildren[p3...].sort(by: { $0.minWidth < $1.minWidth })
+		
+		partitionedChildren[p0..<p3].sort(by: { $0.minWidth < $1.minWidth })
+		
+		remainingWidth = justify(
+			children: partitionedChildren[p0...],
+			totalWidth: remainingWidth + minSum,
+			proposedHeight: proposedHeight
+		)
+		
+		self.width = children.lazy.map(\.width).reduce(0, +) + totalSpacing
+		self.height = children.lazy.max(by: { $0.height < $1.height })?.height ?? 0
+	}
+	
+	
+	private func justify(children: Array<JustifiableNode>.SubSequence, totalWidth: Double, proposedHeight: Double) -> Double {
+		
+		var remainingChildren = children.count
+		
+		var remainingWidth = totalWidth
+		
 		var childWidth: Double {
-			remainingWidth / countOfNotJustifiedChildren
+			remainingWidth / Double(remainingChildren)
 		}
 		
-		// Copy of `self.children`, because we want to modify
-		// the order of children which get a dimension proposed first
-		// but not the original order.
-		var stackElements = self.children
-		
-		// Seperates spacers from all other children.
-		let p0 = stackElements.partition(by: { $0 is SpacerDrawable })
-		
-		// Least flexible children with a minimum
-		// width will get the width dimension proposed first.
-		// They will be located in the right half of `children`,
-		// starting from the pivot-index.
-		let p1 = stackElements[..<p0].partition(by: { $0.minWidth > 0 })
-		
-		// Children with a maximum width smaller
-		// than the `childWidth`,
-		// in the left half of the array before the pivot,
-		// will get proposed `childWidth`,
-		// so that remaining children can fully use the remaining width.
-		let p2 = stackElements[..<p1].partition(by: { $0.maxWidth < childWidth })
-		
-		// [(child.minWidth > 0)...,
-		//  (child.maxWidth < childWidth)...,
-		//  (remaining children not including spacers)...]
-		var children = stackElements[p1..<p0] + stackElements[p2..<p1] + stackElements[..<p2]
-		
-		// Subsequence which contains only spacers.
-		let spacers = stackElements[p0...]
-		
-		// Indicates whether there are children left
-		// that want to claim the entire available space.
-		let needsToLayoutChildrenWithFlexibleWidth = p2 > 0
-		
-		// If there are children in the stack who want to
-		// take the entire remaining width that they are given to..
-		if needsToLayoutChildrenWithFlexibleWidth {
-			for spacer in spacers {
-				// ..spacers shall only take their minimum width from the remaining width.
-				spacer.maxWidth = spacer.minWidth
-				spacer.maxHeight = spacer.minHeight
-			}
-			// Spacers with a fixed width will take their
-			// needed space from the remaining available space first.
-			children = spacers + children
-		} else {
-			// Spacers will take up the remaining available space,
-			// after all other children have claimed their space.
-			children = children + spacers
-		}
-		
-		// Height of the tallest child.
-		var maximumHeightOfChildren: Double = 0
-		
-		for child in children {
-			// Justify each children with the calculated `childWidth`.
+		for child in children.reversed() {
 			child.justify(proposedWidth: childWidth, proposedHeight: proposedHeight)
-			
-			// Decrease count of children that need to be justified.
-			countOfNotJustifiedChildren -= 1
-			
-			// Remove the width from the `remainingWidth` which a child just took.
+			remainingChildren -= 1
 			remainingWidth -= child.width
-			
-			// Calculate the height of the tallest child.
-			maximumHeightOfChildren = max(maximumHeightOfChildren, child.height)
 		}
 		
-		// Sum of all children's width plus total amount of spacing.
-		self.width = proposedWidth - remainingWidth
-		
-		// The `HStack` inherits the height of the tallest child.
-		self.height = maximumHeightOfChildren
+		return remainingWidth
 	}
 	
 	override func justify(x: Double) {

@@ -1,4 +1,4 @@
-final class ZStackDrawable: StackNode {
+final class ZStackDrawable: AlignmentNode {
 	
 	/// Vertical alignment of children.
 	private var alignment: Alignment
