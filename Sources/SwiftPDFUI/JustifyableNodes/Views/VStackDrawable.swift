@@ -17,90 +17,61 @@ final class VStackDrawable: StackNode {
 	}
 	
 	override func justify(proposedWidth: Double, proposedHeight: Double) {
-		// Count of children which did not justify their height yet.
-		var justifiedChildrenHeightCount = Double(children.count)
-
-		// Remaining height after subtracing the total amount of spacing.
-		var remainingHeight = proposedHeight - totalSpacing
-
-		// Compute equal height for all children
-		// which did not get a proposal yet.
-		var childHeight: Double {
-			remainingHeight / justifiedChildrenHeightCount
-		}
-
-		// Copy of `self.children`, because we want to modify
-		// the order of children which get a dimension proposed first.
-		var stackElements = self.children
-
-		// Seperates spacers from all other children.
-		let p0 = stackElements.partition(by: { $0 is SpacerDrawable })
-
-		// Least flexible children with a minimum
-		// height will get the height dimension proposed first.
-		// They will be located in the right half of `children`,
-		// starting from the pivot-index.
-		let p1 = stackElements[..<p0].partition(by: { $0.minHeight > 0 })
-
-		// Children with a maximum height smaller
-		// than the `childHeight`,
-		// in the left half of the array before the pivot,
-		// will get proposed `childHeight`,
-		// so that remaining children can fully use the remaining height.
-		let p2 = stackElements[..<p1].partition(by: { $0.maxHeight < childHeight })
 		
-		// [(child.minHeight > 0)...,
-		//  (child.maxHeight < childHeight)...,
-		//  (remaining children not including spacers)...]
-		var children = stackElements[p1..<p0] + stackElements[p2..<p1] + stackElements[..<p2]
-
-		// Subsequence containing only spacers.
-		let spacers = stackElements[p0...]
-
-		// Indicates whether there are children left
-		// that want to claim the entire available space.
-		let needsToLayoutChildrenWithFlexibleHeight = p2 > 0
-
-		// If there are children in the stack who want to
-		// take the entire remaining height that they are given to..
-		if needsToLayoutChildrenWithFlexibleHeight {
-			for spacer in spacers {
-				// ..spacers shall only take their minimum height from the remaining height.
-				spacer.maxWidth = spacer.minWidth
-				spacer.maxHeight = spacer.minHeight
-			}
-			// Spacers with a fixed height will take their
-			// needed space from the remaining available space first.
-			children = spacers + children
-		} else {
-			// Spacers will take up the remaining available space,
-			// after all other children have claimed their space
-			children = children + spacers
-		}
+		var partitionedChildren = self.children
 		
-		// Width of the widest child.
-		var maximumWidthOfChildren: Double = 0
+		let p0 = partitionedChildren.partition(by: { $0.minHeight > 0 })
 		
-		for child in children {
-			
-			child.justify(proposedWidth: proposedWidth, proposedHeight: childHeight)
-			
-			justifiedChildrenHeightCount -= 1
-			
-			remainingHeight -= child.height
-			
-			// Calculate the height of the tallest child.
-			maximumWidthOfChildren = max(maximumWidthOfChildren, child.width)
-		}
-
-		self.width = maximumWidthOfChildren
+		let minChildrenCount = partitionedChildren[..<p0].count
 		
-		// Sum of all children's height.
-		self.height = proposedHeight - remainingHeight
+		let minSum = partitionedChildren[p0...].map(\.minHeight).reduce(0, +)
+		
+		var remainingHeight = proposedHeight - totalSpacing - minSum
+		
+		let minChildHeight = remainingHeight / Double(minChildrenCount)
+		
+		let _ = partitionedChildren[..<p0].partition(by: { $0.maxHeight <= minChildHeight })
+		
+		remainingHeight = justify(
+			children: partitionedChildren[..<p0],
+			totalHeight: remainingHeight,
+			proposedWidth: proposedWidth
+		)
+		
+		let p3 = partitionedChildren[p0...].partition(by: { $0.maxHeight < .infinity })
+		
+		partitionedChildren[p0..<p3].sort(by: { $0.minHeight < $1.minHeight })
+		
+		remainingHeight = justify(
+			children: partitionedChildren[p0...],
+			totalHeight: remainingHeight + minSum,
+			proposedWidth: proposedWidth
+		)
+		
+		self.width = children.lazy.max(by: { $0.width < $1.width })?.width ?? 0
+		self.height = children.lazy.map(\.height).reduce(0, +) + totalSpacing
 	}
 	
 	
-	
+	private func justify(children: Array<JustifiableNode>.SubSequence, totalHeight: Double, proposedWidth: Double) -> Double {
+		
+		var remainingChildren = children.count
+		
+		var remainingHeight = totalHeight
+		
+		var childHeight: Double {
+			remainingHeight / Double(remainingChildren)
+		}
+		
+		for child in children.reversed() {
+			child.justify(proposedWidth: proposedWidth, proposedHeight: childHeight)
+			remainingChildren -= 1
+			remainingHeight -= child.height
+		}
+		
+		return remainingHeight
+	}
+
 	override func justify(x: Double) {
 		self.x = x
 		switch alignment {
@@ -115,9 +86,7 @@ final class VStackDrawable: StackNode {
 	
 	override func justify(y: Double) {
 		self.y = x
-	
 		var offsetY = y
-		
 		for child in children.reversed() {
 			child.justify(y: offsetY)
 			offsetY += child.height + spacing

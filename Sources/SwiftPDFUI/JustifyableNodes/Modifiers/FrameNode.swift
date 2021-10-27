@@ -24,7 +24,7 @@ final class FrameNode: AlignmentNode {
 			let proposedChildHeight = self._height ?? proposedHeight
 			child.justify(proposedWidth: proposedChildWidth, proposedHeight: proposedChildHeight)
 			self.width = self._width ?? child.width
-			self.height = self._height ?? child.width
+			self.height = self._height ?? child.height
 		} else {
 			self.width = self._width ?? 0
 			self.height = self._height ?? 0

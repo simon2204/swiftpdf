@@ -43,8 +43,6 @@ final class HStackDrawable: StackNode {
 		
 		let p3 = partitionedChildren[p0...].partition(by: { $0.maxWidth < .infinity })
 		
-		//partitionedChildren[p3...].sort(by: { $0.minWidth < $1.minWidth })
-		
 		partitionedChildren[p0..<p3].sort(by: { $0.minWidth < $1.minWidth })
 		
 		remainingWidth = justify(
@@ -79,9 +77,7 @@ final class HStackDrawable: StackNode {
 	
 	override func justify(x: Double) {
 		self.x = x
-		
 		var offsetX = x
-		
 		for child in children {
 			child.justify(x: offsetX)
 			offsetX += child.width + spacing

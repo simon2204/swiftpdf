@@ -3,24 +3,17 @@ import SwiftPDFUI
 struct ContentView: View {
 	var body: some View {
 		HStack {
-			Color.green
-			
-			Spacer(minLength: 100)
-			
-			GeometryReader { geometry -> Color in
-				print(geometry)
-				return Color.blue
+			VStack(spacing: 0) {
+				Text("Hallo und so und so!")
+				Text("Hallo und so und so!")
+				Text("Hallo und so und so!")
+				Spacer()
 			}
-			.frame(width: 150)
-			
-			Spacer(minLength: 50)
-			
-			GeometryReader { geometry -> Color in
-				print(geometry)
-				return Color.yellow
-			}
-			.frame(width: 100)
-			
+			Spacer()
 		}
+		.border(color: .blue)
+		.padding(.vertical, 20)
+		.padding(.horizontal, 50)
+		.border(color: .red)
 	}
 }
