@@ -4,6 +4,11 @@ final class PaddingDrawable: JustifiableNode {
 	
 	init(insets: EdgeInsets?) {
 		self.insets = insets ?? EdgeInsets(all: Default.spacing)
+		
+		super.init()
+		
+		minWidth = self.insets.leading + self.insets.trailing
+		minHeight = self.insets.top + self.insets.bottom
 	}
 	
 	override func justify(proposedWidth: Double, proposedHeight: Double) {

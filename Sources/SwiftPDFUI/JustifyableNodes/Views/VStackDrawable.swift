@@ -40,7 +40,7 @@ final class VStackDrawable: StackNode {
 			remainingHeight / Double(remainingViewCount)
 		}
 		
-		func justViews(inPartition partition: Partition, proposedLength: (JustifiableNode) -> Double) {
+		func justifyViews(inPartition partition: Partition, proposedLength: (JustifiableNode) -> Double) {
 			for view in partition {
 				let proposedLength = proposedLength(view)
 				view.justify(proposedWidth: proposedWidth, proposedHeight: proposedLength)
@@ -60,7 +60,7 @@ final class VStackDrawable: StackNode {
 				
 				remainingViews = remainingViews[..<p]
 				
-				justViews(inPartition: viewsGreaterThanEqualChildHeight) { view in
+				justifyViews(inPartition: viewsGreaterThanEqualChildHeight) { view in
 					view.minHeight
 				}
 				
@@ -71,17 +71,15 @@ final class VStackDrawable: StackNode {
 		
 		let p = remainingViews.partition(by: { $0.maxHeight < equalChildHeight })
 		
-		let viewsSmallerThanEqualChildWidth = remainingViews[p...]
+		let viewsSmallerThanEqualChildHeight = remainingViews[p...]
 		
 		remainingViews = remainingViews[..<p]
 		
-		for view in viewsSmallerThanEqualChildWidth {
-			view.justify(proposedWidth: proposedWidth, proposedHeight: equalChildHeight)
-			remainingHeight -= view.height
-			remainingViewCount -= 1
+		justifyViews(inPartition: viewsSmallerThanEqualChildHeight) { _ in
+			equalChildHeight
 		}
 		
-		justViews(inPartition: remainingViews) { _ in
+		justifyViews(inPartition: remainingViews) { _ in
 			equalChildHeight
 		}
 		
@@ -92,7 +90,7 @@ final class VStackDrawable: StackNode {
 		
 		justifyViewsWithMinimumSpace()
 		
-		justViews(inPartition: remainingViews) { _ in
+		justifyViews(inPartition: remainingViews) { _ in
 			equalChildHeight
 		}
 		

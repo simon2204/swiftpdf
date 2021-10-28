@@ -78,10 +78,8 @@ final class HStackDrawable: StackNode {
 		
 		remainingViews = remainingViews[..<p]
 		
-		for view in viewsSmallerThanEqualChildWidth {
-			view.justify(proposedWidth: equalChildWidth, proposedHeight: proposedHeight)
-			remainingWidth -= view.width
-			remainingViewCount -= 1
+		justViews(inPartition: viewsSmallerThanEqualChildWidth) { _ in
+			equalChildWidth
 		}
 		
 		justViews(inPartition: remainingViews) { _ in

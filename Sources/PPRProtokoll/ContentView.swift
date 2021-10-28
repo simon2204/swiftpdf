@@ -24,19 +24,9 @@ struct ContentView: View {
 			
 			ResultTable()
 			
-			GeometryReader { frame -> Color in
-				print(frame)
-				
-				return Color.green
-			}
-			
-			GeometryReader { frame -> Color in
-				print(frame)
-				
-				return Color.blue
-			}
+			Color.green
 		}
 		.border(color: .red)
-		.padding(.vertical, 30)
+//		.padding(.vertical, 30)
 	}
 }

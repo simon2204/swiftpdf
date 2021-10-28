@@ -15,10 +15,6 @@ final class ColorDrawable: JustifiableNode {
 		self.width = proposedWidth
 		self.height = proposedHeight
 	}
-	
-	override func justifyBounds() -> (minW: Double, minH: Double, maxW: Double, maxH: Double) {
-		return (minWidth, minHeight, maxWidth, maxHeight)
-	}
     
     override func draw(in context: GraphicsContext) {
         context.saveGState()
