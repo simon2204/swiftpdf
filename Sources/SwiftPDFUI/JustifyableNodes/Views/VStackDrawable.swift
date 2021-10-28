@@ -1,5 +1,7 @@
 final class VStackDrawable: StackNode {
 	
+	private typealias Partition = Array<JustifiableNode>.SubSequence
+	
 	private let alignment: HorizontalAlignment
 	
 	private let spacing: Double
@@ -18,35 +20,81 @@ final class VStackDrawable: StackNode {
 	
 	override func justify(proposedWidth: Double, proposedHeight: Double) {
 		
-		var partitionedChildren = self.children
+		// Copy of children, because we don't want to modify the actual order of children.
+		var childrenCopy = self.children
 		
-		let p0 = partitionedChildren.partition(by: { $0.minHeight > 0 })
+		// `childrenCopy` contains only SpacerDrawables starting from this index.
+		let spacerPivot = childrenCopy.partition(by: { $0 is SpacerDrawable })
 		
-		let minChildrenCount = partitionedChildren[..<p0].count
+		let spacers = childrenCopy[spacerPivot...]
 		
-		let minSum = partitionedChildren[p0...].map(\.minHeight).reduce(0, +)
+		var remainingViews = childrenCopy[..<spacerPivot]
 		
-		var remainingHeight = proposedHeight - totalSpacing - minSum
+		let reservedMinimumSpaceForSpacers = spacers.lazy.map(\.minHeight).reduce(0, +)
 		
-		let minChildHeight = remainingHeight / Double(minChildrenCount)
+		var remainingHeight = proposedHeight - totalSpacing - reservedMinimumSpaceForSpacers
 		
-		let _ = partitionedChildren[..<p0].partition(by: { $0.maxHeight <= minChildHeight })
+		var remainingViewCount = remainingViews.count
 		
-		remainingHeight = justify(
-			children: partitionedChildren[..<p0],
-			totalHeight: remainingHeight,
-			proposedWidth: proposedWidth
-		)
+		var equalChildHeight: Double {
+			remainingHeight / Double(remainingViewCount)
+		}
 		
-		let p3 = partitionedChildren[p0...].partition(by: { $0.maxHeight < .infinity })
+		func justViews(inPartition partition: Partition, proposedLength: (JustifiableNode) -> Double) {
+			for view in partition {
+				let proposedLength = proposedLength(view)
+				view.justify(proposedWidth: proposedWidth, proposedHeight: proposedLength)
+				remainingHeight -= view.height
+				remainingViewCount -= 1
+			}
+		}
 		
-		partitionedChildren[p0..<p3].sort(by: { $0.minHeight < $1.minHeight })
+		func justifyViewsWithMinimumSpace() {
+			var viewsGreaterThanEqualChildHeight: Partition
+			
+			repeat {
+				
+				let p = remainingViews.partition(by: { $0.minHeight >= equalChildHeight })
+				
+				viewsGreaterThanEqualChildHeight = remainingViews[p...]
+				
+				remainingViews = remainingViews[..<p]
+				
+				justViews(inPartition: viewsGreaterThanEqualChildHeight) { view in
+					view.minHeight
+				}
+				
+			} while !viewsGreaterThanEqualChildHeight.isEmpty
+		}
 		
-		remainingHeight = justify(
-			children: partitionedChildren[p0...],
-			totalHeight: remainingHeight + minSum,
-			proposedWidth: proposedWidth
-		)
+		justifyViewsWithMinimumSpace()
+		
+		let p = remainingViews.partition(by: { $0.maxHeight < equalChildHeight })
+		
+		let viewsSmallerThanEqualChildWidth = remainingViews[p...]
+		
+		remainingViews = remainingViews[..<p]
+		
+		for view in viewsSmallerThanEqualChildWidth {
+			view.justify(proposedWidth: proposedWidth, proposedHeight: equalChildHeight)
+			remainingHeight -= view.height
+			remainingViewCount -= 1
+		}
+		
+		justViews(inPartition: remainingViews) { _ in
+			equalChildHeight
+		}
+		
+		remainingHeight += reservedMinimumSpaceForSpacers
+		
+		remainingViews = spacers
+		remainingViewCount = spacers.count
+		
+		justifyViewsWithMinimumSpace()
+		
+		justViews(inPartition: remainingViews) { _ in
+			equalChildHeight
+		}
 		
 		self.width = children.lazy.max(by: { $0.width < $1.width })?.width ?? 0
 		self.height = children.lazy.map(\.height).reduce(0, +) + totalSpacing

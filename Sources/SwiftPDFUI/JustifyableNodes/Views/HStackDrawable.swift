@@ -1,4 +1,6 @@
 final class HStackDrawable: StackNode {
+	
+	private typealias Partition = Array<JustifiableNode>.SubSequence
     
 	/// Vertical alignment of children.
     private let alignment: VerticalAlignment
@@ -21,58 +23,84 @@ final class HStackDrawable: StackNode {
 	
 	override func justify(proposedWidth: Double, proposedHeight: Double) {
 		
-		var partitionedChildren = self.children
+		// Copy of children, because we don't want to modify the actual order of children.
+		var childrenCopy = self.children
 		
-		let p0 = partitionedChildren.partition(by: { $0.minWidth > 0 })
+		// `childrenCopy` contains only SpacerDrawables starting from this index.
+		let spacerPivot = childrenCopy.partition(by: { $0 is SpacerDrawable })
 		
-		let minChildrenCount = partitionedChildren[..<p0].count
+		let spacers = childrenCopy[spacerPivot...]
 		
-		let minSum = partitionedChildren[p0...].map(\.minWidth).reduce(0, +)
+		var remainingViews = childrenCopy[..<spacerPivot]
 		
-		var remainingWidth = proposedWidth - totalSpacing - minSum
+		let reservedMinimumSpaceForSpacers = spacers.lazy.map(\.minWidth).reduce(0, +)
 		
-		let minChildWidth = remainingWidth / Double(minChildrenCount)
+		var remainingWidth = proposedWidth - totalSpacing - reservedMinimumSpaceForSpacers
 		
-		let _ = partitionedChildren[..<p0].partition(by: { $0.maxWidth <= minChildWidth })
+		var remainingViewCount = remainingViews.count
 		
-		remainingWidth = justify(
-			children: partitionedChildren[..<p0],
-			totalWidth: remainingWidth,
-			proposedHeight: proposedHeight
-		)
+		var equalChildWidth: Double {
+			remainingWidth / Double(remainingViewCount)
+		}
 		
-		let p3 = partitionedChildren[p0...].partition(by: { $0.maxWidth < .infinity })
+		func justViews(inPartition partition: Partition, proposedLength: (JustifiableNode) -> Double) {
+			for view in partition {
+				let proposedLength = proposedLength(view)
+				view.justify(proposedWidth: proposedLength, proposedHeight: proposedHeight)
+				remainingWidth -= view.width
+				remainingViewCount -= 1
+			}
+		}
 		
-		partitionedChildren[p0..<p3].sort(by: { $0.minWidth < $1.minWidth })
+		func justifyViewsWithMinimumSpace() {
+			var viewsGreaterThanEqualChildWidth: Partition
+			
+			repeat {
+				
+				let p = remainingViews.partition(by: { $0.minWidth >= equalChildWidth })
+				
+				viewsGreaterThanEqualChildWidth = remainingViews[p...]
+				
+				remainingViews = remainingViews[..<p]
+				
+				justViews(inPartition: viewsGreaterThanEqualChildWidth) { view in
+					view.minWidth
+				}
+				
+			} while !viewsGreaterThanEqualChildWidth.isEmpty
+		}
 		
-		remainingWidth = justify(
-			children: partitionedChildren[p0...],
-			totalWidth: remainingWidth + minSum,
-			proposedHeight: proposedHeight
-		)
+		justifyViewsWithMinimumSpace()
+		
+		let p = remainingViews.partition(by: { $0.maxWidth < equalChildWidth })
+		
+		let viewsSmallerThanEqualChildWidth = remainingViews[p...]
+		
+		remainingViews = remainingViews[..<p]
+		
+		for view in viewsSmallerThanEqualChildWidth {
+			view.justify(proposedWidth: equalChildWidth, proposedHeight: proposedHeight)
+			remainingWidth -= view.width
+			remainingViewCount -= 1
+		}
+		
+		justViews(inPartition: remainingViews) { _ in
+			equalChildWidth
+		}
+		
+		remainingWidth += reservedMinimumSpaceForSpacers
+		
+		remainingViews = spacers
+		remainingViewCount = spacers.count
+		
+		justifyViewsWithMinimumSpace()
+		
+		justViews(inPartition: remainingViews) { _ in
+			equalChildWidth
+		}
 		
 		self.width = children.lazy.map(\.width).reduce(0, +) + totalSpacing
 		self.height = children.lazy.max(by: { $0.height < $1.height })?.height ?? 0
-	}
-	
-	
-	private func justify(children: Array<JustifiableNode>.SubSequence, totalWidth: Double, proposedHeight: Double) -> Double {
-		
-		var remainingChildren = children.count
-		
-		var remainingWidth = totalWidth
-		
-		var childWidth: Double {
-			remainingWidth / Double(remainingChildren)
-		}
-		
-		for child in children.reversed() {
-			child.justify(proposedWidth: childWidth, proposedHeight: proposedHeight)
-			remainingChildren -= 1
-			remainingWidth -= child.width
-		}
-		
-		return remainingWidth
 	}
 	
 	override func justify(x: Double) {
