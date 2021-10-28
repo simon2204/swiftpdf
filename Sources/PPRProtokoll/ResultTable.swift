@@ -7,9 +7,9 @@ struct ResultTable: View {
 		VStack(spacing: 0) {
 			HorizontalDivider()
 			
-			ForEach(0..<7) { _ in
+			ForEach(0..<8) { _ in
 				TableRow {
-					Text("Hallo, Welt!")
+					Text("Hallo, \nWelt!")
 						.padding(16)
 					
 				} trailing: {

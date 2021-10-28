@@ -56,7 +56,11 @@ final class TextDrawable: JustifiableNode {
 	override func justify(proposedWidth: Double, proposedHeight: Double) {
 		
 		// Count of lines that can fit in proposedHeight.
-		let maxLineCount = Int((proposedHeight + lineSpacing) / (fontSize + lineSpacing))
+		var maxLineCount: Int?
+		
+		if proposedHeight.isFinite {
+			maxLineCount = Int((proposedHeight + lineSpacing) / (fontSize + lineSpacing))
+		}
 		
 		for line in lines where !line.isEmpty {
 			
@@ -75,7 +79,7 @@ final class TextDrawable: JustifiableNode {
 			
 			var canProcessNextComponent: Bool {
 				currentIndex < lineComponents.endIndex
-                && fittingLines.count < maxLineCount
+				&& fittingLines.count < maxLineCount ?? 0
 			}
 			
 			var currentIndexIsLastIndex: Bool {

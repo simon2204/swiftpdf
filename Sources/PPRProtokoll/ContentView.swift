@@ -25,6 +25,8 @@ struct ContentView: View {
 			ResultTable()
 			
 			Color.green
+			
+			//Spacer(minLength: 0)
 		}
 		.border(color: .red)
 //		.padding(.vertical, 30)

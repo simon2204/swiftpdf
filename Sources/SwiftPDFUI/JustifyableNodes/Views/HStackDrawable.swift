@@ -43,7 +43,7 @@ final class HStackDrawable: StackNode {
 			remainingWidth / Double(remainingViewCount)
 		}
 		
-		func justViews(inPartition partition: Partition, proposedLength: (JustifiableNode) -> Double) {
+		func justifyViews(inPartition partition: Partition, proposedLength: (JustifiableNode) -> Double) {
 			for view in partition {
 				let proposedLength = proposedLength(view)
 				view.justify(proposedWidth: proposedLength, proposedHeight: proposedHeight)
@@ -63,7 +63,7 @@ final class HStackDrawable: StackNode {
 				
 				remainingViews = remainingViews[..<p]
 				
-				justViews(inPartition: viewsGreaterThanEqualChildWidth) { view in
+				justifyViews(inPartition: viewsGreaterThanEqualChildWidth) { view in
 					view.minWidth
 				}
 				
@@ -78,11 +78,27 @@ final class HStackDrawable: StackNode {
 		
 		remainingViews = remainingViews[..<p]
 		
-		justViews(inPartition: viewsSmallerThanEqualChildWidth) { _ in
+		justifyViews(inPartition: viewsSmallerThanEqualChildWidth) { _ in
 			equalChildWidth
 		}
 		
-		justViews(inPartition: remainingViews) { _ in
+		// Fix for children with maxLength of infinity but actually dont take up infinite space
+		
+		for view in remainingViews {
+			view.justify(proposedWidth: proposedWidth, proposedHeight: .infinity)
+		}
+		
+		let p2 = remainingViews.partition(by: { $0.width < equalChildWidth })
+		
+		let viewsSmallerThanEqualChildWidth2 = remainingViews[p2...]
+		
+		justifyViews(inPartition: viewsSmallerThanEqualChildWidth2) { _ in
+			equalChildWidth
+		}
+		
+		// Fix for children with maxLength of infinity but actually dont take up infinite space
+		
+		justifyViews(inPartition: remainingViews) { _ in
 			equalChildWidth
 		}
 		
@@ -93,7 +109,7 @@ final class HStackDrawable: StackNode {
 		
 		justifyViewsWithMinimumSpace()
 		
-		justViews(inPartition: remainingViews) { _ in
+		justifyViews(inPartition: remainingViews) { _ in
 			equalChildWidth
 		}
 		

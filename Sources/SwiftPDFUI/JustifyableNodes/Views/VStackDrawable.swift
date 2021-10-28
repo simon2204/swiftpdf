@@ -54,7 +54,7 @@ final class VStackDrawable: StackNode {
 			
 			repeat {
 				
-				let p = remainingViews.partition(by: { $0.minHeight >= equalChildHeight })
+				let p = remainingViews.partition(by: { $0.minHeight > equalChildHeight })
 				
 				viewsGreaterThanEqualChildHeight = remainingViews[p...]
 				
@@ -76,6 +76,18 @@ final class VStackDrawable: StackNode {
 		remainingViews = remainingViews[..<p]
 		
 		justifyViews(inPartition: viewsSmallerThanEqualChildHeight) { _ in
+			equalChildHeight
+		}
+		
+		for view in remainingViews {
+			view.justify(proposedWidth: proposedWidth, proposedHeight: .infinity)
+		}
+		
+		let p2 = remainingViews.partition(by: { $0.height < equalChildHeight })
+		
+		let viewsSmallerThanEqualChildHeight2 = remainingViews[p2...]
+		
+		justifyViews(inPartition: viewsSmallerThanEqualChildHeight2) { _ in
 			equalChildHeight
 		}
 		
