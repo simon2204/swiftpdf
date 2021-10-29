@@ -9,7 +9,7 @@ struct ResultTable: View {
 			
 			ForEach(0..<8) { _ in
 				TableRow {
-					Text("Hallo, \nWelt!")
+					Text("Hallo, Welt!")
 						.padding(16)
 					
 				} trailing: {
