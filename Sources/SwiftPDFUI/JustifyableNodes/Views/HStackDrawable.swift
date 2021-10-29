@@ -85,7 +85,7 @@ final class HStackDrawable: StackNode {
 		// Fix for children with maxLength of infinity but actually dont take up infinite space
 		
 		for view in remainingViews {
-			view.justify(proposedWidth: proposedWidth, proposedHeight: .infinity)
+			view.justify(proposedWidth: .infinity, proposedHeight: proposedHeight)
 		}
 		
 		let p2 = remainingViews.partition(by: { $0.width < equalChildWidth })
