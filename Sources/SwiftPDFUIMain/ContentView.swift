@@ -8,6 +8,8 @@ struct ContentView: View {
 			Rectangle()
 				.stroke(.green, lineWidth: 20)
 			
+			RoundedRectangle(cornerRadius: 50)
+			
 			ZStack {
 				Circle()
 					.fill(.blue)

@@ -7,16 +7,34 @@ struct ResultTable: View {
 		VStack(spacing: 0) {
 			HorizontalDivider()
 			
-			ForEach(0..<8) { _ in
-				TableRow {
-					Text("Hallo, Welt!")
-						.padding(16)
-					
-				} trailing: {
-					
-					Text("Hallo, Welt!")
-						.padding(16)
-				}
+			TableRow {
+				Text("agagagaagga!")
+					.padding(16)
+				
+			} trailing: {
+				
+				Text("dfdft!")
+					.padding(16)
+			}
+			
+			TableRow {
+				Text("fadfafffafdaf!")
+					.padding(16)
+				
+			} trailing: {
+				
+				Text("Hallo, Welt!Hallo, Welt!")
+					.padding(16)
+			}
+			
+			TableRow {
+				Text("Hallo, Welt!")
+					.padding(16)
+				
+			} trailing: {
+				
+				Text("Hallo, Hallo, Welt!Welt!")
+					.padding(16)
 			}
 		}
 	}

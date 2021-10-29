@@ -24,9 +24,10 @@ struct ContentView: View {
 			
 			ResultTable()
 			
+			SuccessTag()
+			
 			Spacer(minLength: 0)
 		}
-		.border(color: .red)
 		.padding(.vertical, 30)
 	}
 }
