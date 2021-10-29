@@ -21,7 +21,7 @@ extension BackgroundModifier: PrimitiveModifier {
 }
 
 public extension View {
-	func background<V>(alignment: Alignment = .center, content: @autoclosure @escaping () -> V) -> some View where V : View {
+	func background<V>(alignment: Alignment = .center, _ content: @escaping () -> V) -> some View where V : View {
 		modifier(BackgroundModifier(alignment: alignment, background: content, foreground: self))
 	}
 }

@@ -10,31 +10,22 @@ struct ResultTable: View {
 			TableRow {
 				Text("agagagaagga!")
 					.padding(16)
-				
 			} trailing: {
-				
-				Text("dfdft!")
-					.padding(16)
+				SuccessTag()
 			}
 			
 			TableRow {
 				Text("fadfafffafdaf!")
 					.padding(16)
-				
 			} trailing: {
-				
-				Text("Hallo, Welt!Hallo, Welt!")
-					.padding(16)
+				FailureTag()
 			}
-			
+
 			TableRow {
 				Text("Hallo, Welt!")
 					.padding(16)
-				
 			} trailing: {
-				
-				Text("Hallo, Hallo, Welt!Welt!")
-					.padding(16)
+				ErrorTag()
 			}
 		}
 	}
@@ -56,9 +47,12 @@ struct TableRow<Leading, Trailing>: View where Leading: View, Trailing: View {
 		VStack(spacing: 0) {
 			HStack {
 				leadingItem
+					.border(color: .green)
 				Spacer()
 				trailingItem
+					.border(color: .blue)
 			}
+			.border(color: .red)
 			
 			HorizontalDivider()
 		}
