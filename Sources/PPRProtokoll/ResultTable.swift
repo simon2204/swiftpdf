@@ -1,25 +1,9 @@
 import SwiftPDFUI
 
 struct ResultTable: View {
-	
 	var body: some View {
-		
 		VStack(spacing: 0) {
 			HorizontalDivider()
-			
-			TableRow {
-				Text("agagagaagga!")
-					.padding(16)
-			} trailing: {
-				SuccessTag()
-			}
-			
-			TableRow {
-				Text("fadfafffafdaf!")
-					.padding(16)
-			} trailing: {
-				FailureTag()
-			}
 
 			TableRow {
 				Text("Hallo, Welt!")
@@ -37,7 +21,7 @@ struct TableRow<Leading, Trailing>: View where Leading: View, Trailing: View {
 	
 	private var trailingItem: Trailing
 	
-	init(@ViewBuilder leading: () -> Leading, @ViewBuilder trailing: () -> Trailing) {
+	init(leading: () -> Leading, trailing: () -> Trailing) {
 		self.leadingItem = leading()
 		self.trailingItem = trailing()
 	}
@@ -45,12 +29,14 @@ struct TableRow<Leading, Trailing>: View where Leading: View, Trailing: View {
 	var body: some View {
 		
 		VStack(spacing: 0) {
+			
 			HStack {
+				
 				leadingItem
-					.border(color: .green)
+				
 				Spacer()
+				
 				trailingItem
-					.border(color: .blue)
 			}
 			.border(color: .red)
 			

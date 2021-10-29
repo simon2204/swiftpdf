@@ -5,8 +5,6 @@ final class TextDrawable: JustifiableNode {
 	
 	private let content: String
 	
-	private let lines: [String]
-	
 	private var font: Font
 	
 	private var fontSize: Double
@@ -24,7 +22,6 @@ final class TextDrawable: JustifiableNode {
 	
 	init(content: String, modifiers: [Text.Modifier]) {
 		self.content = content
-		self.lines = content.components(separatedBy: "\n")
 		self.font = .courier
 		self.fontSize = Default.fontSize
 		self.lineSpacing = Default.lineSpacing
@@ -55,75 +52,7 @@ final class TextDrawable: JustifiableNode {
 	
 	override func justify(proposedWidth: Double, proposedHeight: Double) {
 		
-		// Count of lines that can fit in proposedHeight.
-		var maxLineCount: Int?
-		
-		if proposedHeight.isFinite {
-			maxLineCount = Int((proposedHeight + lineSpacing) / (fontSize + lineSpacing))
-		}
-		
-		for line in lines where !line.isEmpty {
-			
-			let lineComponents = line
-				.removeTrailingWhitespaces()
-				.split(separator: " ", omittingEmptySubsequences: false)
-			
-			// The current longest line that has a width smaller or equal to `proposedWidth`.
-			var longestFittingLine = ""
-			
-			var currentIndex = lineComponents.startIndex
-			
-			var currentLineComponent: String {
-				String(lineComponents[currentIndex])
-			}
-			
-			var canProcessNextComponent: Bool {
-				currentIndex < lineComponents.endIndex
-				&& fittingLines.count < maxLineCount ?? 0
-			}
-			
-			var currentIndexIsLastIndex: Bool {
-				lineComponents.index(after: currentIndex) == lineComponents.endIndex
-			}
-			
-			repeat {
-				
-				// First append leading whitespaces for each empty `currentLineComponent`.
-				while canProcessNextComponent && currentLineComponent.isEmpty {
-					longestFittingLine += " "
-					currentIndex = lineComponents.index(after: currentIndex)
-				}
-				
-                // Extending `longestFittingLine` by the `currentLineComponent`.
-				let extendedLine = longestFittingLine + currentLineComponent
-				
-                // Line width of the extended line.
-				let extendedLineWidth = font.width(of: extendedLine, size: fontSize)
-				
-				if extendedLineWidth <= proposedWidth {
-					// If `extendedLine` fits in the proposed width the `extendedLine`
-					// is now the new longestFittingLine.
-					longestFittingLine = extendedLine
-				} else if canProcessNextComponent {
-					// If `extendedLine` does not fit, therefore `longestFittingLine`
-					// is now the longest fitting line for the proposed width,
-					// append it to `fittingLines`.
-					fittingLines.append(longestFittingLine.removeTrailingWhitespaces())
-					// `currentLineComponent` will be the start for the next line.
-					longestFittingLine = currentLineComponent
-				}
-			
-				if currentIndexIsLastIndex && canProcessNextComponent {
-					fittingLines.append(longestFittingLine.removeTrailingWhitespaces())
-				}
-				
-				// Append whitespace for seperating each token.
-				longestFittingLine += " "
-				
-				currentIndex = lineComponents.index(after: currentIndex)
-				
-			} while canProcessNextComponent
-		}
+		fittingLines = [content]
 		
 		let longesLineWidth = fittingLines
 			.map { font.width(of: $0, size: fontSize) }
