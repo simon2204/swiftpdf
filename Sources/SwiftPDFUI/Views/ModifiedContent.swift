@@ -3,12 +3,6 @@ public struct ModifiedContent<Content, Modifier>: View where Content: View, Modi
 	var modifier: Modifier
 }
 
-//public extension ViewModifier {
-//	func concat<T>(_ modifier: T) -> ModifiedContent<Self, T> where T: ViewModifier {
-//		.init(content: self, modifier: modifier)
-//	}
-//}
-
 extension ModifiedContent: PrimitiveView {
 	func buildTree(_ parent: JustifiableNode) {
 		if let primitiveModifier = modifier as? PrimitiveModifier {
