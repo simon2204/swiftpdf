@@ -8,14 +8,23 @@ public final class Page: PDFPage {
 		let mm = 72 * 0.0393701
 		let width = 210 * mm
 		let height = 297 * mm
+		
 		self.rootDrawable = RootDrawable(pageSize: Size(width: width, height: height))
 		rootView.unwrapped().buildTree(rootDrawable)
-        super.init(width: width, height: height)
+		_ = rootDrawable.justifyBounds()
+		
+		rootDrawable.justify(
+			proposedWidth: width,
+			proposedHeight: height
+		)
+		rootDrawable.justify(x: 0)
+		rootDrawable.justify(y: 0)
+		rootDrawable.nodeDidJustify()
+		
+		super.init(width: rootDrawable.width, height: rootDrawable.height)
     }
     
 	public override func draw(in context: PDFGraphicsContext) {
-		_ = rootDrawable.justifyBounds()
-		rootDrawable.layoutSubViews()
         rootDrawable.draw(in: context)
     }
 }

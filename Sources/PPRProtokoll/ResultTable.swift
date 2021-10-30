@@ -3,25 +3,25 @@ import SwiftPDFUI
 struct ResultTable: View {
 	var body: some View {
 		VStack(spacing: 0) {
+			
 			HorizontalDivider()
 			
-			TableRow {
-				Text("Hallo, Welt! Hallo, Welt! Hallo\nNo!")
-					.padding(16)
-			} trailing: {
-				SuccessTag()
+			ForEach(0..<15) { _ in
+				TableRow {
+					Text("Hallo, Welt!")
+				} trailing: {
+					SuccessTag()
+				}
 			}
 			
 			TableRow {
 				Text("Hallo, Welt!")
-					.padding(16)
 			} trailing: {
 				FailureTag()
 			}
 
 			TableRow {
 				Text("Hallo, Welt!")
-					.padding(16)
 			} trailing: {
 				ErrorTag()
 			}
@@ -47,6 +47,7 @@ struct TableRow<Leading, Trailing>: View where Leading: View, Trailing: View {
 			HStack {
 				
 				leadingItem
+					.padding(16)
 				
 				Spacer()
 				

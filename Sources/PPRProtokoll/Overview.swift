@@ -11,35 +11,42 @@ struct Overview: View {
 	var body: some View {
 		VStack(alignment: .leading, spacing: 16) {
 	
-			InfoLine(
-				first: "Name: \(name)",
-				second: "Erstellt: \(creationDate)"
-			)
+			InfoLine {
+				HStack {
+					Text("Name:")
+					Text(name)
+				}
+			} second: {
+				HStack {
+					Text("Erstellt:")
+					Text(creationDate)
+				}
+			}
 			
-			InfoLine(
-				first: "Praktikumsaufgabe: \(taskName)",
-				second: "Erfolgreiche Testfälle: \(result)"
-			)
+			InfoLine {
+				HStack {
+					Text("Praktikumsaufgabe:")
+					Text(taskName)
+				}
+			} second: {
+				HStack {
+					Text("Erfolgreiche Testfälle:")
+					Text(result)
+				}
+			}
 		}
 	}
 }
 
-private struct InfoLine: View {
-	let first: String
-	let second: String
-	
-	private let fontSize = 10.0
+private struct InfoLine<First, Second>: View where First: View, Second: View {
+	let first: () -> First
+	let second: () -> Second
 	
 	var body: some View {
 		HStack {
-			Text(first)
-				.fontSize(fontSize)
-			
+			first()
 			Spacer()
-			
-			Text(second)
-				.fontSize(fontSize)
-			
+			second()
 			Spacer(minLength: 0)
 			Spacer(minLength: 0)
 			Spacer(minLength: 0)
