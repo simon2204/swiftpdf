@@ -87,6 +87,8 @@ final class VStackDrawable: StackNode {
 		
 		let viewsSmallerThanEqualChildHeight2 = remainingViews[p2...]
 		
+		remainingViews = remainingViews[..<p2]
+		
 		justifyViews(inPartition: viewsSmallerThanEqualChildHeight2) { _ in
 			equalChildHeight
 		}

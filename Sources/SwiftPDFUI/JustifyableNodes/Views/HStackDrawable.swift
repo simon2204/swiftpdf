@@ -92,6 +92,8 @@ final class HStackDrawable: StackNode {
 		
 		let viewsSmallerThanEqualChildWidth2 = remainingViews[p2...]
 		
+		remainingViews = remainingViews[..<p2]
+		
 		justifyViews(inPartition: viewsSmallerThanEqualChildWidth2) { _ in
 			equalChildWidth
 		}
