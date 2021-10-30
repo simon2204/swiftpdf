@@ -9,9 +9,9 @@ struct ContentView: View {
 			
 			Title(primary: "Auswertungsprotokoll", secondary: "PPR Testbench")
 				.padding(.leading, leadingPadding)
-			
+
 			HorizontalDivider(title: "Übersicht")
-			
+
 			Overview(
 				name: "Alexander Schmitz",
 				creationDate: "October 28, 2021 um 10:45 Uhr",
@@ -19,13 +19,13 @@ struct ContentView: View {
 				result: "10/10 (100%)"
 			)
 				.padding(.leading, leadingPadding)
-			
+
 			HorizontalDivider(title: "Auswertung")
-			
+
 			ResultTable()
 
 			Spacer(minLength: 0)
 		}
-		.padding(.vertical, 60)
+		.padding(.top, 30)
 	}
 }

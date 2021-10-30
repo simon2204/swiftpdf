@@ -6,7 +6,7 @@ struct ResultTable: View {
 			
 			HorizontalDivider()
 			
-			ForEach(0..<15) { _ in
+			ForEach(0..<10) { _ in
 				TableRow {
 					Text("Hallo, Welt!")
 				} trailing: {

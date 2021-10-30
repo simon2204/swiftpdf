@@ -9,7 +9,7 @@ public final class Page: PDFPage {
 		let width = 210 * mm
 		let height = 297 * mm
 		
-		self.rootDrawable = RootDrawable(pageSize: Size(width: width, height: height))
+		self.rootDrawable = RootDrawable()
 		rootView.unwrapped().buildTree(rootDrawable)
 		_ = rootDrawable.justifyBounds()
 		
