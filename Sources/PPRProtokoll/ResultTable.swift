@@ -4,6 +4,20 @@ struct ResultTable: View {
 	var body: some View {
 		VStack(spacing: 0) {
 			HorizontalDivider()
+			
+			TableRow {
+				Text("Hallo, Welt!")
+					.padding(16)
+			} trailing: {
+				SuccessTag()
+			}
+			
+			TableRow {
+				Text("Hallo, Welt!")
+					.padding(16)
+			} trailing: {
+				FailureTag()
+			}
 
 			TableRow {
 				Text("Hallo, Welt!")
@@ -37,13 +51,12 @@ struct TableRow<Leading, Trailing>: View where Leading: View, Trailing: View {
 				Spacer()
 				
 				trailingItem
+					.frame(width: 120, alignment: .leading)
 			}
-			.border(color: .red)
 			
 			HorizontalDivider()
 		}
 	}
-	
 }
 
 enum Result {
