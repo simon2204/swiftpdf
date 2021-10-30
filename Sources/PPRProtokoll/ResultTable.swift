@@ -6,7 +6,7 @@ struct ResultTable: View {
 			HorizontalDivider()
 			
 			TableRow {
-				Text("Hallo, Welt!")
+				Text("Hallo, Welt! Hallo, Welt! Hallo\nNo!")
 					.padding(16)
 			} trailing: {
 				SuccessTag()

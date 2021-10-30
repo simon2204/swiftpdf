@@ -45,17 +45,19 @@ final class TextDrawable: JustifiableNode {
 	}
 	
 	override func justifyBounds() -> (minW: Double, minH: Double, maxW: Double, maxH: Double) {
-		maxWidth = font.width(of: content, size: fontSize)
+		maxWidth = content.reduce(0) { $0 + font.width(of: $1, size: fontSize) }
 		minHeight = fontSize
 		return (minWidth, minHeight, maxWidth, maxHeight)
 	}
 	
 	override func justify(proposedWidth: Double, proposedHeight: Double) {
 		
-		fittingLines = [content]
+		fittingLines = wordWrap(text: content, maxLineLength: proposedWidth) { char in
+			font.width(of: char, size: fontSize)
+		}
 		
 		let longesLineWidth = fittingLines
-			.map { font.width(of: $0, size: fontSize) }
+			.map { $0.reduce(0) { $0 + font.width(of: $1, size: fontSize) } }
 			.max() ?? 0
 		
 		self.width = longesLineWidth
