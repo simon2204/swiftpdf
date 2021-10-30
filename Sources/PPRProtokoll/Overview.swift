@@ -13,25 +13,25 @@ struct Overview: View {
 	
 			InfoLine {
 				HStack {
-					Text("Name:")
-					Text(name)
+					Text("Name:").fontSize(fontSize)
+					Text(name).fontSize(fontSize)
 				}
 			} second: {
 				HStack {
-					Text("Erstellt:")
-					Text(creationDate)
+					Text("Erstellt:").fontSize(fontSize)
+					Text(creationDate).fontSize(fontSize)
 				}
 			}
 			
 			InfoLine {
 				HStack {
-					Text("Praktikumsaufgabe:")
-					Text(taskName)
+					Text("Praktikumsaufgabe:").fontSize(fontSize)
+					Text(taskName).fontSize(fontSize)
 				}
 			} second: {
 				HStack {
-					Text("Erfolgreiche Testfälle:")
-					Text(result)
+					Text("Erfolgreiche Testfälle:").fontSize(fontSize)
+					Text(result).fontSize(fontSize)
 				}
 			}
 		}
