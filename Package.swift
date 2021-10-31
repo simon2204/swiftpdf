@@ -30,10 +30,6 @@ let package = Package(
 			name: "SwiftPDFUIMain",
 			dependencies: ["SwiftPDFUI"]
 		),
-		.executableTarget(
-			name: "PPRProtokoll",
-			dependencies: ["SwiftPDFUI"]
-		),
         .testTarget(
             name: "SwiftPDFUITests",
             dependencies: ["SwiftPDFUI"]),
