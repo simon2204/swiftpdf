@@ -2,6 +2,14 @@ final class PaddingDrawable: JustifiableNode {
 	
 	private let insets: EdgeInsets
 	
+	private var horizontalPadding: Double {
+		insets.leading + insets.trailing
+	}
+	
+	private var verticalPadding: Double {
+		insets.top + insets.bottom
+	}
+	
 	init(insets: EdgeInsets?) {
 		self.insets = insets ?? EdgeInsets(all: Default.spacing)
 		
@@ -11,11 +19,26 @@ final class PaddingDrawable: JustifiableNode {
 		minHeight = self.insets.top + self.insets.bottom
 	}
 	
+	override func justifyBounds() -> (minW: Double, minH: Double, maxW: Double, maxH: Double) {
+		
+		minWidth = horizontalPadding
+		minHeight = verticalPadding
+		maxWidth = horizontalPadding
+		maxHeight = verticalPadding
+		
+		if let child = children.first {
+			let _ = child.justifyBounds()
+			minWidth += child.minWidth
+			minHeight += child.minWidth
+			maxWidth += child.maxWidth
+			maxHeight += child.maxHeight
+		}
+		
+		return (minWidth, minHeight, maxWidth, maxHeight)
+	}
+	
 	override func justify(proposedWidth: Double, proposedHeight: Double) {
 		if let child = children.first {
-			let horizontalPadding = insets.leading + insets.trailing
-			let verticalPadding = insets.top + insets.bottom
-			
 			let childWidth = proposedWidth - horizontalPadding
 			let childHeight = proposedHeight - verticalPadding
 			
