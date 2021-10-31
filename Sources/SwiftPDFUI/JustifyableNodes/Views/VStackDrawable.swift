@@ -153,12 +153,9 @@ final class VStackDrawable: StackNode {
 		}
 	}
 	
-	override func justifyBounds() -> (minW: Double, minH: Double, maxW: Double, maxH: Double) {
-		var newBoundary = super.justifyBounds()
-		newBoundary.minH += totalSpacing
-		newBoundary.maxH += totalSpacing
-		minHeight = newBoundary.minH
-		maxHeight = newBoundary.maxH
-		return newBoundary
+	override func justifyBounds() {
+		super.justifyBounds()
+		minHeight += totalSpacing
+		maxHeight += totalSpacing
 	}
 }

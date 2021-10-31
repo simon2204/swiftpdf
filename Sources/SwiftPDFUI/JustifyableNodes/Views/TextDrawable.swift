@@ -44,10 +44,9 @@ final class TextDrawable: JustifiableNode {
 		}
 	}
 	
-	override func justifyBounds() -> (minW: Double, minH: Double, maxW: Double, maxH: Double) {
+	override func justifyBounds() {
 		maxWidth = content.reduce(0) { $0 + font.width(of: $1, size: fontSize) }
 		minHeight = fontSize
-		return (minWidth, minHeight, maxWidth, maxHeight)
 	}
 	
 	override func justify(proposedWidth: Double, proposedHeight: Double) {

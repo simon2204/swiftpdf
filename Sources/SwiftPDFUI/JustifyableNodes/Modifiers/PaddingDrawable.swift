@@ -19,7 +19,7 @@ final class PaddingDrawable: JustifiableNode {
 		minHeight = self.insets.top + self.insets.bottom
 	}
 	
-	override func justifyBounds() -> (minW: Double, minH: Double, maxW: Double, maxH: Double) {
+	override func justifyBounds() {
 		
 		minWidth = horizontalPadding
 		minHeight = verticalPadding
@@ -33,8 +33,6 @@ final class PaddingDrawable: JustifiableNode {
 			maxWidth += child.maxWidth
 			maxHeight += child.maxHeight
 		}
-		
-		return (minWidth, minHeight, maxWidth, maxHeight)
 	}
 	
 	override func justify(proposedWidth: Double, proposedHeight: Double) {

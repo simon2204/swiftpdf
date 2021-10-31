@@ -9,13 +9,13 @@ final class FrameNode: AlignmentNode {
 		self.alignment = alignment
 	}
 	
-	override func justifyBounds() -> (minW: Double, minH: Double, maxW: Double, maxH: Double) {
-		let boundary = super.justifyBounds()
-		minWidth = _width ?? boundary.minW
-		minHeight = _height ?? boundary.minH
-		maxWidth = _width ?? boundary.maxW
-		maxHeight = _height ?? boundary.maxH
-		return (minWidth, minHeight, maxWidth, maxHeight)
+	override func justifyBounds() {
+		if let child = children.first {
+			minWidth = _width ?? child.minWidth
+			minHeight = _height ?? child.minHeight
+			maxWidth = _width ?? child.maxWidth
+			maxHeight = _height ?? child.maxHeight
+		}
 	}
 	
 	override func justify(proposedWidth: Double, proposedHeight: Double) {

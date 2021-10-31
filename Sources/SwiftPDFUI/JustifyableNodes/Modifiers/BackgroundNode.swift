@@ -6,17 +6,14 @@ final class BackgroundNode: AlignmentNode {
 		self.alignment = alignment
 	}
 	
-	override func justifyBounds() -> (minW: Double, minH: Double, maxW: Double, maxH: Double) {
-		
+	override func justifyBounds() {
 		if let foreground = children.first {
-			let _ = foreground.justifyBounds()
+			foreground.justifyBounds()
 			self.minWidth = foreground.minWidth
 			self.minHeight = foreground.minHeight
 			self.maxWidth = foreground.maxWidth
 			self.maxHeight = foreground.maxHeight
 		}
-		
-		return (minWidth, minHeight, maxWidth, maxHeight)
 	}
 	
 	override func justify(proposedWidth: Double, proposedHeight: Double) {

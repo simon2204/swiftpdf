@@ -11,7 +11,7 @@ public final class Page: PDFPage {
 		
 		self.rootDrawable = RootDrawable()
 		rootView.unwrapped().buildTree(rootDrawable)
-		_ = rootDrawable.justifyBounds()
+		rootDrawable.justifyBounds()
 		
 		rootDrawable.justify(
 			proposedWidth: width,

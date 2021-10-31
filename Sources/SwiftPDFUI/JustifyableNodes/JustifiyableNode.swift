@@ -127,15 +127,14 @@ class JustifiableNode {
 	/// gets called.
 	var maxHeight: Double = .zero
 	
-	func justifyBounds() -> (minW: Double, minH: Double, maxW: Double, maxH: Double) {
+	func justifyBounds() {
 		for child in children {
-			let boundary = child.justifyBounds()
-			self.minWidth += boundary.minW
-			self.minHeight += boundary.minH
-			self.maxWidth += boundary.maxW
-			self.maxHeight += boundary.maxH
+			child.justifyBounds()
+			self.minWidth += child.minWidth
+			self.minHeight += child.minHeight
+			self.maxWidth += child.maxWidth
+			self.maxHeight += child.maxHeight
 		}
-		return (minWidth, minHeight, maxWidth, maxHeight)
 	}
 	
 	// MARK: - Justify Node

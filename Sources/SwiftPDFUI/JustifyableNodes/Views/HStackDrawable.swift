@@ -142,12 +142,9 @@ final class HStackDrawable: StackNode {
 		}
 	}
 	
-	override func justifyBounds() -> (minW: Double, minH: Double, maxW: Double, maxH: Double) {
-		var newBoundary = super.justifyBounds()
-		newBoundary.minW += totalSpacing
-		newBoundary.maxW += totalSpacing
-		minWidth = newBoundary.minW
-		maxWidth = newBoundary.maxW
-		return newBoundary
+	override func justifyBounds() {
+		super.justifyBounds()
+		minWidth += totalSpacing
+		maxWidth += totalSpacing
 	}
 }

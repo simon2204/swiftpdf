@@ -53,14 +53,13 @@ final class ZStackDrawable: AlignmentNode {
 		}
 	}
 	
-	override func justifyBounds() -> (minW: Double, minH: Double, maxW: Double, maxH: Double) {
+	override func justifyBounds() {
 		for child in children {
-			let bounds = child.justifyBounds()
-			minWidth = max(minWidth, bounds.minW)
-			minHeight = max(minHeight, bounds.minH)
-			maxWidth = max(maxWidth, bounds.maxW)
-			maxHeight = max(maxHeight, bounds.maxH)
+			child.justifyBounds()
+			minWidth = max(minWidth, child.minWidth)
+			minHeight = max(minHeight, child.minHeight)
+			maxWidth = max(maxWidth, child.maxWidth)
+			maxHeight = max(maxHeight, child.maxHeight)
 		}
-		return (minWidth, minHeight, maxWidth, maxHeight)
 	}
 }

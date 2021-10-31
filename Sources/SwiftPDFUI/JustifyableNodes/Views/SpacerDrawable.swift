@@ -22,7 +22,7 @@ final class SpacerDrawable: JustifiableNode {
 		}
 	}
 	
-	override func justifyBounds() -> (minW: Double, minH: Double, maxW: Double, maxH: Double) {
+	override func justifyBounds() {
 		if let stack = parent as? StackNode {
 			switch stack.mainAxis {
 			case .vertical:
@@ -31,6 +31,5 @@ final class SpacerDrawable: JustifiableNode {
 				minWidth = minLength
 			}
 		}
-		return (minWidth, minHeight, maxWidth, maxHeight)
 	}
 }
