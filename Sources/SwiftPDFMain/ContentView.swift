@@ -33,18 +33,3 @@ struct ContentView: View {
         .frame(width: 400)
     }
 }
-
-//struct ContentView: View {
-//    var body: some View {
-//        VStack {
-//            Color.green
-//                .frame(height: 50)
-//                .padding(20)
-//            Color.red
-//                .frame(height: 75)
-//            Spacer()
-//            Color.blue.frame(height: 100)
-//        }
-//        .frame(height: 600)
-//    }
-//}
