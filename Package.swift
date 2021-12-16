@@ -4,34 +4,31 @@
 import PackageDescription
 
 let package = Package(
-    name: "SwiftPDFUI",
+    name: "SwiftPDF",
 	platforms: [.macOS(.v10_15)],
     products: [
         .library(
-            name: "SwiftPDFUI",
-            targets: ["SwiftPDFUI"]),
+            name: "SwiftPDF",
+            targets: ["SwiftPDF"]),
     ],
     targets: [
 		.target(
-			name: "FontKit"
-		),
-		.target(
-			name: "SwiftPDF"
+			name: "SwiftPDFFoundation"
 		),
         .target(
-            name: "SwiftPDFUI",
-			dependencies: ["SwiftPDF"]
+            name: "SwiftPDF",
+			dependencies: ["SwiftPDFFoundation"]
         ),
         .executableTarget(
-            name: "SwiftPDFMain",
-            dependencies: ["SwiftPDF"]
+            name: "SwiftPDFFoundationMain",
+            dependencies: ["SwiftPDFFoundation"]
 		),
 		.executableTarget(
-			name: "SwiftPDFUIMain",
-			dependencies: ["SwiftPDFUI"]
+			name: "SwiftPDFMain",
+			dependencies: ["SwiftPDF"]
 		),
         .testTarget(
-            name: "SwiftPDFUITests",
-            dependencies: ["SwiftPDFUI"]),
+            name: "SwiftPDFTests",
+            dependencies: ["SwiftPDF"]),
     ]
 )
