@@ -65,6 +65,7 @@ class AxisJustifier {
         self.remainingLength = length
     }
     
+    /// Justifies the nodes in a certain order.
     func justifyNodes() {
         justifyBiggerNodes()
         justifySmallerNodes()
@@ -110,30 +111,34 @@ class AxisJustifier {
     
     /// Richtet Nodes aus, deren maximale Länge kleiner ist, als die vorgeschlagene Länge.
     private func justifySmallerNodes() {
-        justifyNodes(with: proposedNodeLength, where: { nodeMaxLength($0) < equitableNodeLength })
+        justifyNodes(with: equitableNodeLength, where: { nodeMaxLength($0) < equitableNodeLength })
     }
     
     /// Richtet die übrigen Nodes aus.
     private func justifyRemainingNodes() {
-        justifyNodes(in: remainingNode, with: proposedNodeLength)
+        justifyNodes(in: remainingNode, with: equitableNodeLength)
     }
     
-    private func proposedNodeLength(for node: JustifiableNode) -> Double {
+    private func equitableNodeLength(for node: JustifiableNode) -> Double {
         return equitableNodeLength
     }
     
+    /// Justifies a node with a proposed length.
     func justifyNode(_ node: JustifiableNode, proposedLength: Double) {
         fatalError("Method has not been implemented.")
     }
     
+    /// Retrieves the length of a node.
     func nodeLength(_ node: JustifiableNode) -> Double {
         fatalError("Method has not been implemented.")
     }
     
+    /// Retrieves the minimum length of a node.
     func nodeMinLength(_ node: JustifiableNode) -> Double {
         fatalError("Method has not been implemented.")
     }
     
+    /// Retrieves the maximum length of a node.
     func nodeMaxLength(_ node: JustifiableNode) -> Double {
         fatalError("Method has not been implemented.")
     }
