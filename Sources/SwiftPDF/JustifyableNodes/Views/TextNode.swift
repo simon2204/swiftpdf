@@ -1,7 +1,7 @@
 import SwiftPDFFoundation
 import Foundation
 
-final class TextDrawable: JustifiableNode {
+final class TextNode: JustifiableNode {
 	
 	private let content: String
 	

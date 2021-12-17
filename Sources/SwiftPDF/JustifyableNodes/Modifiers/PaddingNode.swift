@@ -24,7 +24,7 @@ final class PaddingNode: JustifiableNode {
 		insets.top + insets.bottom
 	}
 	
-    /// Erstellt ein PaddingDrawable mit bestimmten Einrückungstiefen.
+    /// Erstellt eine PaddingNode mit bestimmten Einrückungstiefen.
     /// - Parameter insets: Einrückungstiefe dieser Node. Bei `nil` wird eine standard Einrückungstiefe verwendet.
 	init(insets: EdgeInsets?) {
 		self.insets = insets ?? EdgeInsets(all: Default.spacing)

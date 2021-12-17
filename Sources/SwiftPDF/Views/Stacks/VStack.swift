@@ -84,8 +84,8 @@ public struct VStack<Content>: View where Content: View {
 
 extension VStack: PrimitiveView {
     func buildTree(_ parent: JustifiableNode) {
-		let drawable = VStackNode(alignment: alignment, spacing: spacing)
-		parent.add(child: drawable)
-        content().unwrapped().buildTree(drawable)
+		let node = VStackNode(alignment: alignment, spacing: spacing)
+		parent.add(child: node)
+        content().unwrapped().buildTree(node)
     }
 }

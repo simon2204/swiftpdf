@@ -127,7 +127,7 @@ public extension Color {
 
 extension Color: PrimitiveView {
 	func buildTree(_ parent: JustifiableNode) {
-		let drawable = ColorDrawable(color: pdfColor)
-		parent.add(child: drawable)
+		let node = ColorNode(color: pdfColor)
+		parent.add(child: node)
 	}
 }

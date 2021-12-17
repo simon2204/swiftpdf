@@ -1,6 +1,6 @@
 import SwiftPDFFoundation
 
-final class ColorDrawable: JustifiableNode {
+final class ColorNode: JustifiableNode {
     
     private let color: PDFColor
     
