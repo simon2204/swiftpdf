@@ -34,7 +34,7 @@ public extension View {
     /// ```
     /// ![Farbige Umrandung innerhalb des Text-Rahmens.](Border.png)
     ///
-    /// Um die Umrandung außerhalb des Rahmens zu zeichen,
+    /// Um die Umrandung außerhalb des Rahmens zu zeichnen,
     /// kann ein zusätzliches ``View/padding(_:)-4nkjg`` mit der Breite
     /// der Umrandung verwendet werden, bevor die Umrandung gezeichnet wird.
     ///
