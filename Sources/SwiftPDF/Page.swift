@@ -1,30 +1,51 @@
 import SwiftPDFFoundation
+import Foundation
 
-public final class Page: PDFPage {
-	
-	private let rootDrawable: RootNode
+final class Page: PDFPage {
     
-	public init<Content>(rootView: Content) where Content: View {
-		let mm = 72 * 0.0393701
-		let width = 210 * mm
-		let height = 297 * mm
-		
-		self.rootDrawable = RootNode()
-		rootView.unwrapped().buildTree(rootDrawable)
-		rootDrawable.justifyBounds()
-		
-		rootDrawable.justify(
-			proposedWidth: width,
-			proposedHeight: height
-		)
-		rootDrawable.justify(x: 0)
-		rootDrawable.justify(y: 0)
-		rootDrawable.nodeDidJustify()
-		
-		super.init(width: rootDrawable.width, height: rootDrawable.height)
+	private let rootNode: JustifiableNode
+    
+    init(rootNode: JustifiableNode, size: PageSize) {
+        
+        self.rootNode = rootNode
+        
+		rootNode.justifyBounds()
+        
+        switch size {
+        case .fixed(let size):
+            
+            rootNode.justify(
+                proposedWidth: size.width,
+                proposedHeight: size.height
+            )
+                        
+            rootNode.justify(x: (size.width - rootNode.width) / 2)
+            rootNode.justify(y: (size.height - rootNode.height) / 2)
+            
+            super.init(width: size.width, height: size.height)
+            
+        case .preferred(let size):
+            
+            rootNode.justify(
+                proposedWidth: size.width,
+                proposedHeight: size.height
+            )
+            
+            rootNode.justify(x: 0)
+            rootNode.justify(y: 0)
+            
+            super.init(width: rootNode.width, height: rootNode.height)
+        }
+        
+        rootNode.nodeDidJustify()
     }
     
 	public override func draw(in context: PDFGraphicsContext) {
-        rootDrawable.draw(in: context)
+        rootNode.draw(in: context)
     }
+}
+
+public enum PageSize {
+    case fixed(Size)
+    case preferred(Size)
 }

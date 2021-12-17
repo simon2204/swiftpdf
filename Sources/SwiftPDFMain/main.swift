@@ -1,15 +1,16 @@
-import SwiftPDFFoundation
 import SwiftPDF
 import Foundation
 
-let page = Page(rootView: ContentView())
-
-let document = PDFDocument()
-
-document.appendPage(page)
+var document = Document {
+    ContentView()
+    ContentView()
+    Color.gray
+}
+    
+document.pageSize = .preferred(.init(width: 500, height: 500))
 
 let desktopURL = URL(fileURLWithPath: "/Users/simon/Desktop/SwiftBeta.pdf")
 
-let data = document.dataRepresentation()
+let data = document.createData()
 
 try data.write(to: desktopURL)
