@@ -48,4 +48,13 @@ final class Page: PDFPage {
 public enum PageSize {
     case fixed(Size)
     case preferred(Size)
+    
+    public var size: Size {
+        switch self {
+        case .fixed(let size):
+            return size
+        case .preferred(let size):
+            return size
+        }
+    }
 }
