@@ -3,7 +3,7 @@ import SwiftPDFFoundation
 /// Repräsentiert eine Farbe.
 ///
 /// Farben können sowohl als Wert verwendet werden, der einem Parameter übergeben werden kann,
-/// sowie auch als View, dargestellt als Reckteck mit der entsprechenden Farbe als Füllung.
+/// sowie auch als View, dargestellt als Rechteck, mit der entsprechenden Farbe als Füllung.
 ///
 /// Eine beliebige Farbe kann mit ``Color/init(red:green:blue:)`` erstellt werden.
 ///
