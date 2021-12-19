@@ -1,4 +1,4 @@
-/// Eine `View`, die `View`s übereinander stapelt.
+ /// Eine `View`, die `View`s übereinander stapelt.
 ///
 /// Views im ZStack, die später aufgelistet werden, erscheinen über den vorherigen Views.
 /// In diesem Beispiel werden die verschiedenen Farben übereinander gestapelt, wobei

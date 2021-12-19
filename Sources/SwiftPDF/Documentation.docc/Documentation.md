@@ -11,9 +11,9 @@ Durch das automatische Layoutsystem werden inkonsistente Positionierung und Dime
 Stacks wie ``HStack`` und ``VStack`` richten ``View``s entlang ihrer Hauptachse aus 
 und mit dem ``ZStack`` werden View-Elemente übereinander gestapelt.
 
-Jede ``View`` besitzt eine vielzahl von Modifikatoren,
+Jede ``View`` besitzt eine Vielzahl von Modifikatoren,
 um der View zum Beispiel einen Abstand zu umliegenden Elementen zu geben, 
-eine Umrandung zu zeichen oder der View nur eine maximale Raumgröße zuzuteilen,
+eine Umrandung zu zeichnen oder der View nur eine maximale Raumgröße zuzuteilen,
 wie es mit ``View/padding(_:)-4nkjg``,
 ``View/border(color:width:)`` und
 ``View/frame(width:height:alignment:)`` möglich ist.

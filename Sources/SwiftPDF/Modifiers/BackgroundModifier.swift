@@ -29,7 +29,7 @@ public extension View {
     /// den auch die View im Vordergrund bekommt.
     ///
     /// Mehrere `View`s können dem Modifikator als Hintergrund übergeben werden.
-    /// Übergebene `View`s werden implizit in einen ``HStack`` gepackt,
+    /// Übergebene `View`s werden implizit in einen ``ZStack`` gepackt,
     /// die in der Reihenfolge von hinten nach vorne erscheinen.
     ///
     /// ```swift
