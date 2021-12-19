@@ -18,77 +18,20 @@ extension View {
     }
 }
 
-struct Star: Shape {
-    /// Anzahl der Zacken.
-    var points = 5
+struct Seperator: View {
 
-    func path(in rect: Rect) -> Path {
+    var title: String?
 
-        // Länge bis zur Spitze einer Zacke,
-        // beginnend von der Mitte des Sterns.
-        let outerRadius = min(rect.width, rect.height) / 2
-
-        // Länge bis zum Tal zwischen zweier Zacken,
-        // beginnend von der Mitte des Sterns.
-        let innerRadius = outerRadius / 2.25
-
-        // Mitte des Sterns.
-        let center = Point(x: rect.midX, y: rect.midY)
-
-        // Winkel des Tals, senkrecht unter der Mitte.
-        let startAngle = -Double.pi / 2 // -90°
-        let endAngle = 3 * Double.pi / 2 // 270°
-
-        // Winkel zwischen der Spitze und
-        // dem Anfang einer Zacke eines Sterns.
-        let halfCornerAngle = Double.pi / Double(points)
-
-        // Winkel zwischen zwei Zacken eines Sterns.
-        let cornerAngle = halfCornerAngle * 2
-
-        // Winkel der Täler zwischen den Zacken.
-        let innerAngles = stride(
-            from: startAngle,
-            through: endAngle,
-            by: cornerAngle)
-
-        // Alle Punkte der Täler und Spitzen.
-        let points = innerAngles.lazy.flatMap { angle -> [Point] in
-            let innerX = center.x + innerRadius * cos(angle)
-            let innerY = center.y + innerRadius * sin(angle)
-            let outerX = center.x + outerRadius * cos(angle + halfCornerAngle)
-            let outerY = center.y + outerRadius * sin(angle + halfCornerAngle)
-            return [Point(x: innerX, y: innerY), Point(x: outerX, y: outerY)]
-        }
-
-        // Pfad des Sterns.
-        var path = Path()
-
-        // Iterator über Punkte des Sterns.
-        var pointIterator = points.makeIterator()
-
-        // Zeichnet den Stern.
-        if let firstPoint = pointIterator.next() {
-            path.move(to: firstPoint)
-            while let nextPoint = pointIterator.next() {
-                path.addLine(to: nextPoint)
-            }
-        }
-
-        path.closePath()
-
-        return path
-    }
-}
-
-struct ContentView: View {
     var body: some View {
-        ZStack {
-            Star()
-                .fill(.yellow)
-            Star()
-                .stroke(.orange)
+        HStack(spacing: 0) {
+            
+            Color.black.frame(height: 1)
+
+            if let title = title {
+                Text(title).padding(.horizontal)
+            }
+
+            Color.black.frame(height: 1)
         }
-        .frame(width: 100, height: 100)
     }
 }

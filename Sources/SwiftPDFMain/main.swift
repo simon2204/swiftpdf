@@ -2,12 +2,9 @@ import SwiftPDF
 import Foundation
 
 var document = Document {
-    ContentView()
-    ContentView()
-    Color.gray
+    Seperator(title: "Überschrift")
+    Seperator()
 }
-    
-document.pageSize = .preferred(.init(width: 500, height: 500))
 
 let desktopURL = URL(fileURLWithPath: "/Users/simon/Desktop/SwiftBeta.pdf")
 
