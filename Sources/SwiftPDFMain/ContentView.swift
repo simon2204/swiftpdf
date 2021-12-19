@@ -2,9 +2,7 @@ import SwiftPDF
 import Foundation
 
 struct DarkDocumentationBackgroundModifier: ViewModifier {
-    
     let darkBackgroundColor = Color(red: 0.12, green: 0.12, blue: 0.12)
-    
     func body(content: Content) -> some View {
         content.background {
             darkBackgroundColor

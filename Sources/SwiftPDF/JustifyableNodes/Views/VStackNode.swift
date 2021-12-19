@@ -1,4 +1,4 @@
-final class VStackNode: AlignmentNode {
+final class VStackNode: JustifiableNode {
 	
 	private typealias Partition = Array<JustifiableNode>.SubSequence
 	

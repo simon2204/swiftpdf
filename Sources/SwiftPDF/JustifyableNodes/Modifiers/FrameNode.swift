@@ -9,7 +9,7 @@
 ///
 /// Bei einem Kind, welches kleiner ist, als dieser Knoten,
 /// kann das Kind durch einem `Alignment` ausgerichtet werden.
-final class FrameNode: AlignmentNode {
+final class FrameNode: JustifiableNode {
     
     /// Feste Breite dieses Knotens. Bei `nil` nimmt diese Node die Breite des Kindes an.
 	private let _width: Double?

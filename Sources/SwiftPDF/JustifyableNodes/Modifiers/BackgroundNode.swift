@@ -17,7 +17,7 @@
 ///
 /// Damit der Hintergrund auch hinter dem Vordergrund erscheint,
 /// wird zuerst der Hintergrund gezeichnet und danach der Vordergrund.
-final class BackgroundNode: AlignmentNode {
+final class BackgroundNode: JustifiableNode {
 	
     /// Ausrichtung des Hintergrundes.
 	let alignment: Alignment

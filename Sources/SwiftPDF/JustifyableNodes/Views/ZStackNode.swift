@@ -1,4 +1,4 @@
-final class ZStackNode: AlignmentNode {
+final class ZStackNode: JustifiableNode {
 	
 	private var alignment: Alignment
 	
