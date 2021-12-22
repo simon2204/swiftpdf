@@ -19,6 +19,10 @@ final class TextNode: JustifiableNode {
 	
 	// Lines that fit in proposedWith.
 	private var fittingLines = [String]()
+    
+    var lines: Int {
+        fittingLines.count
+    }
 	
 	init(content: String, modifiers: [Text.Modifier]) {
 		self.content = content
