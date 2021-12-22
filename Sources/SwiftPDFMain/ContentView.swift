@@ -16,20 +16,8 @@ extension View {
     }
 }
 
-struct Seperator: View {
-
-    var title: String?
-
+struct ContentView: View {
     var body: some View {
-        HStack(spacing: 0) {
-            
-            Color.black.frame(height: 1)
-
-            if let title = title {
-                Text(title).padding(.horizontal)
-            }
-
-            Color.black.frame(height: 1)
-        }
+        Text("Hello, world!")
     }
 }

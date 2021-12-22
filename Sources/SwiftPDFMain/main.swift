@@ -2,8 +2,7 @@ import SwiftPDF
 import Foundation
 
 var document = Document {
-    Seperator(title: "Überschrift")
-    Seperator()
+    ContentView()
 }
 
 let desktopURL = URL(fileURLWithPath: "/Users/simon/Desktop/SwiftBeta.pdf")
